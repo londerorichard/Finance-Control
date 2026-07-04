@@ -1,561 +1,581 @@
-# 💰 Sistema de Controle Financeiro
+# 💰 Financial Management System
 
-Um sistema web para gerenciamento financeiro pessoal, desenvolvido com o objetivo de consolidar conhecimentos em desenvolvimento **Full Stack** utilizando **Python, FastAPI, SQLite, HTML, CSS e JavaScript**.
+A web application for personal financial management, developed to strengthen **Full Stack** development skills using **Python, FastAPI, SQLite, HTML, CSS, and JavaScript**.
 
-O projeto simula uma aplicação real, permitindo o gerenciamento de receitas, despesas, categorias e metas financeiras, além da geração de relatórios e gráficos.
-
----
-
-## 📖 Sobre o Projeto
-
-Este projeto foi pensado para servir como uma aplicação completa de estudos, abordando desde a criação de uma API REST até a construção da interface web e integração com banco de dados.
-
-Ao longo do desenvolvimento serão praticados conceitos como:
-
-- Arquitetura de projetos
-- Organização de código
-- CRUD completo
-- APIs REST
-- Banco de dados relacional
-- Autenticação
-- Consumo de APIs
-- Manipulação do DOM
-- Responsividade
-- Deploy
+The project simulates a real-world application, allowing users to manage income, expenses, categories, and financial goals, as well as generate reports and charts.
 
 ---
 
-# 🚀 Tecnologias
+## 📖 About the Project
+
+This project was designed as a complete learning application, covering everything from building a REST API to developing the web interface and integrating it with a database.
+
+Throughout the development process, the following concepts will be practiced:
+
+* Project architecture
+* Code organization
+* Full CRUD operations
+* REST APIs
+* Relational databases
+* Authentication
+* API consumption
+* DOM manipulation
+* Responsive design
+* Deployment
+
+---
+
+# 🚀 Technologies
 
 ## Backend
 
-- Python
-- FastAPI
-- SQLAlchemy
-- SQLite
-- Pydantic
+* Python
+* FastAPI
+* SQLAlchemy
+* SQLite
+* Pydantic
 
 ## Frontend
 
-- HTML5
-- CSS3
-- JavaScript
+* HTML5
+* CSS3
+* JavaScript
 
-## Ferramentas
+## Tools
 
-- Git
-- GitHub
-- Uvicorn
-- Swagger
-- Postman
-- VS Code
+* Git
+* GitHub
+* Uvicorn
+* Swagger
+* Postman
+* VS Code
 
 ---
 
-# 📁 Estrutura do Projeto
+# 📁 Project Structure
 
 ```text
 finance-control/
 │
 ├── app/
+│   ├── main.py              # Application entry point
+│   ├── database.py          # Database connection
+│   ├── models.py            # SQLAlchemy models
+│   ├── schemas.py           # Pydantic schemas
+│   ├── crud.py              # Database operations
+│   ├── auth.py              # Authentication logic
+│   ├── dependencies.py      # FastAPI dependencies
+│   │
 │   ├── routers/
+│   │   ├── auth.py
+│   │   ├── users.py
+│   │   ├── categories.py
+│   │   ├── incomes.py
+│   │   ├── expenses.py
+│   │   ├── goals.py
+│   │   └── reports.py
+│   │
 │   ├── templates/
+│   │   ├── base.html
+│   │   ├── login.html
+│   │   ├── dashboard.html
+│   │   ├── incomes.html
+│   │   ├── expenses.html
+│   │   ├── categories.html
+│   │   ├── goals.html
+│   │   └── reports.html
+│   │
 │   ├── static/
 │   │   ├── css/
+│   │   │   ├── style.css
+│   │   │   └── variables.css
+│   │   │
 │   │   ├── js/
+│   │   │   ├── api.js
+│   │   │   ├── dashboard.js
+│   │   │   ├── forms.js
+│   │   │   └── utils.js
+│   │   │
 │   │   └── images/
 │   │
-│   ├── auth.py
-│   ├── crud.py
-│   ├── database.py
-│   ├── dependencies.py
-│   ├── main.py
-│   ├── models.py
-│   └── schemas.py
+│   └── utils/
+│       ├── validators.py
+│       ├── helpers.py
+│       └── constants.py
 │
 ├── database/
 │   └── finance.db
 │
 ├── tests/
+│   ├── test_auth.py
+│   ├── test_categories.py
+│   ├── test_incomes.py
+│   ├── test_expenses.py
+│   └── test_reports.py
 │
+├── .env
+├── .gitignore
 ├── requirements.txt
 ├── README.md
-└── .gitignore
+├── ROADMAP.md
+└── LICENSE
 ```
 
 ---
 
-# 🎯 Objetivos de Aprendizado
+# ✨ Features
 
-Este projeto foi desenvolvido para praticar:
+## 👤 Authentication
 
-- Organização de projetos profissionais
-- APIs REST com FastAPI
-- Modelagem de banco de dados
-- CRUD completo
-- Relacionamentos entre tabelas
-- Autenticação de usuários
-- Consumo de APIs com JavaScript
-- Integração Frontend + Backend
-- Manipulação de formulários
-- Validação de dados
-- Relatórios e gráficos
+Handles user authentication and account management.
 
----
+### Features
 
-# ✨ Funcionalidades
+* User registration
+* Login
+* Logout
+* Password hashing
+* Route protection
 
-## 👤 Autenticação
+### Concepts Practiced
 
-Sistema responsável pelo gerenciamento de usuários.
-
-### Funcionalidades
-
-- Cadastro de usuário
-- Login
-- Logout
-- Criptografia de senha
-- Proteção de rotas
-
-### Conceitos praticados
-
-- Hash de senhas
-- JWT
-- Dependências do FastAPI
-- Autenticação
+* Password hashing
+* JWT
+* FastAPI dependencies
+* Authentication
 
 ---
 
 ## 📊 Dashboard
 
-Tela inicial contendo um resumo financeiro.
+Home page displaying a financial overview.
 
-### Informações exibidas
+### Displayed Information
 
-- Saldo atual
-- Total de receitas
-- Total de despesas
-- Economia do mês
-- Últimas movimentações
-- Metas financeiras
-- Gráficos
+* Current balance
+* Total income
+* Total expenses
+* Monthly savings
+* Recent transactions
+* Financial goals
+* Charts
 
-### Conceitos praticados
+### Concepts Practiced
 
-- Consultas SQL
-- Agregações
-- Organização da interface
-
----
-
-## 💵 Receitas
-
-Cadastro das entradas financeiras.
-
-### Operações
-
-- Criar receita
-- Editar receita
-- Excluir receita
-- Listar receitas
-
-### Campos
-
-- Descrição
-- Valor
-- Categoria
-- Data
-- Observação
-
-### Conceitos praticados
-
-- CRUD
-- Validação
-- Formulários
+* SQL queries
+* Aggregations
+* User interface organization
 
 ---
 
-## 💳 Despesas
+## 💵 Income
 
-Cadastro das saídas financeiras.
+Manage financial income records.
 
-### Operações
+### Operations
 
-- Criar despesa
-- Editar despesa
-- Excluir despesa
-- Listar despesas
+* Create income
+* Edit income
+* Delete income
+* List income
 
-### Campos
+### Fields
 
-- Descrição
-- Valor
-- Categoria
-- Forma de pagamento
-- Data
-- Observação
+* Description
+* Amount
+* Category
+* Date
+* Notes
+
+### Concepts Practiced
+
+* CRUD operations
+* Validation
+* Forms
+
+---
+
+## 💳 Expenses
+
+Manage financial expense records.
+
+### Operations
+
+* Create expense
+* Edit expense
+* Delete expense
+* List expenses
+
+### Fields
+
+* Description
+* Amount
+* Category
+* Payment method
+* Date
+* Notes
 
 ### Extras
 
-- Parcelamento
-- Despesas recorrentes
+* Installment payments
+* Recurring expenses
 
 ---
 
-## 🏷 Categorias
+## 🏷 Categories
 
-Permite organizar receitas e despesas.
+Organize income and expenses into categories.
 
-### Funcionalidades
+### Features
 
-- Criar categoria
-- Editar categoria
-- Excluir categoria
+* Create category
+* Edit category
+* Delete category
 
-### Exemplos
+### Examples
 
-- Alimentação
-- Transporte
-- Saúde
-- Educação
-- Moradia
-- Investimentos
-- Lazer
+* Food
+* Transportation
+* Healthcare
+* Education
+* Housing
+* Investments
+* Entertainment
 
-### Conceitos praticados
+### Concepts Practiced
 
-- Relacionamentos
-- Foreign Keys
-
----
-
-## 🎯 Metas Financeiras
-
-Controle de objetivos financeiros.
-
-### Funcionalidades
-
-- Criar meta
-- Atualizar progresso
-- Excluir meta
-
-### Informações
-
-- Nome
-- Valor objetivo
-- Valor atual
-- Percentual concluído
-- Data limite
+* Relationships
+* Foreign Keys
 
 ---
 
-## 📈 Relatórios
+## 🎯 Financial Goals
 
-Relatórios financeiros personalizados.
+Track personal financial goals.
 
-### Filtros
+### Features
 
-- Hoje
-- Semana
-- Mês
-- Ano
-- Período personalizado
+* Create goal
+* Update progress
+* Delete goal
 
-### Relatórios disponíveis
+### Information
 
-- Receitas
-- Despesas
-- Saldo
-- Gastos por categoria
-
-### Conceitos praticados
-
-- Queries
-- Filtros
-- Estatísticas
+* Name
+* Target amount
+* Current amount
+* Completion percentage
+* Deadline
 
 ---
 
-## 🔍 Busca
+## 📈 Reports
 
-Pesquisar movimentações utilizando:
+Generate customized financial reports.
 
-- Nome
-- Categoria
-- Data
-- Valor
+### Filters
 
----
+* Today
+* This week
+* This month
+* This year
+* Custom date range
 
-## ↕ Ordenação
+### Available Reports
 
-Ordenar registros por:
+* Income
+* Expenses
+* Balance
+* Expenses by category
 
-- Data
-- Valor
-- Categoria
-- Mais recente
-- Maior valor
-- Menor valor
+### Concepts Practiced
 
----
-
-## 📄 Paginação
-
-Paginação automática para grandes quantidades de registros.
-
-### Conceitos praticados
-
-- LIMIT
-- OFFSET
+* Queries
+* Filters
+* Statistics
 
 ---
 
-## 👤 Perfil
+## 🔍 Search
 
-Permite ao usuário alterar seus dados.
+Search financial transactions by:
 
-### Funcionalidades
-
-- Alterar nome
-- Alterar email
-- Alterar senha
-
----
-
-## ⚙ Configurações
-
-Preferências da aplicação.
-
-### Funcionalidades
-
-- Tema claro
-- Tema escuro
-- Configuração de moeda
+* Name
+* Category
+* Date
+* Amount
 
 ---
 
-## 📤 Exportação
+## ↕ Sorting
 
-Exportação das movimentações.
+Sort records by:
 
-### Formatos
+* Date
+* Amount
+* Category
+* Most recent
+* Highest amount
+* Lowest amount
 
-- CSV
-
-### Opcional
-
-- PDF
-
----
-
-## 📊 Gráficos
-
-Visualização dos dados financeiros.
-
-### Exemplos
-
-- Gastos por categoria
-- Receitas x Despesas
-- Evolução mensal
-- Economia por mês
 
 ---
 
-# 🗄 Banco de Dados
+## 📄 Pagination
+
+Automatic pagination for large amounts of records.
+
+### Concepts Practiced
+
+* LIMIT
+* OFFSET
+
+---
+
+## 👤 Profile
+
+Allows users to manage their personal information.
+
+### Features
+
+* Change name
+* Change email
+* Change password
+
+---
+
+## ⚙ Settings
+
+Application preferences.
+
+### Features
+
+* Light theme
+* Dark theme
+* Currency settings
+
+---
+
+## 📤 Export
+
+Export financial transactions.
+
+### Formats
+
+* CSV
+
+### Optional
+
+* PDF
+
+---
+
+## 📊 Charts
+
+Visual representation of financial data.
+
+### Examples
+
+* Expenses by category
+* Income vs. Expenses
+* Monthly trends
+* Monthly savings
+
+---
+
+# 🗄 Database
 
 ## users
 
-| Campo | Tipo |
-|--------|------|
-| id | INTEGER |
-| name | TEXT |
-| email | TEXT |
-| password | TEXT |
+| Field    | Type    |
+| -------- | ------- |
+| id       | INTEGER |
+| name     | TEXT    |
+| email    | TEXT    |
+| password | TEXT    |
 
 ---
 
 ## categories
 
-| Campo | Tipo |
-|--------|------|
-| id | INTEGER |
-| name | TEXT |
+| Field | Type    |
+| ----- | ------- |
+| id    | INTEGER |
+| name  | TEXT    |
 
 ---
 
 ## incomes
 
-| Campo | Tipo |
-|--------|------|
-| id | INTEGER |
-| description | TEXT |
-| value | REAL |
-| date | DATE |
+| Field       | Type    |
+| ----------- | ------- |
+| id          | INTEGER |
+| description | TEXT    |
+| value       | REAL    |
+| date        | DATE    |
 | category_id | INTEGER |
-| user_id | INTEGER |
+| user_id     | INTEGER |
 
 ---
 
 ## expenses
 
-| Campo | Tipo |
-|--------|------|
-| id | INTEGER |
-| description | TEXT |
-| value | REAL |
-| date | DATE |
+| Field       | Type    |
+| ----------- | ------- |
+| id          | INTEGER |
+| description | TEXT    |
+| value       | REAL    |
+| date        | DATE    |
 | category_id | INTEGER |
-| user_id | INTEGER |
+| user_id     | INTEGER |
 
 ---
 
 ## goals
 
-| Campo | Tipo |
-|--------|------|
-| id | INTEGER |
-| name | TEXT |
-| target_value | REAL |
-| current_value | REAL |
-| user_id | INTEGER |
+| Field         | Type    |
+| ------------- | ------- |
+| id            | INTEGER |
+| name          | TEXT    |
+| target_value  | REAL    |
+| current_value | REAL    |
+| user_id       | INTEGER |
 
 ---
 
 # 🌐 API
 
-## Autenticação
+## Authentication
 
-| Método | Endpoint |
-|---------|----------|
-| POST | /register |
-| POST | /login |
-| GET | /me |
+| Method | Endpoint  |
+| ------ | --------- |
+| POST   | /register |
+| POST   | /login    |
+| GET    | /me       |
 
 ---
 
-## Receitas
+## Income
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /incomes |
-| GET | /incomes/{id} |
-| POST | /incomes |
-| PUT | /incomes/{id} |
+| Method | Endpoint      |
+| ------ | ------------- |
+| GET    | /incomes      |
+| GET    | /incomes/{id} |
+| POST   | /incomes      |
+| PUT    | /incomes/{id} |
 | DELETE | /incomes/{id} |
 
 ---
 
-## Despesas
+## Expenses
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /expenses |
-| GET | /expenses/{id} |
-| POST | /expenses |
-| PUT | /expenses/{id} |
+| Method | Endpoint       |
+| ------ | -------------- |
+| GET    | /expenses      |
+| GET    | /expenses/{id} |
+| POST   | /expenses      |
+| PUT    | /expenses/{id} |
 | DELETE | /expenses/{id} |
 
 ---
 
-## Categorias
+## Categories
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /categories |
-| POST | /categories |
-| PUT | /categories/{id} |
+| Method | Endpoint         |
+| ------ | ---------------- |
+| GET    | /categories      |
+| POST   | /categories      |
+| PUT    | /categories/{id} |
 | DELETE | /categories/{id} |
 
 ---
 
-## Metas
+## Financial Goals
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /goals |
-| POST | /goals |
-| PUT | /goals/{id} |
+| Method | Endpoint    |
+| ------ | ----------- |
+| GET    | /goals      |
+| POST   | /goals      |
+| PUT    | /goals/{id} |
 | DELETE | /goals/{id} |
 
 ---
 
-## Relatórios
+## Reports
 
-| Método | Endpoint |
-|---------|----------|
-| GET | /reports/month |
-| GET | /reports/year |
-| GET | /reports/category |
+| Method | Endpoint          |
+| ------ | ----------------- |
+| GET    | /reports/month    |
+| GET    | /reports/year     |
+| GET    | /reports/category |
 
 ---
 
-# 📚 Conceitos Praticados
+# 📚 Concepts Practiced
 
 ### Python
 
-- Organização de projetos
-- Funções
-- Classes
-- Tipagem
-- Tratamento de exceções
+* Project organization
+* Functions
+* Classes
+* Type hints
+* Exception handling
 
 ### FastAPI
 
-- Rotas
-- Path Parameters
-- Query Parameters
-- Depends
-- Pydantic
-- Response Models
-- Status Codes
-- Middleware
-- Autenticação
+* Routes
+* Path Parameters
+* Query Parameters
+* Depends
+* Pydantic
+* Response Models
+* Status Codes
+* Middleware
+* Authentication
 
-### Banco de Dados
+### Database
 
-- SQLite
-- SQLAlchemy
-- CRUD
-- Relacionamentos
-- Consultas SQL
-- Paginação
-- Ordenação
-- Filtros
+* SQLite
+* SQLAlchemy
+* CRUD operations
+* Relationships
+* SQL queries
+* Pagination
+* Sorting
+* Filtering
 
 ### HTML
 
-- Estrutura semântica
-- Formulários
-- Templates
+* Semantic structure
+* Forms
+* Templates
 
 ### CSS
 
-- Flexbox
-- Grid
-- Responsividade
-- Variáveis CSS
+* Flexbox
+* Grid
+* Responsive design
+* CSS variables
 
 ### JavaScript
 
-- DOM
-- Eventos
-- Fetch API
-- Async/Await
-- Manipulação dinâmica da interface
+* DOM
+* Events
+* Fetch API
+* Async/Await
+* Dynamic UI manipulation
 
 ---
 
-# 🚧 Melhorias Futuras
+# 🚧 Future Improvements
 
-- Recuperação de senha
-- Upload de foto de perfil
-- Notificações
-- Controle de cartões de crédito
-- Múltiplas contas
-- Importação de extratos
-- Dashboard mais completo
-- Docker
-- Testes automatizados
-- Deploy em produção
-
+* Password recovery
+* Profile picture upload
+* Notifications
+* Credit card management
+* Multiple accounts
+* Bank statement import
+* More advanced dashboard
+* Docker
+* Automated testing
+* Production deployment
