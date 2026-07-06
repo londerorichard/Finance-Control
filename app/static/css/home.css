@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-areas: 
+        "sidebar navbar"
+        "sidebar resume-expenses"
+        "sidebar resume-dashboard"
+        "sidebar activities-notifications";
+    height: 100vh;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background-color: rgb(44, 43, 43);
+}
+
+.navbar {
+    grid-area: navbar;
+    width: 100%;
+    height: 80px;
+    background-color: brown;
+}
+
+.resume-expenses {
+    display: grid;
+    grid-area: resume-expenses;
+    grid-template-columns: repeat(3, 1fr);
+
+    height: 200px;
+    background-color: rgb(73, 42, 165);
+}
+
+.resume-dashboard {
+    display: grid;
+    grid-area: resume-dashboard;
+    grid-template-columns: repeat(2, 1fr);
+
+    height: 300px;
+    background-color: rgb(95, 198, 88);
+}
+
+.activities-notifications {
+    grid-area: activities-notifications;
+    height: 180px;
+    background-color: rgb(214, 73, 73);
+}
