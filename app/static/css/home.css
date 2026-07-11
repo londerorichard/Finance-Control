@@ -6,12 +6,12 @@
 
 .main-container {
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 50px 1fr;
     grid-template-areas: 
-        "sidebar navbar"
+        "navbar navbar"
+        "sidebar news"
         "sidebar resume-expenses"
-        "sidebar resume-dashboard"
-        "sidebar activities-notifications";
+        "sidebar resume-market";
     height: 100vh;
 }
 
@@ -23,8 +23,17 @@
 .navbar {
     grid-area: navbar;
     width: 100%;
-    height: 80px;
-    background-color: brown;
+    height: 50px;
+    background-color: rgb(42, 41, 41);
+}
+
+.news {
+    display: grid;
+    grid-area: news;
+    grid-template-columns: repeat(2, 1fr);
+
+    height: 250px;
+    background-color: rgb(95, 198, 88);
 }
 
 .resume-expenses {
@@ -32,21 +41,56 @@
     grid-area: resume-expenses;
     grid-template-columns: repeat(3, 1fr);
 
-    height: 200px;
+    height: 250px;
     background-color: rgb(73, 42, 165);
 }
 
-.resume-dashboard {
-    display: grid;
-    grid-area: resume-dashboard;
-    grid-template-columns: repeat(2, 1fr);
-
-    height: 300px;
-    background-color: rgb(95, 198, 88);
+.resume-market {
+    grid-area: resume-market;
+    height: 200px;
+    background-color: rgb(214, 73, 73);
 }
 
-.activities-notifications {
-    grid-area: activities-notifications;
-    height: 180px;
-    background-color: rgb(214, 73, 73);
+.navbar-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100%;
+
+    color: beige;
+}
+
+/* .navbar-left{
+
+} */
+
+/* .navbar-center{
+
+} */
+
+.navbar-center-options{
+    list-style: none;
+
+    display: flex;
+    flex-direction: row;
+
+    gap: 1rem;
+}
+
+.navbar-right{
+    display: flex;
+    gap: 1rem;
+}
+
+.sidebar-window-btn{
+    width: 1rem;
+    height: 1rem;
+    color: blanchedalmond;
+    background-color: rgb(42, 41, 41);
+
+    border: none;
+
+    padding-left: 1rem;
+    cursor: pointer;
 }

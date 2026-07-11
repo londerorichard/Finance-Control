@@ -80,7 +80,7 @@ function validateConfirmPassword(password, confirmPassword) {
 }
 
 function setupRegisterValidation() {
-    const form = document.querySelector("#register-form");
+    const form = document.querySelector(".password-box");
     const errorBox = document.querySelector(".error-message");
 
     form.addEventListener("submit", (event) => {
