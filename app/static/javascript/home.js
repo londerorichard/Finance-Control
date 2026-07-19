@@ -11,21 +11,26 @@ hideSearchBar();
 
 function hideNotifications() {
     const notifPanel = document.querySelector(".notification-panel");
+    const profilePanel = document.querySelector(".profile-panel");
     const notifBtn = document.querySelector(".notification-btn");
 
     notifBtn.addEventListener("click", () => {
-        notifPanel.classList.toggle("hidden")
+        profilePanel.classList.add("hidden");
+        notifPanel.classList.toggle("hidden");
     });
 }
+
 hideNotifications();
 
-
 function hideSettings() {
+    const notifPanel = document.querySelector(".notification-panel");
     const profilePanel = document.querySelector(".profile-panel");
-    const profilefBtn = document.querySelector(".profile-btn");
+    const profileBtn = document.querySelector(".profile-btn");
 
-    profilefBtn.addEventListener("click", () => {
-        profilePanel.classList.toggle("hidden")
+    profileBtn.addEventListener("click", () => {
+        notifPanel.classList.add("hidden");
+        profilePanel.classList.toggle("hidden");
     });
 }
+
 hideSettings();
