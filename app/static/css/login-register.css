@@ -17,6 +17,10 @@
 =================================== */
 
 :root {
+    /* ===================================
+       Colors
+    =================================== */
+
     --bg-primary: #030a0f;
     --bg-card: #1f1f21;
 
@@ -26,10 +30,43 @@
     --accent: #0036d6;
     --accent-hover: #2259ff;
 
-    --border: rgba(255,255,255,0.08);
+    --border: rgba(255,255,255,.08);
+
+    /* ===================================
+       Spacing
+    =================================== */
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+    --space-3xl: 3rem;
+
+    /* ===================================
+       Border Radius
+    =================================== */
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+
+    /* ===================================
+       Shadows
+    =================================== */
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.15);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.2);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,.3);
+
+    /* ===================================
+       Transitions
+    =================================== */
+
+    --transition-fast: .2s ease;
+    --transition-normal: .3s ease;
 }
-
-
 /* ===================================
    BASE STYLES
 =================================== */
@@ -42,8 +79,7 @@ body {
 h1,
 span,
 a,
-p,
-divider {
+p {
     color: var(--text-primary);
 }
 
@@ -53,8 +89,7 @@ a {
 }
 
 h1 {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-block: var(--space-xl);
 }
 
 
@@ -75,46 +110,26 @@ h1 {
    LOGIN CARD
 =================================== */
 
-.login-box {
-    border: 2px solid;
-    height: 30rem;
-    width: 25rem;
-
+.login-box,
+.login-box-register {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-content: center;
     align-items: center;
 
-    border-radius: 1rem;
+    width: 25rem;
+    height: 30rem;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
 
     background-color: var(--bg-card);
 
-    border: 1px solid var(--border);
-
-    box-shadow:
-        0 0 20px rgba(180,180,180,0.08);
+    box-shadow: 0 0 20px rgba(180, 180, 180, 0.08);
 }
 
 .login-box-register {
-    border: 2px solid;
     height: 37rem;
-    width: 25rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-content: center;
-    align-items: center;
-
-    border-radius: 1rem;
-
-    background-color: var(--bg-card);
-
-    border: 1px solid var(--border);
-
-    box-shadow:
-        0 0 20px rgba(180,180,180,0.08);
 }
 
 
@@ -126,14 +141,14 @@ h1 {
     display: flex;
     flex-direction: column;
 
-    padding: 0 1rem 0 1rem;
-
     width: 90%;
+
+    padding-inline: var(--space-lg);
 
     color: var(--text-primary);
 }
 
-/* garante que o autofill não mude de cor */
+/* Keeps autofill colors consistent */
 .email-input:-webkit-autofill,
 .password-input:-webkit-autofill,
 .email-input:-webkit-autofill:hover,
@@ -141,37 +156,36 @@ h1 {
 .email-input:-webkit-autofill:focus,
 .password-input:-webkit-autofill:focus {
     -webkit-text-fill-color: var(--text-primary);
-    -webkit-box-shadow: 0 0 0px 1000px var(--bg-primary) inset;
-    box-shadow: 0 0 0px 1000px var(--bg-primary) inset;
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-primary) inset;
+    box-shadow: 0 0 0 1000px var(--bg-primary) inset;
     caret-color: var(--text-primary);
 }
 
 .email-title,
 .password-title {
-    padding-left: 0.5rem;
+    padding-left: var(--space-sm);
 
     font-size: 0.9rem;
 }
 
-.email-input,
-.password-input {
+.form-input {
     width: 100%;
 
     padding: 0.6rem;
     padding-left: 2.5rem;
 
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
 
     background-color: var(--bg-primary);
     color: var(--text-primary);
 }
 
 .checklist-validation {
+    margin-left: var(--space-xs);
+
     font-size: 0.7rem;
     font-weight: 100;
-
-    margin-left: 0.4rem;
 }
 
 /* ===================================
@@ -179,21 +193,23 @@ h1 {
 =================================== */
 
 .email-box {
-    width: 100%;
     position: relative;
 
-    margin-bottom: 1rem;
-    margin-top: 0.4rem;
+    width: 100%;
+
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-lg);
 }
 
 .password-box {
-    padding-top: 0.1rem;
-
-    width: 100%;
     position: relative;
 
-    margin-bottom: 0.4rem;
-    margin-top: 0.4rem;
+    width: 100%;
+
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-xs);
+
+    padding-top: 0.1rem;
 }
 
 
@@ -203,14 +219,13 @@ h1 {
 
 .input-icon {
     position: absolute;
-
-    left: 12px;
     top: 50%;
-
-    transform: translateY(-50%);
+    left: 12px;
 
     width: 18px;
     height: 18px;
+
+    transform: translateY(-50%);
 
     stroke-width: 1.7;
     color: var(--text-primary);
@@ -223,9 +238,8 @@ h1 {
 .icon-eye,
 .icon-eye-off {
     position: absolute;
-
-    right: 12px;
     top: 50%;
+    right: 12px;
 
     transform: translateY(-50%);
 
@@ -240,17 +254,18 @@ h1 {
 }
 
 .toggle-password {
-    background: transparent;
-    border: none;
+    position: absolute;
+    top: 50%;
+    right: 12px;
 
-    cursor: pointer;
+    transform: translateY(-50%);
+
+    border: none;
+    background: transparent;
 
     color: var(--text-primary);
 
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 
@@ -259,10 +274,10 @@ h1 {
 =================================== */
 
 .forgot-password {
+    padding-left: var(--space-sm);
+
     font-size: 0.7rem;
     color: var(--text-primary);
-
-    padding-left: 0.5rem;
 }
 
 .sign-up {
@@ -279,14 +294,14 @@ h1 {
 =================================== */
 
 .login-buttons {
-    width: 82%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    padding-top: 1rem;
-    padding-bottom: 2rem;
+    width: 82%;
+
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-2xl);
 
     color: var(--text-primary);
 }
@@ -301,10 +316,10 @@ h1 {
     align-items: center;
 
     width: 100%;
-    gap: 1rem;
 
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    gap: var(--space-lg);
+
+    padding-block: var(--space-lg);
 }
 
 .divider::before,
@@ -328,16 +343,18 @@ h1 {
     height: 2.2rem;
 
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
 
     background-color: var(--accent);
     color: var(--text-primary);
 
     cursor: pointer;
+
+    transition: background-color var(--transition-fast);
 }
 
 .login-btn:hover {
-    background: #2259ff;
+    background-color: var(--accent-hover);
 }
 
 
@@ -351,23 +368,25 @@ h1 {
 
 .google-login {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
 
     width: 100%;
     height: 2.2rem;
 
+    gap: var(--space-lg);
+
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-sm);
 
     background-color: var(--bg-primary);
     color: var(--text-primary);
 
     cursor: pointer;
+
+    transition: background-color var(--transition-fast);
 }
 
 .google-login:hover {
-    background: #10161d;
+    background-color: #10161d;
 }

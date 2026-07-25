@@ -1,28 +1,181 @@
-1. Reset
+# CSS Organization Guide
 
-2. Variables
+## 1. Reset
 
-3. Global Layout
-   - main-container
-   - grid
+* [ ] CSS Reset
+* [ ] `box-sizing`
+* [ ] Remove default margins and paddings
 
-4. Sections
-   - navbar
-   - sidebar
-   - main
-   - footer
+---
 
-5. Components
-   - buttons
-   - cards
-   - avatar
-   - search
-   - inputs
-   - divider
+## 2. Variables
 
-6. States
-   - hover
-   - active
-   - focus
+* [ ] Colors
+* [ ] Typography
+* [ ] Spacing
+* [ ] Border radius
+* [ ] Shadows
+* [ ] Transitions
 
-7. Utilities (optional)
+---
+
+## 3. Base Styles
+
+* [ ] `body`
+* [ ] `html`
+* [ ] `h1` – `h6`
+* [ ] `p`
+* [ ] `a`
+* [ ] `img`
+* [ ] `ul`
+* [ ] `ol`
+* [ ] `button`
+* [ ] `input`
+
+---
+
+## 4. Layout
+
+* [ ] Hero
+* [ ] Container
+* [ ] Grid
+* [ ] Navbar
+* [ ] Sidebar
+* [ ] Main
+* [ ] Footer
+
+---
+
+## 5. Components
+
+* [ ] Buttons
+* [ ] Cards
+* [ ] Forms
+* [ ] Inputs
+* [ ] Search
+* [ ] Avatar
+* [ ] Divider
+* [ ] Tables
+* [ ] Modals
+* [ ] Dropdowns
+* [ ] Notifications
+* [ ] Profile Menu
+* [ ] Pagination
+* [ ] Tooltips
+* [ ] Badges
+
+---
+
+## 6. States
+
+* [ ] `:hover`
+* [ ] `:active`
+* [ ] `:focus`
+* [ ] `:disabled`
+* [ ] `.hidden`
+* [ ] `.active`
+* [ ] `.selected`
+* [ ] `.error`
+* [ ] `.success`
+
+---
+
+## 7. Utilities
+
+* [ ] `.hidden`
+* [ ] `.visually-hidden`
+* [ ] `.text-center`
+* [ ] `.text-left`
+* [ ] `.text-right`
+* [ ] `.sr-only`
+* [ ] `.flex`
+* [ ] `.grid`
+
+---
+
+# Recommended CSS Property Order
+
+```css
+.selector {
+    /* ===================================
+       Layout
+    =================================== */
+
+    display:
+    position:
+    top:
+    right:
+    bottom:
+    left:
+    z-index:
+
+    /* ===================================
+       Size
+    =================================== */
+
+    width:
+    min-width:
+    max-width:
+
+    height:
+    min-height:
+    max-height:
+
+    /* ===================================
+       Spacing
+    =================================== */
+
+    margin:
+    padding:
+    gap:
+
+    /* ===================================
+       Appearance
+    =================================== */
+
+    border:
+    border-radius:
+    outline:
+    background:
+
+    /* ===================================
+       Typography
+    =================================== */
+
+    font-family:
+    font-size:
+    font-weight:
+    line-height:
+    text-align:
+    text-decoration:
+    color:
+
+    /* ===================================
+       Effects
+    =================================== */
+
+    opacity:
+    overflow:
+    box-shadow:
+    transition:
+    transform:
+
+    /* ===================================
+       Interaction
+    =================================== */
+
+    cursor:
+}
+```
+
+---
+
+# General Tips
+
+* [ ] Keep selectors simple.
+* [ ] Prefer reusable classes over duplicated styles.
+* [ ] Group related styles together.
+* [ ] Use CSS variables for colors, spacing, fonts, and shadows.
+* [ ] Follow a consistent property order in every selector.
+* [ ] Name classes by their purpose, not their appearance (e.g., `.primary-btn` instead of `.blue-button`).
+* [ ] Organize files and sections so they remain easy to navigate as the project grows.
