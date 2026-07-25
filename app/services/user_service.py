@@ -27,15 +27,19 @@ def create_user(email, password):
 
         password_hash = hash_password(password)
 
-        cursor.execute("""
+        created_at = datetime.now()
+
+        cursor.execute(
+            """
             INSERT INTO users (email, password_hash, created_at)
             VALUES (?, ?, ?)
             """,
             (
                 email,
                 password_hash,
-                datetime.now()
-            ))
+                created_at
+            )
+        )
 
         connection.commit()
 

@@ -1,10 +1,9 @@
 from fastapi import FastAPI
-
-from app.routers.auth import router as auth_router
+from routers import users
 
 app = FastAPI()
 
-app.include_router(auth_router)
+app.include_router(users)
 
 @app.get("/")
 def default():

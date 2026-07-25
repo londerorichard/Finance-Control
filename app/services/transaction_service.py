@@ -17,6 +17,8 @@ def create_transaction(
     try:
         cursor = connection.cursor()
 
+        created_at = datetime.now()
+
         cursor.execute(
             """
             INSERT INTO transactions 
