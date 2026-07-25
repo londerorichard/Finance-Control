@@ -82,6 +82,9 @@ html {
         "sidebar resume-market";
 
     height: 100vh;
+    row-gap: 2rem;
+
+    background-color: var(--bg-primary);
 }
 
 
@@ -115,12 +118,8 @@ html {
 }
 
 .news {
-    display: grid;
-
     grid-area: news;
-    grid-template-columns: repeat(3, 1fr);
 
-    gap: var(--space-sm);
     padding: var(--space-sm);
 
     background-color: var(--bg-primary);
@@ -132,7 +131,6 @@ html {
     display: grid;
 
     grid-area: resume-expenses;
-    grid-template-columns: repeat(3, 1fr);
 
     height: 250px;
 
@@ -314,11 +312,10 @@ html {
 .news-title {
     position: relative;
 
-    padding: 0.3rem 0 0 var(--space-lg);
+    padding: var(--space-xs) 0 0 var(--space-lg);
 
     color: var(--text-secondary);
-
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .news-title::after {
@@ -339,18 +336,84 @@ html {
     );
 }
 
-.news-card {
+
+/* ==========================================================================
+   NEWS CAROUSEL
+   ========================================================================== */
+
+.carousel {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
 
     position: relative;
 
     width: 100%;
-    height: 220px;
+}
 
-    border-radius: var(--radius-sm);
+.carousel-container {
+    flex: 1;
 
     overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    gap: var(--space-md);
+
+    transition: transform .3s ease;
+}
+
+
+/* ==========================================================================
+   CAROUSEL BUTTONS
+   ========================================================================== */
+
+.prev-btn,
+.next-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    transition: background-color .2s ease,
+                color .2s ease;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background-color: var(--border);
+    color: var(--text-primary);
+}
+
+
+/* ==========================================================================
+   NEWS CARD
+   ========================================================================== */
+
+.news-card {
+    flex: 0 0 calc((100% - (2 * var(--space-md))) / 3);
+    
+    display: flex;
+    flex-direction: column;
+
+    height: 220px;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-sm);
 
     background-color: var(--bg-primary);
     color: var(--text-secondary);
@@ -358,11 +421,42 @@ html {
     box-shadow: 0 1px 1px var(--border);
 }
 
-.news-card img {
-    width: 100%;
-    height: 120px;
+.news-card {
+    overflow: hidden;
+    border-radius: 10px;
+}
 
+.image-container {
+    position: relative;
+    height: 120px;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+}
+
+.image-container::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 40%,
+            rgba(0,0,0,.25) 75%,
+            rgba(0,0,0,.5) 100%
+        ),
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.45),
+            transparent 45%
+        );
+
+    pointer-events: none;
 }
 
 .news-content {
@@ -374,7 +468,7 @@ html {
 }
 
 .news-card h2 {
-    margin: var(--space-sm);
+    margin-bottom: var(--space-sm);
 
     font-size: 1.2rem;
 
@@ -386,10 +480,10 @@ html {
 }
 
 .news-card p {
-    margin: var(--space-sm);
-
     display: -webkit-box;
     overflow: hidden;
+
+    color: var(--text-secondary);
 
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -398,6 +492,7 @@ html {
 .news-content a {
     margin-top: auto;
 }
+
 
 /* ==========================================================================
    NOTIFICATION
@@ -633,6 +728,36 @@ html {
 
     object-fit: cover;
 }
+
+
+/* ==========================================================================
+   EXPENSES
+   ========================================================================== */
+
+.expenses-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+
+    width: 100%;
+    height: 150px;
+
+    align-items: center;
+
+    color: var(--text-secondary);
+    background-color: var(--bg-primary);
+}
+
+.expenses-card {
+    height: 100%;
+
+    border: 1px solid var(--text-secondary);
+
+    
+}
+
+
+
 
 
 /* ==========================================================================

@@ -4,8 +4,8 @@
 
 ### Authentication
 
-* [ ] Login
-* [ ] Register
+* [x] Login
+* [x] Register
 * [ ] Forgot Password
 * [ ] Reset Password
 
