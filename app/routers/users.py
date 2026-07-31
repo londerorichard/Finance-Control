@@ -20,3 +20,10 @@ def register_user(email: str, password: str):
         "message": "User created",
         "id": user_id
     }
+
+
+# POST	/auth/register	Register a new user
+# POST	/auth/login	Authenticate user
+# POST	/auth/logout	Logout current user
+# GET	/auth/me	Get authenticated user information
+# PUT	/auth/change-password	Change user password

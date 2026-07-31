@@ -1,11 +1,67 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, Field
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-class UserAuth(BaseModel):
-    name: str
-    email: str
+# ==========================================================
+# CLASSES
+# ==========================================================
+
+
+class UserCreate(BaseModel):
+    name: str = Field(
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    ) 
+    email: EmailStr
+    password: str = Field(
+        min_length=8,
+        max_length=64,
+        description="User password",
+        examples=["MyPassword123"]
+    )
+
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str = Field(
+        min_length=8,
+        max_length=64,
+        description="User password",
+        examples=["MyPassword123"]
+    )
+
+
+class UserResponse(BaseModel):
+    id: int
+    name: str = Field(
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    )
+    email: EmailStr
+
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str = Field(min_length=8)
+
+
+class UserUpdate(BaseModel):
+    name: str = Field(
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    )
+    email: EmailStr | None = None
+
+
+# class RefreshToken(BaseModel):
+#     refresh_token: str
 
 
 users = {
@@ -17,7 +73,7 @@ users = {
 
 
 @router.post("/auth/register")
-def register_user(new_user: UserAuth):
+def register_user(new_user: UserCreate):
 
     # Check if the email already exists
     for user in users.values():
@@ -44,3 +100,19 @@ def register_user(new_user: UserAuth):
 # def login_user(new_user: UserAuth):
 #     pass
 # Make this once you have learned SQL persistence
+
+
+# @router.post("/auth/logout")
+# def logout_user(user: UserAuth):
+#     pass
+
+
+# @router.get("/auth/me")
+# def logout_user(user: UserAuth):
+#     pass
+# Get authenticated user information
+
+
+# @router.put("/auth/change-password")
+# def logout_user(user: UserAuth):
+#     pass
