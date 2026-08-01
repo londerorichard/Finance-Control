@@ -6,8 +6,8 @@
 
 * [x] Login
 * [x] Register
-* [ ] Forgot Password
-* [ ] Reset Password
+* [x] Forgot Password
+* [x] Reset Password
 
 ### Dashboard
 
