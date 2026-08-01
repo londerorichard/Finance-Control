@@ -1,110 +1,66 @@
-from fastapi import APIRouter
-from pydantic import BaseModel, EmailStr, Field
+from fastapi import APIRouter, HTTPException
+
+from schemas import (
+    UserCreate,
+    UserLogin,
+    UserUpdate,
+    UserResponse,
+    PasswordChange,
+)
+
+from repositories.auth_repository import (
+    email_exists,
+    get_user_by_email,
+    insert_user,
+)
+
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
+
 # ==========================================================
-# CLASSES
+# ENDPOINTS
 # ==========================================================
 
 
-class UserCreate(BaseModel):
-    name: str = Field(
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    ) 
-    email: EmailStr
-    password: str = Field(
-        min_length=8,
-        max_length=64,
-        description="User password",
-        examples=["MyPassword123"]
-    )
-
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str = Field(
-        min_length=8,
-        max_length=64,
-        description="User password",
-        examples=["MyPassword123"]
-    )
-
-
-class UserResponse(BaseModel):
-    id: int
-    name: str = Field(
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    )
-    email: EmailStr
-
-
-class PasswordChange(BaseModel):
-    current_password: str
-    new_password: str = Field(min_length=8)
-
-
-class UserUpdate(BaseModel):
-    name: str = Field(
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    )
-    email: EmailStr | None = None
-
-
-# class RefreshToken(BaseModel):
-#     refresh_token: str
-
-
-users = {
-    1: {
-        "name": "andrew",
-        "email": "andrew@gmail.com"
-    }
-}
-
-
-@router.post("/auth/register")
+@router.post("/register", response_model=UserResponse)
 def register_user(new_user: UserCreate):
 
-    # Check if the email already exists
-    for user in users.values():
-        if user["email"] == new_user.email:
-            return {"data": "User already registered"}
+    if email_exists(new_user.email):
+        raise HTTPException(
+            status_code=409,
+            detail="User already registered"
+        )
 
-    # Generate the next ID
-    new_id = max(users.keys()) + 1 if users else 1
-
-    # Save the new user
-    users[new_id] = {
-        "name": new_user.name,
-        "email": new_user.email
-    }
-
-    # Return the created user
-    return {
-        "id": new_id,
-        "name": new_user.name,
-        "email": new_user.email
-    }
-
-# @router.post("/auth/login")
-# def login_user(new_user: UserAuth):
-#     pass
-# Make this once you have learned SQL persistence
+    return insert_user(new_user)
 
 
+@router.post("/login", response_model=UserResponse)
+def login_user(user: UserLogin):
+
+    stored_user = get_user_by_email(user.email)
+
+    if stored_user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    if stored_user["password_hash"] != user.password:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    return UserResponse(
+        id=stored_user["id"],
+        name=stored_user["name"],
+        email=stored_user["email"]
+    )
+
+    
 # @router.post("/auth/logout")
 # def logout_user(user: UserAuth):
-#     pass
 
 
 # @router.get("/auth/me")
@@ -116,3 +72,8 @@ def register_user(new_user: UserCreate):
 # @router.put("/auth/change-password")
 # def logout_user(user: UserAuth):
 #     pass
+
+
+# PATCH /auth/update
+# PATCH /auth/change-password
+# DELETE /auth/delete-account

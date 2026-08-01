@@ -8,11 +8,13 @@ from enum import Enum
 # ==========================================================
 
 class UserCreate(BaseModel):
-    email: EmailStr = Field(
-        description="User email address",
-        examples=["user@email.com"]
-    )
-
+    name: str = Field(
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    ) 
+    email: EmailStr
     password: str = Field(
         min_length=8,
         max_length=64,
@@ -22,11 +24,7 @@ class UserCreate(BaseModel):
 
 
 class UserLogin(BaseModel):
-    email: EmailStr = Field(
-        description="User email address",
-        examples=["user@email.com"]
-    )
-
+    email: EmailStr
     password: str = Field(
         min_length=8,
         max_length=64,
@@ -37,8 +35,38 @@ class UserLogin(BaseModel):
 
 class UserResponse(BaseModel):
     id: int
+    name: str = Field(
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    )
     email: EmailStr
-    created_at: datetime
+
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str = Field(min_length=8)
+
+
+class UserUpdate(BaseModel):
+    name: str | None = Field(
+        default=None,
+        min_length=2,
+        max_length=50,
+        description="User full name",
+        examples=["Richard"]
+    )
+
+    email: EmailStr | None = Field(
+        default=None,
+        description="User email",
+        examples=["richard@example.com"]
+    )
+
+
+# class RefreshToken(BaseModel):
+#     refresh_token: str
 
 
 # ==========================================================

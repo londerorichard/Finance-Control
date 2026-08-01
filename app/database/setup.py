@@ -9,9 +9,10 @@ def create_tables():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
-        created_at DATE NOT NULL
+        created_at TEXT NOT NULL
     )
     """)
 
@@ -30,9 +31,9 @@ def create_tables():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         amount REAL NOT NULL,
-        transaction_type type TEXT NOT NULL,
+        transaction_type TEXT NOT NULL,
         description TEXT,
-        created_at DATE NOT NULL,
+        created_at TEXT NOT NULL,
         category_id INTEGER,
         account TEXT,
 
@@ -48,7 +49,7 @@ def create_tables():
         goal_name TEXT NOT NULL,
         target_amount REAL NOT NULL,
         current_amount REAL DEFAULT 0,
-        deadline DATE,
+        deadline TEXT,
 
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
