@@ -77,7 +77,7 @@ html {
 
     grid-template-rows:
         50px
-        minmax(120px, 0.4fr)
+        minmax(120px, 0.3fr)
         1fr;
 
     grid-template-areas:
@@ -666,8 +666,52 @@ html {
 
 .statistics-content {
     height: 100%;
-    background-color: blueviolet;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+
+    background-color: var(--text-secondary);
+    color: var(--bg-primary);
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 235, 205, 0.2) transparent;
 }
+
+.statistics-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.statistics-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.statistics-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 235, 205, 0.2);
+    border-radius: 999px;
+}
+
+.expenses-categories,
+.recent-transactions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    width: 100%;
+}
+
+.recent-transactions {
+    padding-top: 2rem;
+}
+
+.categories-card,
+.transaction-card {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
 
 /* ==========================================================================
    UTILITIES
