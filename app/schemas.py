@@ -79,10 +79,27 @@ class TransactionResponse(BaseModel):
 # CATEGORY SCHEMAS
 # ==========================================================
 
-# CategoryCreate
-# CategoryResponse
+class CreateCategory(BaseModel):
+    name: str = Field(
+            min_length=2,
+            max_length=50,
+            description="User full name",
+            examples=["Income"]
+        )
 
-
+    user_id: int
+    
+class UpdateCategory(BaseModel):
+    name: str = Field(
+            min_length=2,
+            max_length=50,
+            description="User full name",
+            examples=["Income"]
+        )
+    
+class ResponseCategory(BaseModel):
+    id: int
+    name: str
 
 
 # ==========================================================
