@@ -245,21 +245,36 @@
                 <div class="expenses-container">
 
                     <article class="expenses-card">
-                        <h4 class="expenses-title">Monthly Expenses</h4>
+                        <h4 class="expenses-title">Account Balances</h4>
                         <h1 class="expenses-value">$4,900</h1>
-                        <p>Create report</p>
+                        <div class="create-report">
+                            <button class="create-report-btn">
+                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                            <p>Create report</p>
+                        </div>
                     </article>
 
                     <article class="expenses-card">
-                        <h4 class="expenses-title">Monthly Income</h4>
+                        <h4 class="expenses-title">Total Income</h4>
                         <h1 class="expenses-value">$7,100</h1>
-                        <p>Create report</p>
+                        <div class="create-report">
+                            <button class="create-report-btn">
+                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                            <p>Create report</p>
+                        </div>
                     </article>
 
                     <article class="expenses-card">
-                        <h4 class="expenses-title">Total Transactions</h4>
+                        <h4 class="expenses-title">Total Expenses</h4>
                         <h1 class="expenses-value">$52,064</h1>
-                        <p>Create report</p>
+                        <div class="create-report">
+                            <button class="create-report-btn">
+                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                            <p>Create report</p>
+                        </div>
                     </article>
 
                 </div>
@@ -430,27 +445,44 @@
 
 
             <aside class="statistics">
-                <div class="statistics-content">
-                    <h5>This week</h5>
-                    <h2>Categories</h2>
-                    <div class="expenses-categories">
-                        <!-- graph -->
-                        <article class="categories-card">
-                            <p>Food</p>
-                            <p>35%</p>
-                        </article>
-                        <article class="categories-card">
-                            <p>Transport</p>
-                            <p>15%</p>
-                        </article>
-                        <article class="categories-card">
-                            <p>Housing</p>
-                            <p>45%</p>
-                        </article>
-                    </div>
 
-                    <div class="recent-transactions">
+                <div class="statistics-content">
+
+                    <!-- BOX 1 -->
+                    <section class="categories-section">
+
+                        <h5>This week</h5>
+                        <h2>Categories</h2>
+
+                        <div class="expenses-categories">
+
+                            <!-- graph -->
+
+                            <article class="categories-card">
+                                <p>Food</p>
+                                <p>35%</p>
+                            </article>
+
+                            <article class="categories-card">
+                                <p>Transport</p>
+                                <p>15%</p>
+                            </article>
+
+                            <article class="categories-card">
+                                <p>Housing</p>
+                                <p>45%</p>
+                            </article>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- BOX 2 -->
+                    <section class="recent-transactions">
+
                         <h2>Transactions</h2>
+
                         <article class="transaction-card">
                             <!-- app icon -->
                             <div class="transaction-description">
@@ -459,6 +491,7 @@
                             </div>
                             <p>-19$</p>
                         </article>
+
                         <article class="transaction-card">
                             <!-- app icon -->
                             <div class="transaction-description">
@@ -467,6 +500,7 @@
                             </div>
                             <p>-45$</p>
                         </article>
+
                         <article class="transaction-card">
                             <!-- app icon -->
                             <div class="transaction-description">
@@ -475,12 +509,11 @@
                             </div>
                             <p>-8$</p>
                         </article>
-                    </div>
 
-                    <div class="goals">
-                        
-                    </div>
+                    </section>
+
                 </div>
+
             </aside>
 
         </div>
@@ -490,13 +523,4 @@
     
 </body>
 </html>
-
-
-<!-- Dashboard
-
---------------------------------
-Goals
-
-Emergency Fund
-████████░░ 80%
 
