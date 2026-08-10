@@ -156,7 +156,7 @@ body {
 
 
 /* ==========================================================================
-   SMALL DESKTOP / TABLET
+   TABLET
    ========================================================================== */
 
 /* @media (max-width: 1100px) {
@@ -167,10 +167,11 @@ body {
 
 
 /* ==========================================================================
-   TABLET
+   MOBILE
    ========================================================================== */
 
-/* @media (max-width: 800px) {
+@media (max-width: 600px) {
+
     .main-container,
     .main-container.collapsed {
         grid-template-columns: minmax(0, 1fr);
@@ -180,14 +181,16 @@ body {
     }
 
     .sidebar {
-        display: none;
+        display: none !important;
     }
 
     .submain {
+        display: grid;
+
         grid-template-columns: minmax(0, 1fr);
 
         grid-template-rows:
-            50px
+            40px
             auto
             auto
             auto;
@@ -195,12 +198,79 @@ body {
         grid-template-areas:
             "navbar"
             "resume-expenses"
-            "resume-market"
-            "statistics";
+            "statistics"
+            "resume-market";
+
+        row-gap: 1rem;
+
+        width: 100%;
+        min-width: 0;
 
         border-radius: 0;
     }
-} */
+
+    .navbar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .navbar-content {
+        display: flex !important;
+
+        justify-content: flex-end !important;
+        align-items: center;
+
+        width: 100%;
+        min-width: 0;
+    }
+
+    .navbar-left,
+    .navbar-center,
+    .navbar-content::after {
+        display: none !important;
+    }
+
+    .navbar-right {
+        display: flex;
+        margin-left: auto;
+    }
+
+    .statistics,
+    .resume-expenses,
+    .resume-market {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        background-color: var(--bg-secondary);
+
+        padding: var(--space-md);
+
+        border-radius: var(--radius-md);
+
+        box-shadow: var(--shadow-sm);
+    }
+
+    .expenses-container {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        width: 100%;
+        min-width: 0;
+        padding: 0;
+
+        gap: var(--space-md);
+    }
+
+    .expense-card {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+}
 
 
 /* ==========================================================================
