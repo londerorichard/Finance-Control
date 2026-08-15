@@ -1,14 +1,15 @@
 from fastapi import APIRouter, HTTPException
-from services.user_service import create_user, get_user_by_id, list_users
+from app.services.user_service import (create_user, get_user_by_id, list_users)
+from app.schemas import (UserCreate, UserLogin, UserResponse)
 
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.post("/")
-def register_user(email: str, password: str):
+def register_user(user: UserCreate):
 
-    user_id = create_user(email, password)
+    user_id = create_user(user.email, user.password)
 
     if user_id is None:
         raise HTTPException(

@@ -1,6 +1,35 @@
 from connection import get_connection
 
 
+    #                 ┌──────────────┐
+    #                 │    users     │
+    #                 ├──────────────┤
+    #                 │ id           │
+    #                 │ email        │
+    #                 │ password     │
+    #                 │ created_at   │
+    #                 └──────┬───────┘
+    #                        │
+    #          ┌─────────────┼──────────────┐
+    #          │             │              │
+    #          │ 1:N         │ 1:N          │ 1:N
+    #          ▼             ▼              ▼
+    #  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+    #  │  categories  │ │ transactions │ │    goals     │
+    #  ├──────────────┤ ├──────────────┤ ├──────────────┤
+    #  │ id           │ │ id           │ │ id           │
+    #  │ name         │ │ user_id      │ │ user_id      │
+    #  │ user_id      │ │ amount       │ │ goal_name    │
+    #  └──────┬───────┘ │ category_id  │ │ target       │
+    #         │         │ ...          │ │ ...          │
+    #         │ 1:N     └──────────────┘ └──────────────┘
+    #         │
+    #         └───────────────┐
+    #                         │
+    #                         ▼
+    #                   Transactions
+
+
 def create_tables():
 
     connection = get_connection()

@@ -1,4 +1,4 @@
-from database.connection import get_connection
+from app.database.connection import get_connection
 from datetime import datetime
 import hashlib
 
@@ -80,6 +80,7 @@ def list_users():
 
     finally:
         connection.close()
+
 
 
 

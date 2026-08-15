@@ -1,4 +1,4 @@
-from database.connection import get_connection
+from app.database.connection import get_connection
 from datetime import datetime
 
 
@@ -7,25 +7,22 @@ def create_transaction(
     amount,
     transaction_type,
     description,
-    created_at,
     category_id,
     account
 ):
-
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
 
-        created_at = datetime.now()
+        created_at = datetime.now().isoformat()
 
         cursor.execute(
             """
-            INSERT INTO transactions 
-            (
+            INSERT INTO transactions (
                 user_id,
                 amount,
-                type,
+                transaction_type,
                 description,
                 created_at,
                 category_id,
@@ -36,7 +33,7 @@ def create_transaction(
             (
                 user_id,
                 amount,
-                transaction_type,
+                transaction_type.value,
                 description,
                 created_at,
                 category_id,
