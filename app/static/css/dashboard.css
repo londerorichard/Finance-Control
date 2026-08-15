@@ -156,14 +156,104 @@ body {
 
 
 /* ==========================================================================
+    DESKTOP
+    ========================================================================== */
+
+@media (max-width: 1024px) {
+
+    .main-container,
+    .main-container.collapsed {
+        grid-template-columns: minmax(0, 1fr);
+
+        grid-template-areas:
+            "submain";
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .submain {
+        grid-template-columns: minmax(0, 1fr);
+
+        grid-template-rows:
+            40px
+            auto
+            auto
+            auto;
+
+        grid-template-areas:
+            "navbar"
+            "resume-expenses"
+            "statistics"
+            "resume-market";
+    }
+
+    .statistics-content {
+        display: grid;
+        justify-self: center;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+
+        height: 400px;
+        padding: 0.5rem;
+        margin: 0 0 1rem 1rem;
+    }
+
+}
+
+
+/* ==========================================================================
    TABLET
    ========================================================================== */
 
-/* @media (max-width: 1100px) {
-    .main-container {
-        grid-template-columns: 70px minmax(0, 1fr);
+@media (max-width: 768px) {
+
+    .main-container,
+    .main-container.collapsed {
+        grid-template-columns: minmax(0, 1fr);
+
+        grid-template-areas:
+            "submain";
     }
-} */
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .submain {
+        grid-template-columns: minmax(0, 1fr);
+
+        grid-template-rows:
+            40px
+            auto
+            auto
+            auto;
+
+        grid-template-areas:
+            "navbar"
+            "resume-expenses"
+            "statistics"
+            "resume-market";
+    }
+
+    .donut-chart {
+        position: relative;
+
+        width: min(270px, 100%);
+        height: 200px;
+
+        margin: 0 auto;
+    }
+
+    .categories-section,
+    .recent-transactions {
+        width: min(290px, 100%);
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+}
 
 
 /* ==========================================================================
@@ -185,9 +275,7 @@ body {
     }
 
     .submain {
-        display: grid;
-
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
 
         grid-template-rows:
             40px
@@ -200,74 +288,34 @@ body {
             "resume-expenses"
             "statistics"
             "resume-market";
-
-        row-gap: 1rem;
-
-        width: 100%;
-        min-width: 0;
-
-        border-radius: 0;
     }
 
-    .navbar {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .navbar-content {
-        display: flex !important;
-
-        justify-content: flex-end !important;
-        align-items: center;
-
-        width: 100%;
-        min-width: 0;
-    }
-
-    .navbar-left,
-    .navbar-center,
-    .navbar-content::after {
-        display: none !important;
-    }
-
-    .navbar-right {
-        display: flex;
-        margin-left: auto;
-    }
-
-    .statistics,
-    .resume-expenses,
-    .resume-market {
-        width: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background-color: var(--bg-secondary);
-
-        padding: var(--space-md);
-
-        border-radius: var(--radius-md);
-
-        box-shadow: var(--shadow-sm);
-    }
-
-    .expenses-container {
+    .statistics-content {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        width: 100%;
-        min-width: 0;
-        padding: 0;
-
-        gap: var(--space-md);
+        justify-self: center;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
     }
 
-    .expense-card {
+    .categories-section,
+    .recent-transactions {
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
+    }
+
+    .donut-chart {
+        position: relative;
+
+        width: min(270px, 100%);
+        height: min(150px, 200px);
+
+        margin: 0 auto;
+    }
+
+    .sidebar,
+    .sidebar-window-btn {
+        display: none;
     }
 
 }
@@ -911,7 +959,12 @@ body {
 .statistics-content {
     display: grid;
     grid-template-rows: 1fr 1fr;
+
     gap: 1rem;
+
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 .categories-section,
@@ -939,6 +992,8 @@ body {
 .expenses-categories,
 .recent-transactions {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 0.5rem;
 
