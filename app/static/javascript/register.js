@@ -19,22 +19,6 @@ function activateIconEye() {
 }
 activateIconEye();
 
-// ======================================
-// ===========FORM VALIDATION============
-// ======================================
-
-function validateEmail() {
-    const email = document.querySelector("#email").value;
-    const confirmEmail = document.querySelector("#confirm-email").value;
-
-    if (email.includes("@") && email.includes(".")) {
-        if (confirmEmail === email) {
-            console.log("Email Válido!")
-        }
-    } else {
-        console.log("Email inválido!")
-    }
-}
 
 // ======================================
 // ==============PASSWORD================
@@ -79,27 +63,6 @@ function validateConfirmPassword(password, confirmPassword) {
     return null;
 }
 
-function setupRegisterValidation() {
-    const form = document.querySelector(".password-box");
-    const errorBox = document.querySelector(".error-message");
-
-    form.addEventListener("submit", (event) => {
-        const password = document.querySelector("#password").value;
-        const confirmPassword = document.querySelector("#confirm-password").value;
-
-        const error = validateConfirmPassword(password, confirmPassword);
-
-        if (error) {
-            event.preventDefault();
-            errorBox.textContent = error;
-            return;
-        }
-
-        errorBox.textContent = "";
-    });
-}
-
-setupRegisterValidation();
 
 function getPasswordRules(password) {
     return [
@@ -159,3 +122,73 @@ function uploadCheckValidation() {
     });
 }
 uploadCheckValidation()
+
+
+
+// ======================================
+// ===============SUBMIT=================
+// ======================================
+
+function setupRegisterForm() {
+    const registerForm = document.querySelector(".login-box-register");
+    const errorBox = document.querySelector(".error-message");
+
+    if (!registerForm) return;
+
+    registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
+        const confirmPassword = document.querySelector("#confirm-password").value;
+
+        // =========================
+        // Password validation
+        // =========================
+
+        const error = validateConfirmPassword(
+            password,
+            confirmPassword
+        );
+
+        if (error) {
+            errorBox.textContent = error;
+            return;
+        }
+
+        errorBox.textContent = "";
+
+        // =========================
+        // API request
+        // =========================
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/users/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            console.log("API RESPONSE:", data);
+
+            if (!response.ok) {
+                console.log("Registration failed:", data);
+                return;
+            }
+
+            console.log("SUCCESS:", data);
+
+        } catch (error) {
+            console.error("Request failed:", error);
+        }
+    });
+}
+
+setupRegisterForm();

@@ -7,9 +7,9 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.post("/")
-def register_user(email: str, password: str):
+def register_user(user: UserCreate):
 
-    user_id = create_user(email, password)
+    user_id = create_user(user.email, user.password)
 
     if user_id is None:
         raise HTTPException(
