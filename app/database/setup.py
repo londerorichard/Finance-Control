@@ -59,7 +59,7 @@ def create_tables():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         amount REAL NOT NULL,
-        transaction_type type TEXT NOT NULL,
+        transaction_type TEXT NOT NULL,
         description TEXT,
         created_at DATE NOT NULL,
         category_id INTEGER,

@@ -1,32 +1,29 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
 from app.schemas import (CreateCategory, UpdateCategory, ResponseCategory)
+from app.services.categories_service import create_category, list_categories
 
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
 
-categories = {
-    1: {
-        "category_name": "Food",
-        "user_id": 1
-    },
-    2: {
-        "category_name": "Transport",
-        "user_id": 1
-    }
-}
+@router.post("/create", response_model=ResponseCategory, status_code=201)
+def create_category_endpoint(new_category: CreateCategory):
 
-@router.get("/list", response_model=list[ResponseCategory])
-def list_categories():
+    category_id = create_category(
+        name=new_category.name,
+        user_id=new_category.user_id
+    )
 
-    return [
-        ResponseCategory(
-            id=category_id,
-            name=category["category_name"]
-        )
-        for category_id, category in categories.items()
-    ]
+    return ResponseCategory(
+        id=category_id,
+        name=new_category.name
+    )
+
+
+@router.get("/list", response_model=ResponseCategory)
+def list_categories_endpoint():
+
+    return list_categories()
 
 
 @router.get("/get-by-name", response_model=ResponseCategory)
@@ -59,32 +56,6 @@ def get_category_by_id(id: int):
     return ResponseCategory(
         id=id,
         name=category["category_name"]
-    )
-
-
-@router.post("/create-category", response_model=ResponseCategory, status_code=201)
-def create_category(new_category: CreateCategory):
-
-    for category in categories.values():
-        if (
-            category["category_name"] == new_category.name
-            and category["user_id"] == new_category.user_id
-        ):
-            raise HTTPException(
-                status_code=409,
-                detail="Category already exists"
-            )
-
-    new_category_id = max(categories.keys(), default=0) + 1
-
-    categories[new_category_id] = {
-        "category_name": new_category.name,
-        "user_id": new_category.user_id
-    }
-
-    return ResponseCategory(
-        id=new_category_id,
-        name=new_category.name
     )
 
 
