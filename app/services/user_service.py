@@ -1,49 +1,46 @@
 from app.database.connection import get_connection
 from datetime import datetime
-import hashlib
+from app.auth.security import hash_password
+import sqlite3
 
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
-
-def create_user(email, password):
+def create_user(email, name, password):
 
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
 
-        cursor.execute("""
-            SELECT id FROM users
-            WHERE email = ?
-            """,(email,))
-
-        existing_user = cursor.fetchone()
-
-        if existing_user:
-            connection.close()
-            return None
-
         password_hash = hash_password(password)
-
         created_at = datetime.now()
 
         cursor.execute(
             """
-            INSERT INTO users (email, password_hash, created_at)
-            VALUES (?, ?, ?)
-            """,
-            (
+            INSERT INTO users (
                 email,
+                name,
                 password_hash,
                 created_at
             )
+            VALUES (?, ?, ?, ?)
+            RETURNING id, email, name
+            """,
+            (
+                email,
+                name,
+                password_hash,
+                created_at,
+            )
         )
+
+        user = cursor.fetchone()
 
         connection.commit()
 
-        return cursor.lastrowid
+        return user
+
+    except sqlite3.IntegrityError:
+        return None
 
     finally:
         connection.close()
@@ -60,6 +57,25 @@ def get_user_by_id(user_id):
             SELECT * FROM users
             WHERE id = ?
             """,(user_id,))
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()
+
+
+def get_user_by_email(email):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM users
+            WHERE email = ?
+            """, (email,))
 
         return cursor.fetchone()
 

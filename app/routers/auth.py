@@ -1,18 +1,24 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
-from schemas import (
+from app.schemas import (
     UserCreate,
     UserLogin,
     UserUpdate,
     UserResponse,
     PasswordChange,
+    Token
 )
 
-from repositories.auth_repository import (
+from app.repositories.auth_repository import (
     email_exists,
     get_user_by_email,
     insert_user,
 )
+
+from app.auth.jwt import create_access_token
+from app.auth.security import verify_password
+from app.auth.dependency import get_current_user
+from app.services.user_service import create_user, get_user_by_email, get_user_by_id
 
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -26,49 +32,57 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 @router.post("/register", response_model=UserResponse)
 def register_user(new_user: UserCreate):
 
-    if email_exists(new_user.email):
-        raise HTTPException(
-            status_code=409,
-            detail="User already registered"
-        )
-
-    return insert_user(new_user)
-
-
-@router.post("/login", response_model=UserResponse)
-def login_user(user: UserLogin):
-
-    stored_user = get_user_by_email(user.email)
-
-    if stored_user is None:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password"
-        )
-
-    if stored_user["password_hash"] != user.password:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password"
-        )
-
-    return UserResponse(
-        id=stored_user["id"],
-        name=stored_user["name"],
-        email=stored_user["email"]
+    user = create_user(
+        new_user.email,
+        new_user.name,
+        new_user.password,
     )
 
+    if user is None:
+        raise HTTPException(
+            status_code=409,
+            detail="User already registered",
+        )
 
-# @router.get("/me")
-# def get_me(
-#     current_user = Depends(get_current_user)
-# ):
-#     ...
+    return user
+
+
+@router.post("/login", response_model=Token)
+def login_user(user_data: UserLogin):
+
+    user = get_user_by_email(user_data.email)
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    if not verify_password(
+        user_data.password,
+        user["password_hash"],
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    token = create_access_token(user["id"])
+
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+    }
+
+
+@router.get("/me", response_model=UserResponse)
+def get_me(
+    current_user = Depends(get_current_user),
+):
+    return current_user
 
 
 
-
-    
 # @router.post("/auth/logout")
 # def logout_user(user: UserAuth):
 

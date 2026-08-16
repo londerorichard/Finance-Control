@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone 
 from jose import JWTError, jwt
 
 
@@ -17,13 +17,11 @@ def create_access_token(user_id: int):
         "exp": expire,
     }
 
-    token = jwt.encode(
+    return jwt.encode(
         payload,
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
-
-    return token
 
 
 def decode_token(token: str):
