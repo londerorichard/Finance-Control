@@ -58,21 +58,23 @@ def login_user(user: UserLogin):
         email=stored_user["email"]
     )
 
+
+# @router.get("/me")
+# def get_me(
+#     current_user = Depends(get_current_user)
+# ):
+#     ...
+
+
+
+
     
 # @router.post("/auth/logout")
 # def logout_user(user: UserAuth):
 
-
-# @router.get("/auth/me")
-# def logout_user(user: UserAuth):
-#     pass
-# Get authenticated user information
-
-
 # @router.put("/auth/change-password")
 # def logout_user(user: UserAuth):
 #     pass
-
 
 # PATCH /auth/update
 # PATCH /auth/change-password
