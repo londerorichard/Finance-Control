@@ -8,12 +8,6 @@ from enum import Enum
 # ==========================================================
 
 class UserCreate(BaseModel):
-    name: str = Field(
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    ) 
     email: EmailStr
     password: str = Field(
         min_length=8,
@@ -35,12 +29,6 @@ class UserLogin(BaseModel):
 
 class UserResponse(BaseModel):
     id: int
-    name: str = Field(
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    )
     email: EmailStr
 
 
@@ -50,14 +38,6 @@ class PasswordChange(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    name: str | None = Field(
-        default=None,
-        min_length=2,
-        max_length=50,
-        description="User full name",
-        examples=["Richard"]
-    )
-
     email: EmailStr | None = Field(
         default=None,
         description="User email",

@@ -18,7 +18,7 @@ from app.repositories.auth_repository import (
 from app.auth.jwt import create_access_token
 from app.auth.security import verify_password
 from app.auth.dependency import get_current_user
-from app.services.user_service import create_user, get_user_by_email, get_user_by_id
+from app.services.auth_service import create_user, get_user_by_email, get_user_by_id, list_users
 
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -34,8 +34,7 @@ def register_user(new_user: UserCreate):
 
     user = create_user(
         new_user.email,
-        new_user.name,
-        new_user.password,
+        new_user.password
     )
 
     if user is None:
@@ -93,3 +92,9 @@ def get_me(
 # PATCH /auth/update
 # PATCH /auth/change-password
 # DELETE /auth/delete-account
+
+# POST	/auth/register	Register a new user
+# POST	/auth/login	Authenticate user
+# POST	/auth/logout	Logout current user
+# GET	/auth/me	Get authenticated user information
+# PUT	/auth/change-password	Change user password

@@ -1,6 +1,6 @@
 from datetime import datetime
-from database import get_connection
-from schemas import (
+from app.database.connection import get_connection
+from app.schemas import (
     UserCreate,
     UserLogin,
     UserUpdate,
@@ -49,14 +49,12 @@ def insert_user(user: UserCreate):
 
     cursor.execute("""
         INSERT INTO users (
-            name,
             email,
             password_hash,
             created_at
         )
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?)
     """, (
-        user.name,
         user.email,
         user.password,      # Later: hashed password
         datetime.now().isoformat()
@@ -70,13 +68,12 @@ def insert_user(user: UserCreate):
 
     return UserResponse(
         id=new_id,
-        name=user.name,
         email=user.email
     )
     
 
-def update_user(...):
-    ...
+# def update_user(...):
+#     ...
 
-def delete_user(...):
-    ...
+# def delete_user(...):
+#     ...
