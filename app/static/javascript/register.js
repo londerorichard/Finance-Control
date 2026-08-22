@@ -133,7 +133,7 @@ function setupRegisterForm() {
     const registerForm = document.querySelector(".login-box-register");
     const errorBox = document.querySelector(".error-message");
 
-    if (!registerForm) return;
+    if (!registerForm || !errorBox) return;
 
     registerForm.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -142,10 +142,7 @@ function setupRegisterForm() {
         const password = document.querySelector("#password").value;
         const confirmPassword = document.querySelector("#confirm-password").value;
 
-        // =========================
         // Password validation
-        // =========================
-
         const error = validateConfirmPassword(
             password,
             confirmPassword
@@ -158,35 +155,35 @@ function setupRegisterForm() {
 
         errorBox.textContent = "";
 
-        // =========================
-        // API request
-        // =========================
-
         try {
-            const response = await fetch("http://127.0.0.1:8000/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });
+            const response = await fetch(
+                "http://127.0.0.1:8000/auth/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
 
             const data = await response.json();
 
-            console.log("API RESPONSE:", data);
-
             if (!response.ok) {
-                console.log("Registration failed:", data);
+                errorBox.textContent = data.detail;
                 return;
             }
 
             console.log("SUCCESS:", data);
 
+            registerForm.reset();
+
         } catch (error) {
             console.error("Request failed:", error);
+            errorBox.textContent = "Could not connect to the server.";
         }
     });
 }
