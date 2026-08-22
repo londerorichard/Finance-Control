@@ -9,15 +9,15 @@ from app.routers import users, categories, transactions, auth
 app = FastAPI()
 
 
-# Static files
+templates = Jinja2Templates(
+    directory="app/templates"
+)
+
 app.mount(
-    "/static",
+    "/app/static",
     StaticFiles(directory="app/static"),
     name="static"
 )
-
-# Jinja2
-templates = Jinja2Templates(directory="app/templates")
 
 
 # CORS
@@ -37,25 +37,29 @@ app.include_router(transactions.router)
 app.include_router(auth.router)
 
 
-# API default endpoint
-@app.get("/api")
-def default():
-    return {"data": "Financial Management API is running"}
 
-
-# Dashboard page
-@app.get("/")
-async def dashboard(request: Request):
+@app.get("/base")
+async def base(request: Request):
     return templates.TemplateResponse(
-        "dashboard.html",
+        "base.html",
         {"request": request}
     )
 
 
-# Expenses page
+@app.get("/dashboard")
+async def dashboard(request: Request):
+    return templates.TemplateResponse(
+        "dashboard.html",
+        {
+            "request": request
+        }
+    )
+
+
 @app.get("/expenses")
 async def expenses(request: Request):
     return templates.TemplateResponse(
         "expenses.html",
         {"request": request}
     )
+
