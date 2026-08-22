@@ -37,29 +37,25 @@ app.include_router(transactions.router)
 app.include_router(auth.router)
 
 
-
 @app.get("/base")
 async def base(request: Request):
     return templates.TemplateResponse(
-        "base.html",
-        {"request": request}
+        request=request,
+        name="base.html"
     )
-
 
 @app.get("/dashboard")
 async def dashboard(request: Request):
     return templates.TemplateResponse(
-        "dashboard.html",
-        {
-            "request": request
-        }
+        request=request,
+        name="dashboard.html"
     )
 
 
 @app.get("/expenses")
 async def expenses(request: Request):
     return templates.TemplateResponse(
-        "expenses.html",
-        {"request": request}
+        request=request,
+        name="expenses.html"
     )
 
