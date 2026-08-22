@@ -11,14 +11,14 @@
 
 ### Dashboard
 
-* [ ] Balance Summary
-* [ ] Monthly Income
-* [ ] Monthly Expenses
-* [ ] Budget Progress
-* [ ] Recent Transactions
-* [ ] Financial News
-* [ ] Market Overview
-* [ ] Charts
+* [x] Balance Summary
+* [x] Monthly Income
+* [x] Monthly Expenses
+* [x] Budget Progress
+* [x] Recent Transactions
+* [x] Financial News
+* [x] Market Overview
+* [x] Charts
 
 ### Expenses
 
