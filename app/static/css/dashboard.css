@@ -18,10 +18,6 @@ body {
     min-height: 100%;
 }
 
-body {
-    background-color: var(--bg-secondary);
-}
-
 
 /* ==========================================================================
    VARIABLES
@@ -98,29 +94,16 @@ body {
 .main-container {
     display: grid;
 
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(250px, 350px);
 
     grid-template-areas:
-        "sidebar submain";
+        "submain statistics";
 
-    min-height: 100vh;
-
-    background-color: var(--bg-secondary);
-}
-
-
-/* ==========================================================================
-   COLLAPSED SIDEBAR
-   ========================================================================== */
-
-.main-container.collapsed {
-    grid-template-columns:
-        70px
-        minmax(0, 1fr);
-}
-
-.main-container.collapsed .sidebar-item a {
-    display: none;
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
 }
 
 
@@ -131,17 +114,13 @@ body {
 .submain {
     display: grid;
 
-    grid-template-columns:
-        minmax(0, 2fr)
-        minmax(250px, 350px);
+    grid-template-columns: minmax(0, 1fr);
 
     grid-template-rows:
-        50px
-        140px
+        auto
         1fr;
 
     grid-template-areas:
-        "navbar navbar"
         "resume-expenses statistics"
         "resume-market statistics";
 
@@ -158,7 +137,7 @@ body {
 /* ==========================================================================
     DESKTOP
     ========================================================================== */
-
+/* 
 @media (max-width: 1024px) {
 
     .main-container,
@@ -200,13 +179,13 @@ body {
         margin: 0 0 1rem 1rem;
     }
 
-}
+} */
 
 
 /* ==========================================================================
    TABLET
    ========================================================================== */
-
+/* 
 @media (max-width: 768px) {
 
     .main-container,
@@ -254,12 +233,12 @@ body {
     }
 
 }
-
+ */
 
 /* ==========================================================================
    MOBILE
    ========================================================================== */
-
+/* 
 @media (max-width: 600px) {
 
     .main-container,
@@ -318,7 +297,7 @@ body {
         display: none;
     }
 
-}
+} */
 
 
 /* ==========================================================================

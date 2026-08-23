@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Sistema Financeiro</title>
+
     <link rel="stylesheet" href="/app/static/css/base.css">
 
+    {% block extra_css %}
+    {% endblock %}
 </head>
 
 <body>
@@ -92,7 +96,7 @@
                         <div class="profile wrapper">
                             <button class="profile-btn">
                                 <div class="avatar">
-                                    <img src="../static/images/profile-icon.jpg" alt="Profile picture">
+                                    <img src="/app/static/images/profile-icon.jpg" alt="Profile picture">
                                 </div>
                                 <svg width="1.2rem" height="1.2rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18.2929 15.2893C18.6834 14.8988 18.6834 14.2656 18.2929 13.8751L13.4007 8.98766C12.6195 8.20726 11.3537 8.20757 10.5729 8.98835L5.68257 13.8787C5.29205 14.2692 5.29205 14.9024 5.68257 15.2929C6.0731 15.6835 6.70626 15.6835 7.09679 15.2929L11.2824 11.1073C11.673 10.7168 12.3061 10.7168 12.6966 11.1073L16.8787 15.2893C17.2692 15.6798 17.9024 15.6798 18.2929 15.2893Z" fill="currentColor"></path> </g></svg>
                             </button>
@@ -102,7 +106,7 @@
 
                                 <div class="profile-header">
                                     <div class="avatar-bigger">
-                                        <img src="../static/images/profile-icon.jpg" alt="Profile picture">
+                                        <img src="/app/static/images/profile-icon.jpg" alt="Profile picture">
                                     </div>
 
                                     <div class="profile-info">
@@ -243,7 +247,7 @@
         {% block content %}
         {% endblock %}
 
-    </main>"
+    </main>
 
 
     <script src="/app/static/javascript/base.js"></script>

@@ -1,377 +1,366 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Sistema Financeiro </title>
+{% block extra_css %}
+<link rel="stylesheet" href="/app/static/css/dashboard.css">
+{% endblock %}
 
-    <meta name="description" content="Sistema de gerenciamento financeiro">
+{% block content %}
 
-    <meta name="author" content="Richard">
+<main class="main-container">
 
-    <link rel="stylesheet" href="/app/static/css/dashboard.css">
-</head>
-<body>
+    <div class="submain">
 
-    {% extends "base.html" %}
+        <div class="resume-expenses">
 
-    {% block content %}
+            <div class="expenses-container">
 
-    <div class="main-container">
-
-        <div class="submain">
-
-            <div class="resume-expenses">
-
-                <div class="expenses-container">
-
-                    <article class="expenses-card">
-                        <h4 class="expenses-title">Account Balances</h4>
-                        <h1 class="expenses-value">$4,900</h1>
-                        <div class="create-report">
-                            <button class="create-report-btn">
-                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            </button>
-                            <p>Create report</p>
-                        </div>
-                    </article>
-
-                    <article class="expenses-card">
-                        <h4 class="expenses-title">Total Income</h4>
-                        <h1 class="expenses-value">$7,100</h1>
-                        <div class="create-report">
-                            <button class="create-report-btn">
-                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            </button>
-                            <p>Create report</p>
-                        </div>
-                    </article>
-
-                    <article class="expenses-card">
-                        <h4 class="expenses-title">Total Expenses</h4>
-                        <h1 class="expenses-value">$52,064</h1>
-                        <div class="create-report">
-                            <button class="create-report-btn">
-                                <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                            </button>
-                            <p>Create report</p>
-                        </div>
-                    </article>
-
-                </div>
-
-            </div>
-
-            <div class="resume-market">
-
-                <div class="market-content">
-
-                    <div class="market-sections">
-
-
-                        <!-- Global Markets -->
-                        <section class="market-section">
-
-                            <h2>Global Markets</h2>
-
-                            <div class="market-list">
-
-                                <div class="market-card" data-symbol="SP500">
-
-                                    <p class="market-name">S&P 500</p>
-
-                                    <strong class="market-price">
-                                        290$
-                                    </strong>
-
-                                    <span class="market-change positive">
-                                        +3,5%
-                                    </span>
-
-                                </div>
-
-
-                                <div class="market-card" data-symbol="NASDAQ">
-
-                                    <p class="market-name">NASDAQ</p>
-
-                                    <strong class="market-price">
-                                        195$
-                                    </strong>
-
-                                    <span class="market-change positive">
-                                        +0.9%
-                                    </span>
-
-                                </div>
-
-
-                                <div class="market-card" data-symbol="DOW">
-
-                                    <p class="market-name">Dow Jones</p>
-
-                                    <strong class="market-price">
-                                        55$
-                                    </strong>
-
-                                    <span class="market-change negative">
-                                        1,75%
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-
-
-                        <!-- Currencies -->
-                        <section class="market-section">
-
-                            <h2>Currencies</h2>
-
-                            <div class="market-list">
-
-                                <div class="market-card" data-symbol="USD-BRL">
-
-                                    <p class="market-name">
-                                        USD/BRL
-                                    </p>
-
-                                    <strong class="market-price">
-                                        5,65%
-                                    </strong>
-
-                                    <span class="market-change">
-                                        0.25%
-                                    </span>
-
-                                </div>
-
-
-                                <div class="market-card" data-symbol="EUR-BRL">
-
-                                    <p class="market-name">
-                                        EUR/BRL
-                                    </p>
-
-                                    <strong class="market-price">
-                                        6.56$
-                                    </strong>
-
-                                    <span class="market-change">
-                                        2,7%
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </section>
-
-
-
-                        <!-- Crypto -->
-                        <section class="market-section">
-
-                            <h2>Cryptocurrency</h2>
-
-                            <div class="market-list">
-
-                                <div class="market-card" data-symbol="BTC">
-
-                                    <p class="market-name">
-                                        Bitcoin
-                                    </p>
-
-                                    <strong class="market-price">
-                                        1.100$
-                                    </strong>
-
-                                    <span class="market-change positive">
-                                        +8%
-                                    </span>
-
-                                </div>
-
-
-                                <div class="market-card" data-symbol="ETH">
-
-                                    <p class="market-name">
-                                        Ethereum
-                                    </p>
-
-                                    <strong class="market-price">
-                                        850$
-                                    </strong>
-
-                                    <span class="market-change positive">
-                                        -0.2%
-                                    </span>
-
-                                </div>
-
-
-                            </div>
-
-                        </section>
-
-
-
+                <article class="expenses-card">
+                    <h4 class="expenses-title">Account Balances</h4>
+                    <h1 class="expenses-value">$4,900</h1>
+                    <div class="create-report">
+                        <button class="create-report-btn">
+                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        </button>
+                        <p>Create report</p>
                     </div>
-
-                </div>
-
-            </div>
-
-            <section class="goals-section">
-
-                <article class="goals-container">
-
-                    <div class="goal-card">
-                        
-                    </div>
-
                 </article>
 
-            </section>
+                <article class="expenses-card">
+                    <h4 class="expenses-title">Total Income</h4>
+                    <h1 class="expenses-value">$7,100</h1>
+                    <div class="create-report">
+                        <button class="create-report-btn">
+                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        </button>
+                        <p>Create report</p>
+                    </div>
+                </article>
+
+                <article class="expenses-card">
+                    <h4 class="expenses-title">Total Expenses</h4>
+                    <h1 class="expenses-value">$52,064</h1>
+                    <div class="create-report">
+                        <button class="create-report-btn">
+                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                        </button>
+                        <p>Create report</p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+
+        <div class="resume-market">
+
+            <div class="market-content">
+
+                <div class="market-sections">
 
 
-            <aside class="statistics">
+                    <!-- Global Markets -->
+                    <section class="market-section">
 
-                <div class="statistics-content">
+                        <h2>Global Markets</h2>
 
-                    <!-- BOX 1 -->
-                    <section class="categories-section">
+                        <div class="market-list">
 
-                        <h5>This week</h5>
-                        <h2>Categories</h2>
+                            <div class="market-card" data-symbol="SP500">
 
-                        <div class="expenses-categories">
+                                <p class="market-name">S&P 500</p>
 
-                           <div class="donut-chart">
+                                <strong class="market-price">
+                                    290$
+                                </strong>
 
-                                <svg viewBox="0 0 100 100">
-
-                                    <!-- Background circle -->
-                                    <circle
-                                        class="donut-background"
-                                        cx="50"
-                                        cy="50"
-                                        r="35"
-                                    />
-
-                                    <!-- Progress -->
-                                    <circle
-                                        class="donut-progress"
-                                        cx="50"
-                                        cy="50"
-                                        r="35"
-                                    />
-
-                                </svg>
-
-                                <div class="donut-value">
-                                    R$ 0,00
-                                </div>
+                                <span class="market-change positive">
+                                    +3,5%
+                                </span>
 
                             </div>
 
-                            <article class="categories-card">
-                                <p>Food</p>
-                                <p>35%</p>
-                            </article>
 
-                            <article class="categories-card">
-                                <p>Transport</p>
-                                <p>15%</p>
-                            </article>
+                            <div class="market-card" data-symbol="NASDAQ">
 
-                            <article class="categories-card">
-                                <p>Housing</p>
-                                <p>45%</p>
-                            </article>
+                                <p class="market-name">NASDAQ</p>
+
+                                <strong class="market-price">
+                                    195$
+                                </strong>
+
+                                <span class="market-change positive">
+                                    +0.9%
+                                </span>
+
+                            </div>
+
+
+                            <div class="market-card" data-symbol="DOW">
+
+                                <p class="market-name">Dow Jones</p>
+
+                                <strong class="market-price">
+                                    55$
+                                </strong>
+
+                                <span class="market-change negative">
+                                    1,75%
+                                </span>
+
+                            </div>
 
                         </div>
 
                     </section>
 
 
-                    <!-- BOX 2 -->
-                    <section class="recent-transactions">
 
-                        <h2>Transactions</h2>
+                    <!-- Currencies -->
+                    <section class="market-section">
+
+                        <h2>Currencies</h2>
+
+                        <div class="market-list">
+
+                            <div class="market-card" data-symbol="USD-BRL">
+
+                                <p class="market-name">
+                                    USD/BRL
+                                </p>
+
+                                <strong class="market-price">
+                                    5,65%
+                                </strong>
+
+                                <span class="market-change">
+                                    0.25%
+                                </span>
+
+                            </div>
+
+
+                            <div class="market-card" data-symbol="EUR-BRL">
+
+                                <p class="market-name">
+                                    EUR/BRL
+                                </p>
+
+                                <strong class="market-price">
+                                    6.56$
+                                </strong>
+
+                                <span class="market-change">
+                                    2,7%
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- Crypto -->
+                    <section class="market-section">
+
+                        <h2>Cryptocurrency</h2>
+
+                        <div class="market-list">
+
+                            <div class="market-card" data-symbol="BTC">
+
+                                <p class="market-name">
+                                    Bitcoin
+                                </p>
+
+                                <strong class="market-price">
+                                    1.100$
+                                </strong>
+
+                                <span class="market-change positive">
+                                    +8%
+                                </span>
+
+                            </div>
+
+
+                            <div class="market-card" data-symbol="ETH">
+
+                                <p class="market-name">
+                                    Ethereum
+                                </p>
+
+                                <strong class="market-price">
+                                    850$
+                                </strong>
+
+                                <span class="market-change positive">
+                                    -0.2%
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+                    </section>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <section class="goals-section">
+
+            <article class="goals-container">
+
+                <div class="goal-card">
+                    
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <aside class="statistics">
+
+            <div class="statistics-content">
+
+                <!-- BOX 1 -->
+                <section class="categories-section">
+
+                    <h5>This week</h5>
+                    <h2>Categories</h2>
+
+                    <div class="expenses-categories">
 
                         <div class="donut-chart">
 
-                                <svg viewBox="0 0 100 100">
+                            <svg viewBox="0 0 100 100">
 
-                                    <!-- Background circle -->
-                                    <circle
-                                        class="donut-background"
-                                        cx="50"
-                                        cy="50"
-                                        r="35"
-                                    />
+                                <!-- Background circle -->
+                                <circle
+                                    class="donut-background"
+                                    cx="50"
+                                    cy="50"
+                                    r="35"
+                                />
 
-                                    <!-- Progress -->
-                                    <circle
-                                        class="donut-progress"
-                                        cx="50"
-                                        cy="50"
-                                        r="35"
-                                    />
+                                <!-- Progress -->
+                                <circle
+                                    class="donut-progress"
+                                    cx="50"
+                                    cy="50"
+                                    r="35"
+                                />
 
-                                </svg>
+                            </svg>
 
-                                <div class="donut-value">
-                                    R$ 0,00
-                                </div>
-
+                            <div class="donut-value">
+                                R$ 0,00
                             </div>
 
+                        </div>
 
-                        <article class="transaction-card">
-                            <!-- app icon -->
-                            <div class="transaction-description">
-                                <p>Spotify</p>
-                                <p>11min ago</p>
-                            </div>
-                            <p>-19$</p>
+                        <article class="categories-card">
+                            <p>Food</p>
+                            <p>35%</p>
                         </article>
 
-                        <article class="transaction-card">
-                            <!-- app icon -->
-                            <div class="transaction-description">
-                                <p>Amazon</p>
-                                <p>1hour ago</p>
-                            </div>
-                            <p>-45$</p>
+                        <article class="categories-card">
+                            <p>Transport</p>
+                            <p>15%</p>
                         </article>
 
-                        <article class="transaction-card">
-                            <!-- app icon -->
-                            <div class="transaction-description">
-                                <p>Apple</p>
-                                <p>1min ago</p>
-                            </div>
-                            <p>-8$</p>
+                        <article class="categories-card">
+                            <p>Housing</p>
+                            <p>45%</p>
                         </article>
 
-                    </section>
+                    </div>
 
-                </div>
+                </section>
 
-            </aside>
 
-        </div>
+                <!-- BOX 2 -->
+                <section class="recent-transactions">
+
+                    <h2>Transactions</h2>
+
+                    <div class="donut-chart">
+
+                            <svg viewBox="0 0 100 100">
+
+                                <!-- Background circle -->
+                                <circle
+                                    class="donut-background"
+                                    cx="50"
+                                    cy="50"
+                                    r="35"
+                                />
+
+                                <!-- Progress -->
+                                <circle
+                                    class="donut-progress"
+                                    cx="50"
+                                    cy="50"
+                                    r="35"
+                                />
+
+                            </svg>
+
+                            <div class="donut-value">
+                                R$ 0,00
+                            </div>
+
+                        </div>
+
+
+                    <article class="transaction-card">
+                        <!-- app icon -->
+                        <div class="transaction-description">
+                            <p>Spotify</p>
+                            <p>11min ago</p>
+                        </div>
+                        <p>-19$</p>
+                    </article>
+
+                    <article class="transaction-card">
+                        <!-- app icon -->
+                        <div class="transaction-description">
+                            <p>Amazon</p>
+                            <p>1hour ago</p>
+                        </div>
+                        <p>-45$</p>
+                    </article>
+
+                    <article class="transaction-card">
+                        <!-- app icon -->
+                        <div class="transaction-description">
+                            <p>Apple</p>
+                            <p>1min ago</p>
+                        </div>
+                        <p>-8$</p>
+                    </article>
+
+                </section>
+
+            </div>
+
+        </aside>
+
     </div>
+</main>
 
-    <script src="/app/static/javascript/dashboard-js.js"></script>
-    
-</body>
-</html>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/app/static/javascript/dashboard-js.js"></script>
+{% endblock %}
+
 

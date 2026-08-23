@@ -45,7 +45,7 @@ hideSettings();
 
 function showSideBar() {
     const button = document.querySelector(".sidebar-window-btn");
-    const container = document.querySelector(".main-container");
+    const container = document.querySelector(".layout");
 
     button.addEventListener("click", () => {
         container.classList.toggle("collapsed");
