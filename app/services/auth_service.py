@@ -1,7 +1,7 @@
 from app.database.connection import get_connection
 from datetime import datetime
 from app.auth.security import hash_password
-import sqlite3
+from app.schemas import UserResponse
 
 
 def create_user(email, password):
@@ -34,7 +34,10 @@ def create_user(email, password):
 
         connection.commit()
 
-        return user
+        return UserResponse(
+            id=user["id"],
+            email=user["email"]
+        )
 
     finally:
         connection.close()

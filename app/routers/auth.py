@@ -31,19 +31,10 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=UserResponse)
 def register_user(new_user: UserCreate):
-
-    user = create_user(
+    return create_user(
         new_user.email,
         new_user.password
     )
-
-    if user is None:
-        raise HTTPException(
-            status_code=409,
-            detail="User already registered",
-        )
-
-    return user
 
 
 @router.post("/login", response_model=Token)
@@ -81,20 +72,35 @@ def get_me(
     return current_user
 
 
+@router.put("/auth/change-password/{id}", response_model=UserResponse)
+def change_password(id: int, new_password: PasswordChange):
+
+    user = get_user_by_id(id)
+    
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    if not verify_password(
+        id,
+        user["password_hash"],
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
+
+    create_access_token(new_password)
+
+    return UserResponse
+
 
 # @router.post("/auth/logout")
 # def logout_user(user: UserAuth):
-
-# @router.put("/auth/change-password")
-# def logout_user(user: UserAuth):
-#     pass
 
 # PATCH /auth/update
 # PATCH /auth/change-password
 # DELETE /auth/delete-account
 
-# POST	/auth/register	Register a new user
-# POST	/auth/login	Authenticate user
-# POST	/auth/logout	Logout current user
-# GET	/auth/me	Get authenticated user information
-# PUT	/auth/change-password	Change user password
