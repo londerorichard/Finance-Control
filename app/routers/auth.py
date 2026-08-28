@@ -18,7 +18,7 @@ from app.repositories.auth_repository import (
 from app.auth.jwt import create_access_token
 from app.auth.security import verify_password
 from app.auth.dependency import get_current_user
-from app.services.auth_service import create_user, get_user_by_email, get_user_by_id, list_users
+from app.services.auth_service import create_user, get_user_by_email, get_user_by_id, login_user, list_users
 
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -38,31 +38,9 @@ def register_user(new_user: UserCreate):
 
 
 @router.post("/login", response_model=Token)
-def login_user(user_data: UserLogin):
+def login_user_endpoint(user: UserLogin):
 
-    user = get_user_by_email(user_data.email)
-
-    if not user:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid credentials"
-        )
-
-    if not verify_password(
-        user_data.password,
-        user["password_hash"],
-    ):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid credentials"
-        )
-
-    token = create_access_token(user["id"])
-
-    return {
-        "access_token": token,
-        "token_type": "bearer",
-    }
+    return login_user(user)
 
 
 @router.get("/me", response_model=UserResponse)

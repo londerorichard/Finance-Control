@@ -2,6 +2,7 @@ from app.database.connection import get_connection
 from datetime import datetime
 from app.auth.security import hash_password
 from app.schemas import UserResponse
+from app.auth.jwt import create_access_token
 
 
 def create_user(email, password):
@@ -41,6 +42,40 @@ def create_user(email, password):
 
     finally:
         connection.close()
+
+
+def login_user(email, password):
+
+    connetion = get_connection()
+    
+    try:
+        cursor = connetion.cursor()
+
+        cursor.execute(""" 
+        SELECT * FROM users 
+        WHERE email = ?
+        """, (email))
+
+        cursor.fetchone()
+
+        if not email:
+            print("User not found")
+            return
+
+        password_hash = hash_password(password)
+
+        if password_hash != password:
+            print("Invalid credencials")
+            return
+
+        token = create_access_token(password)
+
+        connetion.commit()
+
+        return token
+
+    finally:
+        connetion.close()
 
 
 def get_user_by_id(user_id):
