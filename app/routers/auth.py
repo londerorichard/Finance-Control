@@ -9,17 +9,10 @@ from app.schemas import (
     Token
 )
 
-from app.repositories.auth_repository import (
-    email_exists,
-    get_user_by_email,
-    insert_user,
-)
-
 from app.auth.jwt import create_access_token
-from app.auth.security import verify_password
 from app.auth.dependency import get_current_user
-from app.services.auth_service import create_user, get_user_by_email, get_user_by_id, login_user, list_users
-
+from app.services.auth_service import create_user, change_password, get_user_by_email, get_user_by_id, login_user, list_users
+import sqlite3
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -31,16 +24,34 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/register", response_model=UserResponse)
 def register_user(new_user: UserCreate):
-    return create_user(
-        new_user.email,
-        new_user.password
-    )
+
+    try:
+        return create_user(
+            new_user.email,
+            new_user.password
+        )
+
+    except sqlite3.IntegrityError:
+        raise HTTPException(
+            status_code=409,
+            detail="Email already registered"
+        )
 
 
 @router.post("/login", response_model=Token)
-def login_user_endpoint(user: UserLogin):
+def login_user_endpoint(user_data: UserLogin):
 
-    return login_user(user)
+    user = login_user(
+        user_data.email,
+        user_data.password
+    )
+
+    token = create_access_token(user["id"])
+
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }
 
 
 @router.get("/me", response_model=UserResponse)
@@ -50,29 +61,19 @@ def get_me(
     return current_user
 
 
-@router.put("/auth/change-password/{id}", response_model=UserResponse)
-def change_password(id: int, new_password: PasswordChange):
+@router.put("/change-password")
+def change_password_endpoint(
+    password_data: PasswordChange,
+    current_user=Depends(get_current_user)
+):
 
-    user = get_user_by_id(id)
-    
-    if not user:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid credentials"
-        )
+    change_password(
+        current_user["id"],
+        password_data.current_password,
+        password_data.new_password
+    )
 
-    if not verify_password(
-        id,
-        user["password_hash"],
-    ):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid credentials"
-        )
-
-    create_access_token(new_password)
-
-    return UserResponse
+    return {"message": "Password changed successfully"}
 
 
 # @router.post("/auth/logout")

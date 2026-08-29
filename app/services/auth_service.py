@@ -1,8 +1,14 @@
 from app.database.connection import get_connection
 from datetime import datetime
-from app.auth.security import hash_password
+from app.auth.security import hash_password, verify_password
 from app.schemas import UserResponse
-from app.auth.jwt import create_access_token
+from fastapi import HTTPException
+import sqlite3
+
+connection = sqlite3.connect("name_file")
+cursor = connection.cursor()
+
+
 
 
 def create_user(email, password):
@@ -32,7 +38,6 @@ def create_user(email, password):
         )
 
         user = cursor.fetchone()
-
         connection.commit()
 
         return UserResponse(
@@ -54,25 +59,25 @@ def login_user(email, password):
         cursor.execute(""" 
         SELECT * FROM users 
         WHERE email = ?
-        """, (email))
+        """, (email,))
 
-        cursor.fetchone()
+        user = cursor.fetchone()
 
-        if not email:
-            print("User not found")
-            return
+        if not user:
+            raise HTTPException( 
+                status_code=401, 
+                detail="Invalid credentials"
+                )
 
-        password_hash = hash_password(password)
+        password_hash = user['password_hash']
 
-        if password_hash != password:
-            print("Invalid credencials")
-            return
+        if not verify_password(password, password_hash): 
+            raise HTTPException(
+                status_code=401, 
+                detail="Invalid credentials" 
+                )
 
-        token = create_access_token(password)
-
-        connetion.commit()
-
-        return token
+        return user
 
     finally:
         connetion.close()
@@ -110,6 +115,52 @@ def get_user_by_email(email):
             """, (email,))
 
         return cursor.fetchone()
+
+    finally:
+        connection.close()
+
+
+def change_password(user_id, current_password, new_password):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT id, password_hash
+            FROM users
+            WHERE id = ?
+        """, (user_id,))
+
+        user = cursor.fetchone()
+
+        if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid credentials"
+            )
+
+        stored_password_hash = user["password_hash"]
+
+        if not verify_password(
+            current_password,
+            stored_password_hash
+        ):
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid credentials"
+            )
+
+        new_password_hash = hash_password(new_password)
+
+        cursor.execute("""
+            UPDATE users
+            SET password_hash = ?
+            WHERE id = ?
+        """, (new_password_hash, user_id))
+
+        connection.commit()
 
     finally:
         connection.close()
