@@ -8,9 +8,6 @@ import sqlite3
 connection = sqlite3.connect("name_file")
 cursor = connection.cursor()
 
-
-
-
 def create_user(email, password):
     connection = get_connection()
 
@@ -166,16 +163,3 @@ def change_password(user_id, current_password, new_password):
         connection.close()
 
 
-def list_users():
-
-    connection = get_connection()
-    
-    try:
-        cursor = connection.cursor()
-
-        cursor.execute("SELECT * FROM users")
-
-        return cursor.fetchall()
-
-    finally:
-        connection.close()

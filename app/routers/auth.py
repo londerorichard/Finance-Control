@@ -11,7 +11,7 @@ from app.schemas import (
 
 from app.auth.jwt import create_access_token
 from app.auth.dependency import get_current_user
-from app.services.auth_service import create_user, change_password, get_user_by_email, get_user_by_id, login_user, list_users
+from app.services.auth_service import create_user, change_password, login_user
 import sqlite3
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -80,6 +80,5 @@ def change_password_endpoint(
 # def logout_user(user: UserAuth):
 
 # PATCH /auth/update
-# PATCH /auth/change-password
 # DELETE /auth/delete-account
 
