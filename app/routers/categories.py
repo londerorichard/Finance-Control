@@ -87,19 +87,19 @@ def update_category(category_id: int, category_updated: UpdateCategory):
     )
 
 
-@router.delete("/delete-category/{id}")
-def delete_category(category_id: int):
+@router.delete("/delete-category/{category_id}")
+def delete_category_endpoint(category_id: int):
 
-    if category_id not in categories:
+    category = get_category_by_id(category_id)
+
+    if not category:
         raise HTTPException(
             status_code=404,
             detail="Category not found"
         )
 
-    category_name = categories[category_id]["category_name"]
-
-    del categories[category_id]
+    delete_category(category_id)
 
     return {
-        "success": f"{category_name} successfully deleted"
+        "success": f"Category {category_id} successfully deleted"
     }

@@ -115,3 +115,25 @@ def get_category_by_name(category_name):
 
     finally:
         connection.close()
+
+
+def get_category_for_user(category_id, user_id):
+    
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM categories
+            WHERE id = ?
+            AND user_id = ?
+        """, (category_id, user_id))
+
+        category = cursor.fetchone()
+
+        return category
+
+    finally:
+        connection.close()

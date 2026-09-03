@@ -62,19 +62,13 @@ class TransactionType(str, Enum):
     income = "income"
     expense = "expense"
 
+
 class TransactionCreate(BaseModel):
-    user_id: int = Field(gt=0)
-    amount: float = Field(gt=0)
+    amount: float
     transaction_type: TransactionType
-    description: str = Field(
-        min_length=1,
-        max_length=200
-    )
-    category_id: int = Field(gt=0)
-    account: str = Field(
-        min_length=1,
-        max_length=50
-    )
+    description: str | None = None
+    category_id: int | None = None
+    account: str | None = None
 
 
 class TransactionResponse(BaseModel):
@@ -82,10 +76,17 @@ class TransactionResponse(BaseModel):
     user_id: int
     amount: float
     transaction_type: TransactionType
-    description: str
+    description: str | None
     created_at: datetime
-    category_id: int
-    account: str
+    category_id: int | None
+    account: str | None
+
+class TransactionUpdate(BaseModel):
+    amount: float
+    transaction_type: TransactionType
+    description: str | None = None
+    category_id: int | None = None
+    account: str | None = None
 
 
 # ==========================================================
