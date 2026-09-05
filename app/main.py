@@ -55,10 +55,12 @@ async def dashboard(request: Request):
     )
 
 
-@app.get("/expenses")
-async def expenses(request: Request):
+@app.get("/categories")
+async def categories(request: Request):
     return templates.TemplateResponse(
         request=request,
-        name="expenses.html"
+        name="categories.html"
     )
+
+
 
