@@ -240,13 +240,12 @@
             </nav>
         </aside>
 
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
     </div>
-
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
 
     <script src="/app/static/javascript/base.js"></script>
 
