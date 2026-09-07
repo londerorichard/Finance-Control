@@ -111,8 +111,7 @@ body {
     list-style: none;
 }
 
-.category,
-.subcategory {
+.category {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,12 +125,10 @@ body {
     color: var(--text-secondary);
 }
 
-.subcategory {
-    width: 300px;
-
-    padding: 1rem;
-
-    background-color: var(--bg-secondary);
+.category,
+.subcategory,
+.category-header {
+    position: relative;
 }
 
 .category-main {
@@ -195,6 +192,53 @@ body {
     gap: 0.5rem;
 }
 
+
+    /* ==========================================================================
+        COLOR PICKER
+    ========================================================================== */
+
+
+    .color-palette {
+        display: none;
+
+        position: absolute;
+
+        top: calc(100% + 10px);
+        left: 0;
+
+        grid-template-columns: repeat(6, 30px);
+        gap: 5px;
+
+        padding: 12px;
+
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+
+        z-index: 9999;
+    }
+
+
+    .color-palette.open {
+        display: grid;
+    }
+
+
+    .color-option {
+        width: 30px;
+        height: 30px;
+
+        padding: 0;
+
+        border: none;
+        border-radius: 4px;
+
+        cursor: pointer;
+    }
+
+    .color-option:hover {
+        transform: scale(1.1);
+    }
+
     /* ==========================================================================
    SUBCATEGORIES
    ========================================================================== */
@@ -204,24 +248,43 @@ body {
     }
 
     .subcategories-container {
-        background-color: var(--bg-secondary);
-    }
-
-    .subcategories {
         position: absolute;
         top: calc(100% + 0.5rem);
         right: 0;
 
+        width: 300px;
+        border-radius: var(--radius-sm);
+        background-color: var(--bg-secondary);
+    }
+
+    .subcategories {
         display: flex;
         flex-direction: column;
 
-        width: 250px;
-        padding: 0;
+        width: 100%;
+        padding: 0.25rem;
         margin: 0;
 
         list-style: none;
         gap: 0.15rem;
         z-index: 1000;
+    }
+
+    .subcategory {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+        height: 60px;
+        padding: 1rem;
+
+        border-radius: var(--radius-sm);
+        background-color: var(--bg-terciary);
+        color: var(--text-secondary);
+
+        width: 100%;
+        padding: 1rem;
     }
 
     .subcategories.active {
@@ -233,5 +296,5 @@ body {
 
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
