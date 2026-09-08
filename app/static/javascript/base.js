@@ -9,6 +9,12 @@ function hideSearchBar() {
         profilePanel.classList.add("hidden");
         notifPanel.classList.add("hidden");
     });
+
+    document.addEventListener("click", (event) => {
+        if (!searchBar.contains(event.target) && !searchBtn.contains(event.target)) {
+            searchBar.classList.add("hidden");
+        }
+    });
 }
 hideSearchBar();
 
@@ -24,6 +30,12 @@ function hideNotifications() {
         notifPanel.classList.toggle("hidden");
         searchBar.classList.add("hidden");
     });
+
+    document.addEventListener("click", (event) => {
+        if (!notifPanel.contains(event.target) && !notifBtn.contains(event.target)) {
+            notifPanel.classList.add("hidden");
+        }
+    })
 }
 
 hideNotifications();
@@ -39,6 +51,12 @@ function hideSettings() {
         profilePanel.classList.toggle("hidden");
         searchBar.classList.add("hidden");
     });
+
+    document.addEventListener("click", (event) => {
+        if (!profilePanel.contains(event.target) && !profileBtn.contains(event.target)) {
+            profilePanel.classList.add("hidden");
+        }
+    })
 }
 
 hideSettings();
