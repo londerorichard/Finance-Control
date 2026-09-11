@@ -119,10 +119,19 @@ def get_single_transaction(user_id, transaction_id):
         cursor = connection.cursor()
 
         cursor.execute("""
-            SELECT *
-            FROM transactions
-            WHERE user_id = ?
-            AND id = ?
+            SELECT
+                t.id,
+                t.amount,
+                t.transaction_type,
+                t.description,
+                t.created_at,
+                t.category_id,
+                c.name AS category_name
+            FROM transactions t
+            LEFT JOIN categories c
+                ON t.category_id = c.id
+            WHERE t.user_id = ?
+            AND t.id = ?
         """, (user_id, transaction_id))
 
         return cursor.fetchone()
