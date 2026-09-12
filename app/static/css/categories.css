@@ -194,6 +194,113 @@ body {
 
 
     /* ==========================================================================
+        CARD SETTING OPTIONS
+    ========================================================================== */
+
+    .category-settings {
+        position: relative
+    }
+
+    .settings-dropdown {
+        position: absolute;
+        top: calc(100% + 0.2rem);
+        right: 0;
+
+        width: 140px;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 1rem;
+        gap: 0.5rem;
+
+        background-color: var(--bg-secondary);
+        border-radius: var(--radius-sm);
+    }
+
+    .edit-option-btn,
+    .delete-option-btn,
+    .move-transactions-option-btn {
+        width: 100%;
+
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+
+        border: none;
+    }
+
+
+        /* ==========================================================================
+            EDIT CATEGORY
+        ========================================================================== */
+
+        .edit-category {
+            width: 250px;
+
+            display: flex;
+
+            background-color: var(--bg-secondary);
+
+            border-radius: var(--radius-sm);
+        }
+
+        /* ==========================================================================
+            ICON PICKER
+        ========================================================================== */
+
+        .icon-picker-container {
+            position: relative;
+        }
+
+        .icon-picker-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .icon-picker-panel {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            left: -10rem;
+
+            display: grid;
+            grid-template-columns: repeat(6, 40px);
+            gap: 0.5rem;
+
+            width: max-content;
+            padding: 0.75rem;
+
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius-md);
+
+            z-index: 1000;
+        }
+
+        .icon-picker-panel.hidden {
+            display: none;
+        }
+
+        .icon-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 40px;
+            height: 40px;
+
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--text-secondary);
+
+            cursor: pointer;
+        }
+
+        .icon-option:hover {
+            background-color: var(--bg-terciary);
+        }
+
+
+    /* ==========================================================================
         COLOR PICKER
     ========================================================================== */
 
@@ -239,9 +346,10 @@ body {
         transform: scale(1.1);
     }
 
+
     /* ==========================================================================
-   SUBCATEGORIES
-   ========================================================================== */
+        SUBCATEGORIES
+    ========================================================================== */
 
     .tag-container {
         position: relative;
@@ -249,7 +357,7 @@ body {
 
     .subcategories-container {
         position: absolute;
-        top: calc(100% + 0.5rem);
+        top: calc(100% + 1rem);
         right: 0;
 
         width: 300px;

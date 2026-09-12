@@ -33,7 +33,7 @@
 
                         <div class="subcategories-container hidden">
                             <ul class="subcategories">
-                                <li class="subcategory">
+                                <li class="subcategory">  
                                     <div class="category-header">
                                         <button class="category-main" type="button">
                                             <div class="icon-container">
@@ -78,6 +78,38 @@
                     <button class="category-settings" type="button">
                         <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
                     </button>
+                    <div class="settings-dropdown hidden">
+                        <button class="edit-option-btn" type="button">
+                            <span>Edit</span>
+                        </button>
+                        <div class="edit-category">
+                            <span>Edit Category</span>
+                            <input type="text" placeholder="Category" aria-label="Category" class="edit-category-input">
+                            <div class="color-palette"></div>
+                            <div class="icon-picker-container">
+                                <button class="icon-picker-btn" type="button">
+                                    <i data-lucide="utensils"></i>
+                                </button>
+
+                                <div class="icon-picker-panel hidden"></div>
+                            </div>
+
+                            <button class="cancel-category-edition" type="button">
+                                <span>Cancel</span>
+                            </button>
+
+                            <button class="save-category-edition" type="button">
+                                <span>Save</span>
+                            </button>
+                        </div>
+
+                        <button class="delete-option-btn" type="button">
+                            <span>Delete</span>
+                        </button>
+                        <button class="move-transactions-option-btn" type="button">
+                            <span>Move transactions</span>
+                        </button>
+                    </div>
                 </div>
             </li>
 
@@ -322,5 +354,6 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://unpkg.com/lucide@latest"></script>
 <script src="/app/static/javascript/categories-js.js"></script>
 {% endblock %}

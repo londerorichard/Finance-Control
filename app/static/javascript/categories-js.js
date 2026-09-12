@@ -95,34 +95,139 @@ function setupOpenSubcategories() {
 
         const tagBtn = category.querySelector(".category-tag");
         const subcategories = category.querySelector(".subcategories-container");
+        const settingsPanel = category.querySelector(".settings-dropdown");
+
+        if (!tagBtn || !subcategories) {
+            return;
+        }
 
         tagBtn.addEventListener("click", event => {
 
             event.stopPropagation();
 
+            // Close settings in THIS category
+            if (settingsPanel) {
+                settingsPanel.classList.add("hidden");
+            }
+
+            // Close subcategories in OTHER categories
+            categories.forEach(otherCategory => {
+
+                const otherSubcategories =
+                    otherCategory.querySelector(".subcategories-container");
+
+                if (otherSubcategories && otherSubcategories !== subcategories) {
+                    otherSubcategories.classList.add("hidden");
+                }
+
+            });
+
+            // Toggle this category's subcategories
             subcategories.classList.toggle("hidden");
         });
+
     });
 
-    document.addEventListener("click", event => {
-
-        // Don't close anything if clicking a palette or category button
-        if (
-            event.target.closest(".category-main") ||
-            event.target.closest(".color-palette") ||
-            event.target.closest(".category-tag")
-        ) {
-            return;
-        }
-
-        document.querySelectorAll(".subcategories-container").forEach(subcategories => {
-            subcategories.classList.add("hidden");
-        });
-
-        document.querySelectorAll(".color-palette").forEach(palette => {
-            palette.classList.remove("open");
-        });
-    });
 }
 
 setupOpenSubcategories();
+
+
+function setupCategoriesSettings() {
+
+    const categories = document.querySelectorAll(".category");
+
+    categories.forEach(category => {
+
+        const categorySettingsBtn =
+            category.querySelector(".category-options");
+
+        const settingsPanel =
+            category.querySelector(".settings-dropdown");
+
+        const subcategories =
+            category.querySelector(".subcategories-container");
+
+        if (!categorySettingsBtn || !settingsPanel) {
+            return;
+        }
+
+        categorySettingsBtn.addEventListener("click", event => {
+
+            event.stopPropagation();
+
+            // Close subcategories in THIS category
+            if (subcategories) {
+                subcategories.classList.add("hidden");
+            }
+
+            // Close settings in OTHER categories
+            categories.forEach(otherCategory => {
+
+                const otherPanel =
+                    otherCategory.querySelector(".settings-dropdown");
+
+                if (otherPanel && otherPanel !== settingsPanel) {
+                    otherPanel.classList.add("hidden");
+                }
+
+            });
+
+            // Toggle this category's settings
+            settingsPanel.classList.toggle("hidden");
+        });
+
+    });
+
+}
+
+setupCategoriesSettings();
+
+
+function setSameIcon() {
+    const categoryIcon = category.querySelector(".icon-container svg");
+    const pickerBtn = category.querySelector(".icon-picker-btn");
+
+    const pickerIcon = categoryIcon.cloneNode(true);
+
+    pickerBtn.appendChild(pickerIcon);
+}
+
+
+// setupIconPicker() {
+
+//     const icons = [
+//         "utensils",
+//         "shopping-cart",
+//         "car",
+//         "home",
+//         "coffee",
+//         "gamepad-2",
+//         "heart",
+//         "briefcase",
+//         "plane",
+//         "gift",
+//         "music",
+//         "book-open",
+//         "dumbbell",
+//         "shirt",
+//         "dog",
+//         "paw-print"
+//     ];
+
+//     const panel = document.querySelector(".icon-picker-panel");
+
+//     icons.forEach(icon => {
+//         const button = document.createElement("button");
+
+//         button.type = "button";
+//         button.classList.add("icon-option");
+//         button.dataset.icon = icon;
+
+//         button.innerHTML = `<i data-lucide="${icon}"></i>`;
+
+//         panel.appendChild(button);
+//     });
+
+//     lucide.createIcons();
+// }
