@@ -23,162 +23,308 @@ This structure follows a common organization for **FastAPI** applications, makin
 
 
 
+=======
+* [x] Create the project structure
+* [x] Configure the virtual environment
+* [x] Install dependencies
+* [x] Configure the database connection (`database.py`)
+* [x] Create the database models (`models.py`)
+* [x] Create the Pydantic schemas (`schemas.py`)
+* [x] Implement CRUD operations (`crud.py`)
+* [x] Build the API routes (`routers/`)
+* [x] Implement authentication (`auth.py`)
+* [x] Create the HTML templates (`templates/`)
+* [ ] Add CSS, JavaScript, and images (`static/`)
+* [ ] Write automated tests (`tests/`)
+* [ ] Refactor and improve the code
+* [ ] Update the documentation (`README.md`)
+* [ ] Deploy the application
 
-Transactions ← do this next
+---
 
-This should be your next major feature.
+# FastAPI Backend Learning Roadmap
 
-Build:
+## 2. Authentication & Authorization ⭐⭐⭐
 
-POST   /transactions
-GET    /transactions
-GET    /transactions/{id}
-PUT    /transactions/{id}
-DELETE /transactions/{id}
-
-Your transaction should connect:
-
-User
-  │
-  └── Transactions
-          │
-          └── Category
-
-For example:
-
-User 1
- ├── Transaction 1 → Food
- ├── Transaction 2 → Salary
- ├── Transaction 3 → Rent
- └── Transaction 4 → Food
-
-This is important because transactions are the actual financial data. Once they're working, practically everything else becomes easier.
-
-4. Goals
-
-After transactions, I'd implement your financial goals:
-
-POST   /goals
-GET    /goals
-GET    /goals/{id}
-PUT    /goals/{id}
-DELETE /goals/{id}
-
-For example:
-
-Goal
-├── name
-├── target_amount
-├── current_amount
-├── deadline
-└── user_id
-
-This gives you another major piece of your application's business logic.
-
-5. Profile
-
-Then I'd do profile management.
-
-Things like:
-
-GET /users/me
-PUT /users/me
-PATCH /users/me/password
-
-You already have some of the authentication infrastructure, so this shouldn't be particularly difficult.
-
-I'd keep profile relatively small initially:
-
-Get current user
-Change email
-Change password
-Maybe name/avatar later
-
-Don't spend a lot of time polishing profile features yet. They're not the core of your financial application.
-
-6. Transactions filtering + pagination
-
-This is where your API starts becoming more realistic.
-
-For example:
-
-GET /transactions?category_id=3
-GET /transactions?transaction_type=expense
-GET /transactions?start_date=2026-08-01
-GET /transactions?end_date=2026-08-31
-GET /transactions?page=1&limit=20
-
-You can eventually combine them:
-
-GET /transactions
-    ?category_id=3
-    &transaction_type=expense
-    &start_date=2026-08-01
-    &page=1
-
-I'd learn this after basic CRUD works.
-
-7. Dashboard ← now it makes sense
-
-This is why I wouldn't build the dashboard yet.
-
-The dashboard depends on your underlying financial data.
-
-Once you have:
-
-Users
+1. [ ] **Authentication vs Authorization**
    ↓
-Categories
+2. [ ] **Password hashing & verification**
    ↓
-Transactions
+3. [ ] **OAuth2 basics**
    ↓
-Goals
+4. [ ] **Bearer tokens**
    ↓
-Filtering / aggregation
+5. [ ] **JWT structure & claims**
+   ↓
+6. [ ] **Token expiration**
+   ↓
+7. [ ] **Access vs Refresh tokens**
+   ↓
+8. [ ] **`get_current_user` + `Depends()`**
+   ↓
+9. [ ] **Resource ownership** ⭐
+   ↓
+10. [ ] **401 vs 403**
+    ↓
+11. [ ] **Roles / permissions**
+    ↓
+12. [ ] **Cookies vs `localStorage`**
+    ↓
+13. [ ] **XSS**
+    ↓
+14. [ ] **CSRF**
+    ↓
+15. [ ] **CORS**
+    ↓
+16. [ ] **OAuth2 scopes**
 
-you can build things like:
+---
 
-Dashboard
-│
-├── Total income
-├── Total expenses
-├── Current balance
-├── Expenses by category
-├── Recent transactions
-├── Monthly spending
-├── Goals progress
-└── Charts
+# 7. Pagination ⭐⭐⭐
 
-The dashboard becomes mostly a read/aggregation layer over functionality you've already built.
+## Fundamentals
 
-For example:
+* [ ] What pagination is
+* [ ] `page` and `limit`
+* [ ] SQL `LIMIT`
+* [ ] SQL `OFFSET`
+* [ ] Understand the formula:
 
-transactions
-       ↓
-SQL aggregation
-       ↓
-dashboard service
-       ↓
-API response
-       ↓
-fetch()
-       ↓
-HTML/JS dashboard
+```text
+offset = (page - 1) * limit
+```
 
-That's a much better learning experience than trying to build the dashboard while your transaction system doesn't exist yet.
+## FastAPI Pagination
 
-So I'd follow this order
-                    YOU ARE HERE
-                         ↓
-1. Authentication       ✅
-2. Categories           ✅
-3. Transactions         ← NEXT
-4. Goals
-5. Profile
-6. Filtering
-7. Pagination
-8. Dashboard
-9. Reports / statistics
-10. Charts
-11. Export CSV
-12. Deployment
+* [ ] Pagination validation with `Query`
+* [ ] Set minimum/maximum values for `page` and `limit`
+* [ ] Return pagination metadata
+* [ ] Calculate `total` count
+* [ ] Calculate `has_next`
+* [ ] Calculate `has_previous`
+
+## SQL Pagination
+
+* [ ] Pagination with SQL
+* [ ] Combine `LIMIT` and `OFFSET`
+* [ ] Order results before pagination
+* [ ] Understand how pagination interacts with filtering and sorting
+
+---
+
+# 8. Testing ⭐⭐⭐
+
+## Testing Fundamentals
+
+1. [ ] **pytest**
+   ↓
+2. [ ] **`assert`**
+   ↓
+3. [ ] **Basic unit tests**
+   ↓
+4. [ ] **FastAPI `TestClient`**
+   ↓
+5. [ ] **Testing GET / POST / PATCH / DELETE**
+   ↓
+6. [ ] **Testing status codes + response JSON**
+   ↓
+7. [ ] **Testing validation errors**
+   ↓
+8. [ ] **Testing authentication**
+   ↓
+9. [ ] **Testing authorization / ownership**
+   ↓
+10. [ ] **Fixtures**
+    ↓
+11. [ ] **Test database**
+    ↓
+12. [ ] **Setup / cleanup**
+    ↓
+13. [ ] **Integration tests**
+    ↓
+14. [ ] **Mocking**
+    ↓
+15. [ ] **Coverage**
+
+---
+
+## Authentication Tests
+
+* [ ] Register valid user
+* [ ] Register duplicate email
+* [ ] Login with valid credentials
+* [ ] Login with wrong password
+* [ ] Access protected endpoint without token
+* [ ] Access protected endpoint with invalid token
+
+---
+
+## Transaction Tests
+
+* [ ] Create transaction
+* [ ] List transactions
+* [ ] Get transaction
+* [ ] Update transaction
+* [ ] Delete transaction
+* [ ] Invalid transaction
+* [ ] Nonexistent transaction
+* [ ] Cannot access another user's transaction
+
+---
+
+## Category Tests
+
+* [ ] Create category
+* [ ] List categories
+* [ ] Update category
+* [ ] Delete category
+* [ ] Cannot access another user's category
+
+---
+
+## Database Tests
+
+* [ ] Insert
+* [ ] Select
+* [ ] Update
+* [ ] Delete
+* [ ] Rollback on failure
+
+---
+
+# 9. Middleware ⭐⭐
+
+## Fundamentals
+
+* [ ] What middleware is
+* [ ] Understand the request/response flow:
+
+```text
+Request
+   ↓
+Middleware
+   ↓
+Endpoint
+   ↓
+Middleware
+   ↓
+Response
+```
+
+## FastAPI Middleware
+
+* [ ] `@app.middleware("http")`
+* [ ] `call_next(request)`
+* [ ] Read request information
+* [ ] Modify responses
+* [ ] Add response headers
+
+## Practical Middleware
+
+* [ ] Logging middleware
+* [ ] Timing middleware
+* [ ] CORS middleware
+
+## Middleware Architecture
+
+* [ ] Middleware vs dependencies
+* [ ] Middleware vs router dependencies
+* [ ] Middleware ordering
+* [ ] Understand when middleware is appropriate
+* [ ] Understand when **not** to use middleware
+
+---
+
+# 10. SQLAlchemy ⭐
+
+* [ ] SQLAlchemy fundamentals
+* [ ] Models
+* [ ] Engine
+* [ ] Sessions
+* [ ] CRUD operations
+* [ ] `select()`
+* [ ] `where()`
+* [ ] Filtering
+* [ ] Ordering
+* [ ] `LIMIT` / `OFFSET`
+* [ ] Relationships
+* [ ] Foreign keys
+* [ ] Joins
+* [ ] Transactions
+* [ ] Commit / rollback
+* [ ] Session management
+* [ ] SQLAlchemy with FastAPI
+* [ ] SQLAlchemy with Pydantic schemas
+
+---
+
+# 11. Lifespan / Background Tasks / File Uploads
+
+## Lifespan
+
+* [ ] Understand application lifespan
+* [ ] Startup logic
+* [ ] Shutdown logic
+* [ ] `lifespan`
+* [ ] When to use lifespan
+
+## Background Tasks
+
+* [ ] What background tasks are
+* [ ] FastAPI `BackgroundTasks`
+* [ ] Run non-critical work after a response
+* [ ] Understand when background tasks are appropriate
+* [ ] Understand their limitations
+
+## File Uploads
+
+* [ ] `UploadFile`
+* [ ] `File`
+* [ ] Upload validation
+* [ ] File size validation
+* [ ] File type validation
+* [ ] Saving uploaded files
+* [ ] File paths and storage
+* [ ] Security considerations for uploaded files
+
+---
+
+# 12. Security + Configuration
+
+## Security
+
+* [ ] Secure password hashing
+* [ ] JWT security
+* [ ] Token expiration
+* [ ] Access vs refresh tokens
+* [ ] Authentication vs authorization
+* [ ] Resource ownership
+* [ ] Roles / permissions
+* [ ] Input validation
+* [ ] SQL injection prevention
+* [ ] XSS
+* [ ] CSRF
+* [ ] CORS
+* [ ] Secure cookies
+* [ ] Secret management
+* [ ] Environment variables
+* [ ] HTTPS
+* [ ] Rate limiting
+* [ ] Secure error handling
+* [ ] Avoid exposing sensitive information
+
+## Configuration
+
+* [ ] Environment variables
+* [ ] `.env`
+* [ ] Separate development / production configuration
+* [ ] Configuration management
+* [ ] Secrets
+* [ ] Database configuration
+* [ ] JWT configuration
+* [ ] CORS configuration
+* [ ] Logging configuration
+* [ ] Debug vs production mode
+* [ ] Never commit secrets to Git
+
+>>>>>>> feature/api
