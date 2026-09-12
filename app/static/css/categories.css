@@ -235,13 +235,98 @@ body {
         ========================================================================== */
 
         .edit-category {
-            width: 250px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 300px;
 
             display: flex;
+            flex-direction: column;
 
             background-color: var(--bg-secondary);
 
             border-radius: var(--radius-sm);
+
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .edit-category-title {
+            color: var(--text-secondary);
+        }
+
+        .edit-main {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            width: 100%;
+
+            border-radius: var(--radius-sm);
+        }
+
+        .collor-picker-btn {
+            height: 2rem;
+            width: 2rem;
+
+            background-color: blue;
+            border: none;
+            border-radius: 100%;
+        }
+
+        .icon-picker-btn {
+            height: 2rem;
+            width: 2rem;
+
+            border: none;
+            border-radius: 100%;
+        }
+
+        .edit-category-input {
+            width: 70%;
+            height: 1.75rem;
+
+            border: none;
+            border-radius: var(--radius-sm);
+            background-color: var(--text-secondary);
+        }
+
+        .edit-category-input::placeholder {
+            padding: 0.75rem;
+            color: var(--bg-secondary);
+        }
+
+        .icon-picker-container{
+            display: flex;
+            align-items: center;
+        }
+
+        .save-category-edition {
+            height: 1.75rem;
+            border: none;
+
+            border-radius: var(--radius-sm);
+
+            background-color: var(--text-secondary);
+        }
+
+        .save-category-span {
+            color: var(--bg-secondary);
+        }
+
+        .cancel-category-edition {
+            height: 1.75rem;
+            border: none;
+
+            border-radius: var(--radius-sm);
+
+            background-color: var(--bg-primary);
+        }
+
+        .cancel-category-span {
+            color: var(--text-secondary);
         }
 
         /* ==========================================================================

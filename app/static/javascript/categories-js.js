@@ -87,15 +87,18 @@ function setupColorPalettes() {
 setupColorPalettes();
 
 
-function setupOpenSubcategories() {
+    function setupOpenSubcategories() {
 
     const categories = document.querySelectorAll(".category");
 
     categories.forEach(category => {
 
         const tagBtn = category.querySelector(".category-tag");
-        const subcategories = category.querySelector(".subcategories-container");
-        const settingsPanel = category.querySelector(".settings-dropdown");
+        const subcategories =
+            category.querySelector(".subcategories-container");
+
+        const settingsPanel =
+            category.querySelector(".settings-dropdown");
 
         if (!tagBtn || !subcategories) {
             return;
@@ -116,21 +119,44 @@ function setupOpenSubcategories() {
                 const otherSubcategories =
                     otherCategory.querySelector(".subcategories-container");
 
-                if (otherSubcategories && otherSubcategories !== subcategories) {
+                if (
+                    otherSubcategories &&
+                    otherSubcategories !== subcategories
+                ) {
                     otherSubcategories.classList.add("hidden");
                 }
-
             });
 
             // Toggle this category's subcategories
             subcategories.classList.toggle("hidden");
         });
+    });
 
+    // Close subcategories when clicking somewhere else
+    document.addEventListener("click", event => {
+
+        categories.forEach(category => {
+
+            const subcategories =
+                category.querySelector(".subcategories-container");
+
+            const tagBtn =
+                category.querySelector(".category-tag");
+
+            if (
+                subcategories &&
+                !subcategories.contains(event.target) &&
+                !tagBtn.contains(event.target)
+            ) {
+                subcategories.classList.add("hidden");
+            }
+        });
     });
 
 }
 
 setupOpenSubcategories();
+
 
 
 function setupCategoriesSettings() {
@@ -140,13 +166,13 @@ function setupCategoriesSettings() {
     categories.forEach(category => {
 
         const categorySettingsBtn =
-            category.querySelector(".category-options");
+            category.querySelector(":scope > .category-options > .category-settings");
 
         const settingsPanel =
-            category.querySelector(".settings-dropdown");
+            category.querySelector(":scope > .category-options > .settings-dropdown");
 
         const subcategories =
-            category.querySelector(".subcategories-container");
+            category.querySelector(":scope > .category-options .subcategories-container");
 
         if (!categorySettingsBtn || !settingsPanel) {
             return;
@@ -156,32 +182,87 @@ function setupCategoriesSettings() {
 
             event.stopPropagation();
 
-            // Close subcategories in THIS category
             if (subcategories) {
                 subcategories.classList.add("hidden");
             }
 
-            // Close settings in OTHER categories
             categories.forEach(otherCategory => {
 
                 const otherPanel =
-                    otherCategory.querySelector(".settings-dropdown");
+                    otherCategory.querySelector(
+                        ":scope > .category-options > .settings-dropdown"
+                    );
 
                 if (otherPanel && otherPanel !== settingsPanel) {
                     otherPanel.classList.add("hidden");
                 }
-
             });
 
-            // Toggle this category's settings
             settingsPanel.classList.toggle("hidden");
         });
-
     });
 
+    // Close settings when clicking somewhere else
+    document.addEventListener("click", event => {
+
+        categories.forEach(category => {
+
+            const settingsPanel =
+                category.querySelector(
+                    ":scope > .category-options > .settings-dropdown"
+                );
+
+            const settingsButton =
+                category.querySelector(
+                    ":scope > .category-options > .category-settings"
+                );
+
+            if (
+                settingsPanel &&
+                !settingsPanel.contains(event.target) &&
+                !settingsButton.contains(event.target)
+            ) {
+                settingsPanel.classList.add("hidden");
+            }
+        });
+    });
 }
 
 setupCategoriesSettings();
+
+
+let categoryBeingEdited = null;
+
+function setupEditCategory() {
+
+    const categories = document.querySelectorAll(".category");
+    const editCategoryPanel = document.querySelector(".edit-category");
+
+    categories.forEach(category => {
+
+        const editCategoryBtn =
+            category.querySelector(
+                ":scope > .category-options > .settings-dropdown > .edit-option-btn"
+            );
+
+        if (!editCategoryBtn) {
+            return;
+        }
+
+        editCategoryBtn.addEventListener("click", event => {
+
+            event.stopPropagation();
+
+            // Remember which category was selected
+            categoryBeingEdited = category;
+
+            // Open modal
+            editCategoryPanel.classList.remove("hidden");
+        });
+    });
+}
+
+setupEditCategory();
 
 
 function setSameIcon() {
@@ -192,6 +273,8 @@ function setSameIcon() {
 
     pickerBtn.appendChild(pickerIcon);
 }
+
+setSameIcon();
 
 
 // setupIconPicker() {
