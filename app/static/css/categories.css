@@ -258,6 +258,8 @@ body {
         }
 
         .edit-main {
+            position: relative;
+
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -265,6 +267,33 @@ body {
             width: 100%;
 
             border-radius: var(--radius-sm);
+        }
+
+        .edit-color-palette {
+            display: grid;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+
+            grid-template-columns: repeat(6, 30px);
+            gap: 5px;
+
+            padding: 12px;
+
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+
+            z-index: 9999;
+        }
+
+        .edit-color-palette.hidden {
+            display: none;
+        }
+
+        .edit-color-picker-container {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .collor-picker-btn {
@@ -277,6 +306,10 @@ body {
         }
 
         .icon-picker-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             height: 2rem;
             width: 2rem;
 
@@ -291,10 +324,11 @@ body {
             border: none;
             border-radius: var(--radius-sm);
             background-color: var(--text-secondary);
+
+            padding: 0.75rem;
         }
 
         .edit-category-input::placeholder {
-            padding: 0.75rem;
             color: var(--bg-secondary);
         }
 
@@ -391,7 +425,7 @@ body {
 
 
     .color-palette {
-        display: none;
+        display: grid;
 
         position: absolute;
 

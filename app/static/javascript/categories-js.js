@@ -253,28 +253,133 @@ function setupEditCategory() {
 
             event.stopPropagation();
 
-            // Remember which category was selected
             categoryBeingEdited = category;
 
-            // Open modal
+            // Copy icon and background
+            setSameIcon(category);
+
+            // Open edit panel
             editCategoryPanel.classList.remove("hidden");
         });
     });
+
+}
+
+
+
+function setupEditCategory() {
+
+    const categories = document.querySelectorAll(".category");
+
+    const editCategoryPanel =
+        document.querySelector(".edit-category");
+
+    const input =
+        editCategoryPanel.querySelector(".edit-category-input");
+
+    const colorPickerBtn =
+        editCategoryPanel.querySelector(".collor-picker-btn");
+
+    const colorPalette =
+        editCategoryPanel.querySelector(".edit-color-palette");
+
+
+    categories.forEach(category => {
+
+        const editCategoryBtn =
+            category.querySelector(
+                ":scope > .category-options > .settings-dropdown > .edit-option-btn"
+            );
+
+        if (!editCategoryBtn) {
+            return;
+        }
+
+
+        editCategoryBtn.addEventListener("click", event => {
+
+            event.stopPropagation();
+
+            // Store the category being edited
+            categoryBeingEdited = category;
+
+
+            // Get the category name
+            const categoryTitle =
+                category.querySelector(".category-title");
+
+
+            // Put the current name in the input
+            input.value = categoryTitle.textContent;
+
+
+            // Copy the current icon and color
+            setSameIcon(category);
+
+
+            // Close the color palette when opening the edit panel
+            colorPalette.classList.add("hidden");
+
+
+            // Open the edit panel
+            editCategoryPanel.classList.remove("hidden");
+        });
+    });
+
+
+    // Open / close edit color picker
+    colorPickerBtn.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        colorPalette.classList.toggle("hidden");
+    })
 }
 
 setupEditCategory();
 
 
-function setSameIcon() {
-    const categoryIcon = category.querySelector(".icon-container svg");
-    const pickerBtn = category.querySelector(".icon-picker-btn");
 
-    const pickerIcon = categoryIcon.cloneNode(true);
+
+function setSameIcon(category) {
+
+    const categoryIcon =
+        category.querySelector(".icon-container svg");
+
+    const categoryIconContainer =
+        category.querySelector(".icon-container");
+
+    const pickerBtn =
+        document.querySelector(".icon-picker-btn");
+
+    const colorPickerBtn =
+        document.querySelector(".collor-picker-btn");
+
+    if (!categoryIcon || !categoryIconContainer) {
+        return;
+    }
+
+    // Icon picker
+    pickerBtn.innerHTML = "";
+
+    const pickerIcon =
+        categoryIcon.cloneNode(true);
+
+    pickerIcon.style.color =
+        getComputedStyle(categoryIcon).color;
+
+    pickerBtn.style.backgroundColor =
+        getComputedStyle(categoryIconContainer).backgroundColor;
 
     pickerBtn.appendChild(pickerIcon);
-}
 
+    // Color picker button
+    colorPickerBtn.style.backgroundColor =
+        getComputedStyle(categoryIconContainer).backgroundColor;
+}
 setSameIcon();
+
+
 
 
 // setupIconPicker() {
