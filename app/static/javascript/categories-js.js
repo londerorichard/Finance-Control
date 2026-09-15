@@ -1,8 +1,6 @@
-function setupColorPalettes() {
-
-    const categoryItems = document.querySelectorAll(".category, .subcategory");
-
+function createColorOptions(palette, onColorSelected) {
     const colors = [
+
         "#FF0000", "#FF4000", "#FF8000", "#FFBF00", "#FFFF00", "#BFFF00",
         "#80FF00", "#40FF00", "#00FF00", "#00FF40", "#00FF80", "#00FFBF",
         "#00FFFF", "#00BFFF", "#0080FF", "#0040FF", "#0000FF", "#4000FF",
@@ -12,63 +10,103 @@ function setupColorPalettes() {
         "#000000", "#202020", "#404040", "#606060", "#808080", "#A0A0A0",
         "#C0C0C0", "#D0D0D0", "#E0E0E0", "#F0F0F0", "#F8F8F8", "#FFFFFF",
         "#8B4513", "#A0522D", "#CD853F", "#DEB887", "#F5DEB3", "#FFE4C4"
+
     ];
+
+    colors.forEach(color => {
+
+        const colorOption =
+            document.createElement("button");
+
+        colorOption.type = "button";
+
+        colorOption.classList.add("color-option");
+
+        colorOption.style.backgroundColor = color;
+
+        palette.appendChild(colorOption);
+
+
+        colorOption.addEventListener("click", () => {
+
+            onColorSelected(color);
+
+        });
+    });
+}
+
+function closeAllColorPalettes() {
+
+    document
+        .querySelectorAll(".color-palette, .edit-color-palette")
+        .forEach(palette => {
+
+            palette.classList.remove("open");
+            palette.classList.add("hidden");
+
+        });
+}
+
+
+function setupColorPalettes() {
+
+    const categoryItems =
+        document.querySelectorAll(".category, .subcategory");
+
 
     categoryItems.forEach(category => {
 
-        const header = category.querySelector(".category-header");
-        const button = header.querySelector(".category-main");
-        const palette = header.querySelector(".color-palette");
-        const iconContainer = category.querySelector(".icon-container");
+        const header =
+            category.querySelector(".category-header");
+
+        const button =
+            header.querySelector(".category-main");
+
+        const palette =
+            header.querySelector(".color-palette");
+
+        const iconContainer =
+            category.querySelector(".icon-container");
+
 
         if (!button || !palette) {
             return;
         }
 
+
         // Create the color options
-        colors.forEach(color => {
+        createColorOptions(palette, color => {
 
-            const colorOption = document.createElement("button");
+            // Change button color
+            button.style.backgroundColor = color;
 
-            colorOption.type = "button";
-            colorOption.classList.add("color-option");
-            colorOption.style.backgroundColor = color;
+            // Change icon container color
+            if (iconContainer) {
+                iconContainer.style.backgroundColor = color;
+            }
 
-            palette.appendChild(colorOption);
-
-            colorOption.addEventListener("click", () => {
-
-                // Change icon color
-                button.style.backgroundColor = color;
-
-                // Change tag color
-                if (iconContainer) {
-                    iconContainer.style.backgroundColor = color;
-                }
-
-                // Close palette
-                palette.classList.remove("open");
-            });
+            // Close palette
+            palette.classList.remove("open");
         });
 
-        // Open/close palette
-        button.addEventListener("click", () => {
 
-            // Close all other palettes
-            categoryItems.forEach(otherCategory => {
+        // Open / close palette
+        button.addEventListener("click", event => {
 
-                const otherPalette =
-                    otherCategory.querySelector(".color-palette");
+            event.stopPropagation();
 
-                if (otherPalette && otherPalette !== palette) {
-                    otherPalette.classList.remove("open");
-                }
-            });
+            const isOpen =
+                palette.classList.contains("open");
 
-            // Toggle current palette
-            palette.classList.toggle("open");
+            closeAllColorPalettes();
+
+            if (!isOpen) {
+                palette.classList.add("open");
+            }
         });
+
     });
+
 
     // Close palettes when clicking outside
     document.addEventListener("click", event => {
@@ -77,9 +115,14 @@ function setupColorPalettes() {
             !event.target.closest(".category-header") &&
             !event.target.closest(".color-palette")
         ) {
-            document.querySelectorAll(".color-palette").forEach(palette => {
-                palette.classList.remove("open");
-            });
+
+            document
+                .querySelectorAll(".color-palette")
+                .forEach(palette => {
+
+                    palette.classList.remove("open");
+
+                });
         }
     });
 }
@@ -87,7 +130,7 @@ function setupColorPalettes() {
 setupColorPalettes();
 
 
-    function setupOpenSubcategories() {
+function setupOpenSubcategories() {
 
     const categories = document.querySelectorAll(".category");
 
@@ -156,7 +199,6 @@ setupColorPalettes();
 }
 
 setupOpenSubcategories();
-
 
 
 function setupCategoriesSettings() {
@@ -235,41 +277,133 @@ let categoryBeingEdited = null;
 
 function setupEditCategory() {
 
-    const categories = document.querySelectorAll(".category");
-    const editCategoryPanel = document.querySelector(".edit-category");
+        const categories =
+            document.querySelectorAll(".category");
 
-    categories.forEach(category => {
+        const editCategoryPanel =
+            document.querySelector(".edit-category");
 
-        const editCategoryBtn =
-            category.querySelector(
-                ":scope > .category-options > .settings-dropdown > .edit-option-btn"
-            );
+        const input =
+            editCategoryPanel.querySelector(".edit-category-input");
 
-        if (!editCategoryBtn) {
-            return;
-        }
+        const colorPickerBtn =
+            editCategoryPanel.querySelector(".collor-picker-btn");
 
-        editCategoryBtn.addEventListener("click", event => {
+        const colorPalette =
+            editCategoryPanel.querySelector(".edit-color-palette");
+
+        // Create color options once
+        createColorOptions(colorPalette, color => {
+
+            colorPickerBtn.style.backgroundColor = color;
+
+            if (categoryBeingEdited) {
+
+                const categoryMain =
+                    categoryBeingEdited.querySelector(".category-main");
+
+                const iconContainer =
+                    categoryBeingEdited.querySelector(".icon-container");
+
+                if (categoryMain) {
+                    categoryMain.style.backgroundColor = color;
+                }
+
+                if (iconContainer) {
+                    iconContainer.style.backgroundColor = color;
+                }
+            }
+
+            colorPalette.classList.add("hidden");
+        });
+
+        categories.forEach(category => {
+
+            const editCategoryBtn =
+                category.querySelector(
+                    ":scope > .category-options > .settings-dropdown > .edit-option-btn"
+                );
+
+            if (!editCategoryBtn) {
+                return;
+            }
+
+            editCategoryBtn.addEventListener("click", event => {
+
+                event.stopPropagation();
+
+                categoryBeingEdited = category;
+
+                const categoryTitle =
+                    category.querySelector(".category-title");
+
+                input.value =
+                    categoryTitle.textContent;
+
+                setSameIcon(category);
+
+                colorPalette.classList.add("hidden");
+
+                editCategoryPanel.classList.remove("hidden");
+            });
+        });
+
+        colorPickerBtn.addEventListener("click", event => {
 
             event.stopPropagation();
 
-            categoryBeingEdited = category;
+            const isHidden =
+                colorPalette.classList.contains("hidden");
 
-            // Copy icon and background
-            setSameIcon(category);
+            closeAllColorPalettes();
 
-            // Open edit panel
-            editCategoryPanel.classList.remove("hidden");
+            if (isHidden) {
+                colorPalette.classList.remove("hidden");
+            }
         });
-    });
 
+        document.addEventListener("click", event => {
+
+            if (
+                !colorPalette.contains(event.target) &&
+                !colorPickerBtn.contains(event.target)
+            ) {
+                colorPalette.classList.add("hidden");
+            }
+        });
+    }
+
+setupEditCategory();
+
+
+function applyEditCategoryColor(
+    color,
+    colorPickerBtn,
+    category
+    ) {
+
+    colorPickerBtn.style.backgroundColor = color;
+
+    const categoryMain =
+        category.querySelector(".category-main");
+
+    const iconContainer =
+        category.querySelector(".icon-container");
+
+    if (categoryMain) {
+        categoryMain.style.backgroundColor = color;
+    }
+
+    if (iconContainer) {
+        iconContainer.style.backgroundColor = color;
+    }
 }
-
 
 
 function setupEditCategory() {
 
-    const categories = document.querySelectorAll(".category");
+    const categories =
+        document.querySelectorAll(".category");
 
     const editCategoryPanel =
         document.querySelector(".edit-category");
@@ -284,6 +418,23 @@ function setupEditCategory() {
         editCategoryPanel.querySelector(".edit-color-palette");
 
 
+    // Create edit color options once
+    createColorOptions(colorPalette, color => {
+
+        if (!categoryBeingEdited) {
+            return;
+        }
+
+        applyEditCategoryColor(
+            color,
+            colorPickerBtn,
+            categoryBeingEdited
+        );
+
+        colorPalette.classList.add("hidden");
+    });
+
+
     categories.forEach(category => {
 
         const editCategoryBtn =
@@ -300,28 +451,18 @@ function setupEditCategory() {
 
             event.stopPropagation();
 
-            // Store the category being edited
             categoryBeingEdited = category;
 
-
-            // Get the category name
             const categoryTitle =
                 category.querySelector(".category-title");
 
+            input.value =
+                categoryTitle.textContent;
 
-            // Put the current name in the input
-            input.value = categoryTitle.textContent;
-
-
-            // Copy the current icon and color
             setSameIcon(category);
 
-
-            // Close the color palette when opening the edit panel
             colorPalette.classList.add("hidden");
 
-
-            // Open the edit panel
             editCategoryPanel.classList.remove("hidden");
         });
     });
@@ -332,13 +473,30 @@ function setupEditCategory() {
 
         event.stopPropagation();
 
-        colorPalette.classList.toggle("hidden");
-    })
+        const isHidden =
+            colorPalette.classList.contains("hidden");
+
+        closeAllColorPalettes();
+
+        if (isHidden) {
+            colorPalette.classList.remove("hidden");
+        }
+    });
+
+
+    // Close edit color picker when clicking outside
+    document.addEventListener("click", event => {
+
+        if (
+            !colorPalette.contains(event.target) &&
+            !colorPickerBtn.contains(event.target)
+        ) {
+            colorPalette.classList.add("hidden");
+        }
+    });
 }
 
 setupEditCategory();
-
-
 
 
 function setSameIcon(category) {
