@@ -46,9 +46,9 @@ This structure follows a common organization for **FastAPI** applications, makin
 
 ## 2. Authentication & Authorization ⭐⭐⭐
 
-1. [ ] **Authentication vs Authorization**
+1. [x] **Authentication vs Authorization**
    ↓
-2. [ ] **Password hashing & verification**
+2. [x] **Password hashing & verification**
    ↓
 3. [ ] **OAuth2 basics**
    ↓

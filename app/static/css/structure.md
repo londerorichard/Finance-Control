@@ -168,14 +168,3 @@
 }
 ```
 
----
-
-# General Tips
-
-* [ ] Keep selectors simple.
-* [ ] Prefer reusable classes over duplicated styles.
-* [ ] Group related styles together.
-* [ ] Use CSS variables for colors, spacing, fonts, and shadows.
-* [ ] Follow a consistent property order in every selector.
-* [ ] Name classes by their purpose, not their appearance (e.g., `.primary-btn` instead of `.blue-button`).
-* [ ] Organize files and sections so they remain easy to navigate as the project grows.
