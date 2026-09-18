@@ -153,6 +153,30 @@ def get_user_transaction_amount(user_id):
 # Use:
 
 # INNER JOIN
+
+def get_user_transaction(user_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                u.email,
+                t.id AS transaction_id,
+                t.amount
+            FROM users u
+            JOIN transactions t
+                ON u.id = t.user_id
+            WHERE u.id = ?
+        """, (user_id,))
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
 # 2. Categories with transactions
 
 # Return:
@@ -166,6 +190,30 @@ def get_user_transaction_amount(user_id):
 # categories
 #     ↓ INNER JOIN
 # transactions
+
+def get_category_transactions(user_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                c.name AS category_name,
+                t.id AS transaction_id,
+                t.amount
+            FROM categories c
+            JOIN transactions t
+                ON c.id = t.category_id
+            WHERE c.user_id = ?
+        """, (user_id,))
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
 # 3. Users and their goals
 
 # Return:
@@ -179,6 +227,29 @@ def get_user_transaction_amount(user_id):
 # users
 #     ↓ INNER JOIN
 # goals
+
+def get_users_goals(user_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                u.email,
+                g.goal_name,
+                g.target_amount
+            FROM users u
+            JOIN goals g
+                ON u.id = g.user_id
+        """, (user_id,))
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
 # 4. Users + categories + transactions
 
 # Return:
@@ -197,9 +268,29 @@ def get_user_transaction_amount(user_id):
 
 # with INNER JOIN for both relationships.
 
-# RIGHT JOIN exercises
+def get_users_categories_transactions():
+    connection = get_connection()
 
-# These are mainly to understand the direction of a JOIN.
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                u.email,
+                c.name AS category_name,
+                t.amount
+            FROM users u
+            JOIN categories c
+                ON u.id = c.user_id
+            JOIN transactions t
+                ON c.id = t.category_id
+        """)
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
 
 # 5. All transactions, even if the user doesn't exist
 
@@ -223,6 +314,28 @@ def get_user_transaction_amount(user_id):
 
 # Which table am I trying to preserve?
 
+def get_users_categories_transactions():
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                t.id AS transaction_id,
+                u.email,
+                t.amount
+            FROM users u
+            RIGHT JOIN transactions t
+                ON u.id = t.user_id
+        """)
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
 # 6. All transactions and their categories
 
 # Return:
@@ -237,11 +350,27 @@ def get_user_transaction_amount(user_id):
 #     RIGHT JOIN
 # transactions
 
-# This is basically a good exercise for understanding how RIGHT JOIN can be equivalent to changing the order of the tables and using LEFT JOIN.
+def get_users_categories_transactions():
+    connection = get_connection()
 
-# FULL OUTER JOIN exercises
+    try:
+        cursor = connection.cursor()
 
-# These are particularly useful for understanding the difference between LEFT, RIGHT, and FULL.
+        cursor.execute("""
+            SELECT
+                t.id AS transaction_id,
+                c.name AS category_name,
+                t.amount
+            FROM categories c
+            RIGHT JOIN transactions t
+                ON c.id = t.category_id
+        """)
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
 
 # 7. Users and transactions
 
@@ -259,7 +388,27 @@ def get_user_transaction_amount(user_id):
 
 # FULL OUTER JOIN
 
-# This is the easiest way to see what FULL OUTER JOIN actually does.
+def get_users_categories_transactions():
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                u.email,
+                t.id,
+                t.amount
+            FROM users u
+            FULL OUTER JOIN transactions t
+                ON u.id = t.user_id
+        """)
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
 
 # 8. Categories and transactions
 
@@ -279,108 +428,24 @@ def get_user_transaction_amount(user_id):
 
 # This one is particularly useful because your transactions.category_id can be NULL.
 
-# 9. Users and goals
+def get_users_categories_transactions():
+    connection = get_connection()
 
-# Return:
+    try:
+        cursor = connection.cursor()
 
-# email | goal_name | target_amount
+        cursor.execute("""
+            SELECT
+                c.name,
+                t.id,
+                t.amount
+            FROM categories c
+            FULL OUTER JOIN transactions t
+                ON c.id = t.category_id
+        """)
 
-# Include:
+        return cursor.fetchall()
 
-# users with goals
-# users without goals
-# goals without a matching user
+    finally:
+        connection.close()
 
-# Use:
-
-# FULL OUTER JOIN
-# JOIN comparison exercises
-
-# These are probably the most valuable exercises after you've learned all the types.
-
-# 10. Compare INNER vs LEFT
-
-# Write two queries using users and transactions.
-
-# Query A:
-
-# INNER JOIN
-
-# Query B:
-
-# LEFT JOIN
-
-# Return:
-
-# email | transaction_id
-
-# Then compare the results.
-
-# Ask:
-
-# Which users disappeared with INNER JOIN?
-
-# 11. Compare LEFT vs RIGHT
-
-# Write:
-
-# users
-# LEFT JOIN transactions
-
-# Then:
-
-# transactions
-# RIGHT JOIN users
-
-# Try to make both queries produce the same result.
-
-# This teaches you that:
-
-# A LEFT JOIN B
-
-# is conceptually equivalent to:
-
-# B RIGHT JOIN A
-# 12. FULL JOIN vs LEFT JOIN
-
-# First:
-
-# users
-# LEFT JOIN transactions
-
-# Then:
-
-# users
-# FULL OUTER JOIN transactions
-
-# Compare the results.
-
-# Ask:
-
-# What additional rows can FULL OUTER JOIN return that LEFT JOIN cannot?
-
-# Recommended order
-
-# I'd practice them like this:
-
-# 1 → 2 → 3 → 4
-#         ↓
-# 5 → 6
-#         ↓
-# 7 → 8 → 9
-#         ↓
-# 10 → 11 → 12
-
-# The key concept you should get from these isn't memorizing syntax. It's understanding which table's rows you want to preserve:
-
-# INNER JOIN
-# → only matching rows
-
-# LEFT JOIN
-# → everything from the left table
-
-# RIGHT JOIN
-# → everything from the right table
-
-# FULL OUTER JOIN
-# → everything from both tables
