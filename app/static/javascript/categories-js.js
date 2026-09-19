@@ -1,3 +1,4 @@
+// Reusable pallete color
 function createColorOptions(palette, onColorSelected) {
     const colors = [
 
@@ -137,6 +138,7 @@ function setupOpenSubcategories() {
     categories.forEach(category => {
 
         const tagBtn = category.querySelector(".category-tag");
+
         const subcategories =
             category.querySelector(".subcategories-container");
 
@@ -273,131 +275,76 @@ function setupCategoriesSettings() {
 setupCategoriesSettings();
 
 
-let categoryBeingEdited = null;
-
-function setupEditCategory() {
-
-        const categories =
-            document.querySelectorAll(".category");
-
-        const editCategoryPanel =
-            document.querySelector(".edit-category");
-
-        const input =
-            editCategoryPanel.querySelector(".edit-category-input");
-
-        const colorPickerBtn =
-            editCategoryPanel.querySelector(".collor-picker-btn");
-
-        const colorPalette =
-            editCategoryPanel.querySelector(".edit-color-palette");
-
-        // Create color options once
-        createColorOptions(colorPalette, color => {
-
-            colorPickerBtn.style.backgroundColor = color;
-
-            if (categoryBeingEdited) {
-
-                const categoryMain =
-                    categoryBeingEdited.querySelector(".category-main");
-
-                const iconContainer =
-                    categoryBeingEdited.querySelector(".icon-container");
-
-                if (categoryMain) {
-                    categoryMain.style.backgroundColor = color;
-                }
-
-                if (iconContainer) {
-                    iconContainer.style.backgroundColor = color;
-                }
-            }
-
-            colorPalette.classList.add("hidden");
-        });
-
-        categories.forEach(category => {
-
-            const editCategoryBtn =
-                category.querySelector(
-                    ":scope > .category-options > .settings-dropdown > .edit-option-btn"
-                );
-
-            if (!editCategoryBtn) {
-                return;
-            }
-
-            editCategoryBtn.addEventListener("click", event => {
-
-                event.stopPropagation();
-
-                categoryBeingEdited = category;
-
-                const categoryTitle =
-                    category.querySelector(".category-title");
-
-                input.value =
-                    categoryTitle.textContent;
-
-                setSameIcon(category);
-
-                colorPalette.classList.add("hidden");
-
-                editCategoryPanel.classList.remove("hidden");
-            });
-        });
-
-        colorPickerBtn.addEventListener("click", event => {
-
-            event.stopPropagation();
-
-            const isHidden =
-                colorPalette.classList.contains("hidden");
-
-            closeAllColorPalettes();
-
-            if (isHidden) {
-                colorPalette.classList.remove("hidden");
-            }
-        });
-
-        document.addEventListener("click", event => {
-
-            if (
-                !colorPalette.contains(event.target) &&
-                !colorPickerBtn.contains(event.target)
-            ) {
-                colorPalette.classList.add("hidden");
-            }
-        });
-    }
-
-setupEditCategory();
-
-
 function applyEditCategoryColor(
     color,
     colorPickerBtn,
     category
-    ) {
-
+) {
     colorPickerBtn.style.backgroundColor = color;
-
-    const categoryMain =
-        category.querySelector(".category-main");
 
     const iconContainer =
         category.querySelector(".icon-container");
-
-    if (categoryMain) {
-        categoryMain.style.backgroundColor = color;
-    }
 
     if (iconContainer) {
         iconContainer.style.backgroundColor = color;
     }
 }
+
+
+function setupIconPicker() {
+
+    const icons = [
+        "utensils",
+        "shopping-cart",
+        "car",
+        "home",
+        "coffee",
+        "gamepad-2",
+        "heart",
+        "briefcase",
+        "plane",
+        "gift",
+        "music",
+        "book-open",
+        "dumbbell",
+        "shirt",
+        "dog",
+        "paw-print"
+    ];
+
+    const panel =
+        document.querySelector(".icon-picker-panel");
+
+    if (!panel) {
+        return;
+    }
+
+    icons.forEach(icon => {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.classList.add("icon-option");
+        button.dataset.icon = icon;
+
+        button.innerHTML =
+            `<i data-lucide="${icon}"></i>`;
+
+        panel.appendChild(button);
+    });
+
+    lucide.createIcons();
+}
+
+setupIconPicker();
+
+
+let categoryBeingEdited = null;
+
+let editedCategoryName = null;
+let editedCategoryColor = null;
+let editedCategoryIcon = null;
 
 
 function setupEditCategory() {
@@ -417,23 +364,39 @@ function setupEditCategory() {
     const colorPalette =
         editCategoryPanel.querySelector(".edit-color-palette");
 
+    const iconPickerBtn =
+        editCategoryPanel.querySelector(".icon-picker-btn");
 
-    // Create edit color options once
+    const iconPickerPanel =
+        editCategoryPanel.querySelector(".icon-picker-panel");
+
+    const saveChanges =
+        editCategoryPanel.querySelector(".save-category-edition");
+
+    const cancelChanges =
+        editCategoryPanel.querySelector(".cancel-category-edition");
+
+
+    // Create color options once
+
     createColorOptions(colorPalette, color => {
 
         if (!categoryBeingEdited) {
             return;
         }
 
-        applyEditCategoryColor(
-            color,
-            colorPickerBtn,
-            categoryBeingEdited
-        );
+        // Change only the temporary value
+        editedCategoryColor = color;
+
+        // Update both picker buttons
+        colorPickerBtn.style.backgroundColor = color;
+        iconPickerBtn.style.backgroundColor = color;
 
         colorPalette.classList.add("hidden");
     });
 
+
+    // Setup Edit buttons
 
     categories.forEach(category => {
 
@@ -453,22 +416,84 @@ function setupEditCategory() {
 
             categoryBeingEdited = category;
 
+
+            // Get current category name
+
             const categoryTitle =
                 category.querySelector(".category-title");
 
-            input.value =
+            editedCategoryName =
                 categoryTitle.textContent;
 
-            setSameIcon(category);
+            input.value =
+                editedCategoryName;
+
+
+            // Get current category color
+            // The icon-container is the source of truth
+
+            const iconContainer =
+                category.querySelector(".icon-container");
+
+            if (iconContainer) {
+
+                editedCategoryColor =
+                    getComputedStyle(iconContainer).backgroundColor;
+
+                colorPickerBtn.style.backgroundColor =
+                    editedCategoryColor;
+
+                iconPickerBtn.style.backgroundColor =
+                    editedCategoryColor;
+            }
+
+
+            // Get current category icon
+
+            const categoryIcon =
+                category.querySelector(".icon-container svg");
+
+            if (categoryIcon) {
+
+                editedCategoryIcon =
+                    categoryIcon.getAttribute("data-lucide");
+
+                iconPickerBtn.innerHTML = "";
+
+                const pickerIcon =
+                    categoryIcon.cloneNode(true);
+
+                iconPickerBtn.appendChild(pickerIcon);
+
+                lucide.createIcons();
+            }
+
+
+            // Close pickers when opening modal
 
             colorPalette.classList.add("hidden");
+
+            iconPickerPanel.classList.add("hidden");
+
+
+            // Show edit modal
 
             editCategoryPanel.classList.remove("hidden");
         });
     });
 
 
+    // Update temporary name
+
+    input.addEventListener("input", () => {
+
+        editedCategoryName =
+            input.value;
+    });
+
+
     // Open / close edit color picker
+
     colorPickerBtn.addEventListener("click", event => {
 
         event.stopPropagation();
@@ -485,6 +510,7 @@ function setupEditCategory() {
 
 
     // Close edit color picker when clicking outside
+
     document.addEventListener("click", event => {
 
         if (
@@ -494,7 +520,156 @@ function setupEditCategory() {
             colorPalette.classList.add("hidden");
         }
     });
+
+
+    // Open / close edit icon picker
+
+    iconPickerBtn.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        const isHidden =
+            iconPickerPanel.classList.contains("hidden");
+
+        if (isHidden) {
+            iconPickerPanel.classList.remove("hidden");
+        } else {
+            iconPickerPanel.classList.add("hidden");
+        }
+    });
+
+
+    // Icon selection
+
+    iconPickerPanel.addEventListener("click", event => {
+
+        const iconOption =
+            event.target.closest(".icon-option");
+
+        if (!iconOption) {
+            return;
+        }
+
+        editedCategoryIcon =
+            iconOption.dataset.icon;
+
+
+        // Show selected icon in modal
+
+        iconPickerBtn.innerHTML = "";
+
+        const selectedIcon =
+            document.createElement("i");
+
+        selectedIcon.setAttribute(
+            "data-lucide",
+            editedCategoryIcon
+        );
+
+        iconPickerBtn.appendChild(selectedIcon);
+
+        lucide.createIcons();
+
+        iconPickerPanel.classList.add("hidden");
+    });
+
+
+    // Close edit icon picker when clicking outside
+
+    document.addEventListener("click", event => {
+
+        if (
+            !iconPickerPanel.contains(event.target) &&
+            !iconPickerBtn.contains(event.target)
+        ) {
+            iconPickerPanel.classList.add("hidden");
+        }
+    });
+
+
+    // SAVE
+
+    saveChanges.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        if (!categoryBeingEdited) {
+            return;
+        }
+
+
+        // Apply name
+
+        const categoryTitle =
+            categoryBeingEdited.querySelector(".category-title");
+
+        categoryTitle.textContent =
+            editedCategoryName;
+
+
+        // Apply color
+
+        applyEditCategoryColor(
+            editedCategoryColor,
+            colorPickerBtn,
+            categoryBeingEdited
+        );
+
+
+        // Apply icon
+
+        if (editedCategoryIcon) {
+
+            const categoryIconContainer =
+                categoryBeingEdited.querySelector(
+                    ".icon-container"
+                );
+
+            categoryIconContainer.innerHTML = "";
+
+            const newIcon =
+                document.createElement("i");
+
+            newIcon.setAttribute(
+                "data-lucide",
+                editedCategoryIcon
+            );
+
+            categoryIconContainer.appendChild(newIcon);
+
+            lucide.createIcons();
+        }
+
+
+        // Close modal
+
+        editCategoryPanel.classList.add("hidden");
+
+        categoryBeingEdited = null;
+        editedCategoryName = null;
+        editedCategoryColor = null;
+        editedCategoryIcon = null;
+    });
+
+
+    // CANCEL
+
+    cancelChanges.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        // Nothing needs to be restored because
+        // the real category was never modified.
+
+        editCategoryPanel.classList.add("hidden");
+
+        categoryBeingEdited = null;
+        editedCategoryName = null;
+        editedCategoryColor = null;
+        editedCategoryIcon = null;
+    });
 }
+
 
 setupEditCategory();
 
@@ -535,45 +710,9 @@ function setSameIcon(category) {
     colorPickerBtn.style.backgroundColor =
         getComputedStyle(categoryIconContainer).backgroundColor;
 }
+
 setSameIcon();
 
 
 
 
-// setupIconPicker() {
-
-//     const icons = [
-//         "utensils",
-//         "shopping-cart",
-//         "car",
-//         "home",
-//         "coffee",
-//         "gamepad-2",
-//         "heart",
-//         "briefcase",
-//         "plane",
-//         "gift",
-//         "music",
-//         "book-open",
-//         "dumbbell",
-//         "shirt",
-//         "dog",
-//         "paw-print"
-//     ];
-
-//     const panel = document.querySelector(".icon-picker-panel");
-
-//     icons.forEach(icon => {
-//         const button = document.createElement("button");
-
-//         button.type = "button";
-//         button.classList.add("icon-option");
-//         button.dataset.icon = icon;
-
-//         button.innerHTML = `<i data-lucide="${icon}"></i>`;
-
-//         panel.appendChild(button);
-//     });
-
-//     lucide.createIcons();
-// }

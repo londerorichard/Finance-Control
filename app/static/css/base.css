@@ -538,6 +538,10 @@ main {
     overflow-y: auto;
 }
 
+.notification-list li:hover {
+    background-color: var(--bg-terciary);
+}
+
 .notification-list::-webkit-scrollbar {
     width: 5px;
 }
@@ -559,7 +563,6 @@ main {
     cursor: pointer;
 
     padding: 0.5rem;
-    background-color: var(--bg-terciary);
 
     border-radius: var(--radius-md);
 }
@@ -583,7 +586,11 @@ main {
 }
 
 .view-all {
-    padding-top: var(--space-sm);
+    padding: 0.5rem 0 0 0;
+
+    width: 100%;
+
+    text-align: center;
 
     color: inherit;
     text-decoration: none;
@@ -682,7 +689,7 @@ main {
 }
 
 .profile-item a:hover {
-    background-color: var(--text-secondary);
+    background-color: var(--text-terciary);
 }
 
 

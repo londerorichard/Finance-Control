@@ -415,6 +415,11 @@ body {
             cursor: pointer;
         }
 
+        .icon-option svg {
+            width: 20px;
+            height: 20px;
+        }
+
         .icon-option:hover {
             background-color: var(--bg-terciary);
         }
