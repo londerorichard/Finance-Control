@@ -117,6 +117,30 @@ class ResponseCategory(BaseModel):
 
 
 # ==========================================================
+# DASHBOARD SCHEMAS
+# ==========================================================
+
+class DashboardSummary(BaseModel):
+    total_income: float
+    total_expenses: float
+    balance: float
+    transaction_count: int
+
+class CategorySummary(BaseModel):
+    category_name: str
+    total_spent: float
+
+class RecentTransaction(BaseModel):
+    id: int
+    amount: float
+    transaction_type: TransactionType
+    description: str | None
+    created_at: datetime
+    account: str | None
+    category_name: str | None
+
+
+# ==========================================================
 # GOAL SCHEMAS
 # ==========================================================
 
