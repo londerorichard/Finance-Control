@@ -478,7 +478,18 @@ function setupEditCategory() {
 
             // Show edit modal
 
-            editCategoryPanel.classList.remove("hidden");
+            editCategoryPanel.showModal();
+
+
+
+            // Hide settings panel when one option is clicked
+
+            const settingsPanel = category.querySelector(
+                ":scope > .category-options > .settings-dropdown"
+            );
+
+            settingsPanel.classList.add("hidden")
+
         });
     });
 
@@ -643,7 +654,7 @@ function setupEditCategory() {
 
         // Close modal
 
-        editCategoryPanel.classList.add("hidden");
+        editCategoryPanel.close();
 
         categoryBeingEdited = null;
         editedCategoryName = null;
@@ -661,7 +672,7 @@ function setupEditCategory() {
         // Nothing needs to be restored because
         // the real category was never modified.
 
-        editCategoryPanel.classList.add("hidden");
+        editCategoryPanel.close();
 
         categoryBeingEdited = null;
         editedCategoryName = null;
