@@ -21,25 +21,6 @@ This structure follows a common organization for **FastAPI** applications, makin
 | **utils/**      | Stores reusable helper functions, utilities, and common logic shared across the project.               |
 | **tests/**      | Contains automated tests for the application.                                                          |
 
-
-
-=======
-* [x] Create the project structure
-* [x] Configure the virtual environment
-* [x] Install dependencies
-* [x] Configure the database connection (`database.py`)
-* [x] Create the database models (`models.py`)
-* [x] Create the Pydantic schemas (`schemas.py`)
-* [x] Implement CRUD operations (`crud.py`)
-* [x] Build the API routes (`routers/`)
-* [x] Implement authentication (`auth.py`)
-* [x] Create the HTML templates (`templates/`)
-* [ ] Add CSS, JavaScript, and images (`static/`)
-* [ ] Write automated tests (`tests/`)
-* [ ] Refactor and improve the code
-* [ ] Update the documentation (`README.md`)
-* [ ] Deploy the application
-
 ---
 
 # FastAPI Backend Learning Roadmap
@@ -50,24 +31,24 @@ This structure follows a common organization for **FastAPI** applications, makin
    ↓
 2. [x] **Password hashing & verification**
    ↓
-3. [ ] **OAuth2 basics**
+3. [x] **OAuth2 basics**
    ↓
-4. [ ] **Bearer tokens**
+4. [x] **Bearer tokens**
    ↓
-5. [ ] **JWT structure & claims**
+5. [x] **JWT structure & claims**
    ↓
-6. [ ] **Token expiration**
+6. [x] **Token expiration**
    ↓
-7. [ ] **Access vs Refresh tokens**
+7. [x] **Access vs Refresh tokens**
    ↓
-8. [ ] **`get_current_user` + `Depends()`**
+8. [x] **`get_current_user` + `Depends()`**
    ↓
-9. [ ] **Resource ownership** ⭐
+9. [x] **Resource ownership** ⭐
    ↓
-10. [ ] **401 vs 403**
+10. [x] **401 vs 403**
     ↓
-11. [ ] **Roles / permissions**
-    ↓
+11. [x] **Roles / permissions**
+    ↓ Later
 12. [ ] **Cookies vs `localStorage`**
     ↓
 13. [ ] **XSS**
