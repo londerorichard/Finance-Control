@@ -488,7 +488,7 @@ function setupEditCategory() {
                 ":scope > .category-options > .settings-dropdown"
             );
 
-            settingsPanel.classList.add("hidden")
+            settingsPanel.classList.add("hidden");
 
         });
     });
@@ -514,9 +514,12 @@ function setupEditCategory() {
 
         closeAllColorPalettes();
 
+        iconPickerPanel.classList.add("hidden");
+
         if (isHidden) {
             colorPalette.classList.remove("hidden");
         }
+        
     });
 
 
@@ -536,16 +539,14 @@ function setupEditCategory() {
     // Open / close edit icon picker
 
     iconPickerBtn.addEventListener("click", event => {
-
         event.stopPropagation();
 
-        const isHidden =
-            iconPickerPanel.classList.contains("hidden");
+        const isHidden = iconPickerPanel.classList.contains("hidden");
+
+        colorPalette.classList.add("hidden");
 
         if (isHidden) {
             iconPickerPanel.classList.remove("hidden");
-        } else {
-            iconPickerPanel.classList.add("hidden");
         }
     });
 
@@ -681,8 +682,82 @@ function setupEditCategory() {
     });
 }
 
-
 setupEditCategory();
+
+
+let categoryBeingRemoved = null;
+
+function setupRemoveCategory() {
+
+    const categories =
+        document.querySelectorAll(".category");
+
+    const removePanel =
+        document.querySelector(".remove-panel");
+
+    const removeCategoryName =
+        document.querySelector(".remove-category-name");
+
+    const removeCategoriesUl =
+        document.querySelector(".categories-remove-list");
+
+    const chooseCategoryRemoveBtn = 
+        document.querySelector(".choose-category-remove");
+
+    const defaultCategoryRemoveBtn = 
+        document.querySelector(".default-remove-category");
+        
+    const cancelCategoryRemoveBtn = 
+        document.querySelector(".cancel-remove-category");
+
+
+    categories.forEach(category => {
+
+        const removePanelBtn =
+            category.querySelector(".delete-option-btn");
+
+        const settingsPanel = category.querySelector(
+                ":scope > .category-options > .settings-dropdown"
+            );
+            
+        const categoryTitle = category.querySelector(".category-title");
+
+        removePanelBtn.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            const currentCategoryName =
+                categoryBeingRemoved.querySelector(".category-title").textContent;
+
+            settingsPanel.classList.add("hidden");
+
+            removeCategoryName.innerHTML = categoryTitle.textContent
+            
+            removePanel.showModal();
+
+        })
+
+    });
+
+    chooseCategoryRemoveBtn.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+        categoryBeingRemoved = currentCategoryName;
+
+        categoryTitleLi.innerHTML = categoryBeingRemoved.textContent;
+
+        const categoryTitleLi = document.createElement("li");
+
+        categoryTitleLi.innerHTML = categoryBeingRemoved;
+
+        removeCategoriesUl.appendChild(categoryTitleLi);
+
+    })
+
+}
+
+setupRemoveCategory();
 
 
 function setSameIcon(category) {

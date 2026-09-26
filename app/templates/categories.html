@@ -330,7 +330,7 @@
         
     </div>
 
-    <dialog class="edit-category hidden">
+    <dialog class="edit-category">
 
         <span class="edit-category-title">Edit Category</span>
 
@@ -353,8 +353,6 @@
 
             </div>
             
-            <div class="edit-color-palette hidden"></div>
-
             <div class="icon-picker-container">
 
                 <button class="icon-picker-btn" type="button">
@@ -374,6 +372,60 @@
         <button class="save-category-edition" type="button">
             <span class="save-category-span">Save</span>
         </button>
+
+    </dialog>
+
+    <dialog class="remove-panel">
+
+        <h3 class="remove-panel-title">
+            Remove category
+            <span class="remove-category-name"></span>
+        </h3>
+
+        <p class="remove-panel-description">
+            What should happen to the transactions in this category?
+        </p>
+
+        <div class="remove-category-options">
+
+            <div class="safe-remove-option">
+
+                <p class="safe-remove-description">
+                    Move the transactions to another category.
+                    If you don't choose one, they'll be moved to
+                    <strong>Others</strong>.
+                </p>
+
+                <div class="category-remove-selection-btns">
+                    <button
+                        class="choose-category-remove"
+                        type="button"
+                    >
+                        Choose a category
+                    </button>
+
+                    <button
+                        class="default-remove-category"
+                        type="button"
+                    >
+                        Move to Others
+                    </button>
+
+                    <button
+                        class="cancel-remove-category"
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+                </div>
+
+                <div class="safe-remove-panel hidden">
+                    <ul class="categories-remove-list"></ul>
+                </div>
+
+            </div>
+
+        </div>
 
     </dialog>
 
