@@ -521,6 +521,33 @@ body {
         background-color: var(--bg-terciary);
     }
 
+    .safe-remove-panel {
+        position: fixed;
+        z-index: 9999;
+
+        width: 400px;
+        max-height: 500px;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        background-color: var(--bg-secondary);
+        color: var(--text-secondary);
+        border-radius: var(--radius-sm);
+        padding: 1rem;
+    }
+
+    .categories-remove-list {
+        max-height: 350px;
+        overflow-y: auto;
+    }
+
+    .categories-remove-list {
+        max-height: 350px;
+        overflow-y: auto;
+    }
+
 
     /* ==========================================================================
         SUBCATEGORIES

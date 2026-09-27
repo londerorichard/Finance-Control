@@ -10,322 +10,84 @@
     <div class="categories-container">
 
         <ul class="categories-list">
-            <li class="category">
-                <div class="category-header">
-                    <button class="category-main" type="button">
-                        <div class="icon-container">
-                            <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 -3.84 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 115.21" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,1.07-11.98-6.37-20.18L28.76,1c-2.58-3.03-8.66,1.42-6.12,5.09L37.18,24c2.75,3.34-2.36,7.76-5.2,4.32L16.94,9.8 c-2.8-3.21-8.59,1.03-5.66,4.7c4.24,5.1,10.8,13.43,15.04,18.53c2.94,2.99-1.53,7.42-4.43,3.69L6.96,18.32 c-2.19-2.38-5.77-0.9-6.72,1.88c-1.02,2.97,1.49,5.14,3.2,7.34L20.1,49.06c5.17,5.99,10.95,9.54,17.67,7.53 c1.03-0.31,2.29-0.94,3.64-1.77l44.76,57.78c2.41,3.11,7.06,3.44,10.08,0.93l0.69-0.57c3.4-2.83,3.95-8,1.04-11.34L50.58,47.16 C51.96,45.62,52.97,44.16,53.31,43.05L53.31,43.05z M65.98,55.65l7.37-8.94C63.87,23.21,99-8.11,116.03,6.29 C136.72,23.8,105.97,66,84.36,55.57l-8.73,11.09L65.98,55.65L65.98,55.65z"></path> </g> </g></svg>
-                        </div>
-                    </button>
-                    <div class="color-palette hidden"></div>
-                </div>
 
-                <button class="category-description" type="button">
-                        <span class="category-title">Food</span>
-                        <span class="category-expense">$0,00</span>
-                </button>
+            <template id="category-template">
 
-                <div class="category-options">
-                    <div class="tag-container">
-                        <button class="category-tag" type="button">
-                            <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
+                <li class="category">
+                    <div class="category-header">
+                        <button class="category-main" type="button">
+                            <div class="icon-container">
+                                <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 -3.84 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 115.21" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,1.07-11.98-6.37-20.18L28.76,1c-2.58-3.03-8.66,1.42-6.12,5.09L37.18,24c2.75,3.34-2.36,7.76-5.2,4.32L16.94,9.8 c-2.8-3.21-8.59,1.03-5.66,4.7c4.24,5.1,10.8,13.43,15.04,18.53c2.94,2.99-1.53,7.42-4.43,3.69L6.96,18.32 c-2.19-2.38-5.77-0.9-6.72,1.88c-1.02,2.97,1.49,5.14,3.2,7.34L20.1,49.06c5.17,5.99,10.95,9.54,17.67,7.53 c1.03-0.31,2.29-0.94,3.64-1.77l44.76,57.78c2.41,3.11,7.06,3.44,10.08,0.93l0.69-0.57c3.4-2.83,3.95-8,1.04-11.34L50.58,47.16 C51.96,45.62,52.97,44.16,53.31,43.05L53.31,43.05z M65.98,55.65l7.37-8.94C63.87,23.21,99-8.11,116.03,6.29 C136.72,23.8,105.97,66,84.36,55.57l-8.73,11.09L65.98,55.65L65.98,55.65z"></path> </g> </g></svg>
+                            </div>
                         </button>
+                        <div class="color-palette hidden"></div>
+                    </div>
+
+                    <button class="category-description" type="button">
+                            <span class="category-title"></span>
+                            <span class="category-expense">$0,00</span>
+                    </button>
+
+                    <div class="category-options">
+                        <div class="tag-container">
+                            <button class="category-tag" type="button">
+                                <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
+                            </button>
+
+                        </div>
 
                         <div class="subcategories-container hidden">
-                            <ul class="subcategories">
-                                <li class="subcategory">  
-                                    <div class="category-header">
-                                        <button class="category-main" type="button">
-                                            <div class="icon-container">
-                                                <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 -3.84 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 115.21" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,1.07-11.98-6.37-20.18L28.76,1c-2.58-3.03-8.66,1.42-6.12,5.09L37.18,24c2.75,3.34-2.36,7.76-5.2,4.32L16.94,9.8 c-2.8-3.21-8.59,1.03-5.66,4.7c4.24,5.1,10.8,13.43,15.04,18.53c2.94,2.99-1.53,7.42-4.43,3.69L6.96,18.32 c-2.19-2.38-5.77-0.9-6.72,1.88c-1.02,2.97,1.49,5.14,3.2,7.34L20.1,49.06c5.17,5.99,10.95,9.54,17.67,7.53 c1.03-0.31,2.29-0.94,3.64-1.77l44.76,57.78c2.41,3.11,7.06,3.44,10.08,0.93l0.69-0.57c3.4-2.83,3.95-8,1.04-11.34L50.58,47.16 C51.96,45.62,52.97,44.16,53.31,43.05L53.31,43.05z M65.98,55.65l7.37-8.94C63.87,23.21,99-8.11,116.03,6.29 C136.72,23.8,105.97,66,84.36,55.57l-8.73,11.09L65.98,55.65L65.98,55.65z"></path> </g> </g></svg>
-                                            </div>
-                                        </button>
-                                        <div class="color-palette hidden"></div>
-                                    </div>
+                            <ul class="subcategories"></ul>
+                        </div>
 
-                                    <button class="category-description" type="button">
-                                        <span class="category-title">Lunch</span>
-                                        <span class="category-expense">$0,00</span>
-                                    </button>
+                        <button class="category-settings" type="button">
+                            <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
+                        </button>
+                        <div class="settings-dropdown hidden">
+                            <button class="edit-option-btn" type="button">
+                                <span>Edit</span>
+                            </button>
 
-                                    <button class="category-settings" type="button">
-                                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                                    </button>
-                                </li>
-                                <li class="subcategory">
-                                    <div class="category-header">
-                                        <button class="category-main" type="button">
-                                            <div class="icon-container">
-                                                <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 -3.84 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 115.21" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,1.07-11.98-6.37-20.18L28.76,1c-2.58-3.03-8.66,1.42-6.12,5.09L37.18,24c2.75,3.34-2.36,7.76-5.2,4.32L16.94,9.8 c-2.8-3.21-8.59,1.03-5.66,4.7c4.24,5.1,10.8,13.43,15.04,18.53c2.94,2.99-1.53,7.42-4.43,3.69L6.96,18.32 c-2.19-2.38-5.77-0.9-6.72,1.88c-1.02,2.97,1.49,5.14,3.2,7.34L20.1,49.06c5.17,5.99,10.95,9.54,17.67,7.53 c1.03-0.31,2.29-0.94,3.64-1.77l44.76,57.78c2.41,3.11,7.06,3.44,10.08,0.93l0.69-0.57c3.4-2.83,3.95-8,1.04-11.34L50.58,47.16 C51.96,45.62,52.97,44.16,53.31,43.05L53.31,43.05z M65.98,55.65l7.37-8.94C63.87,23.21,99-8.11,116.03,6.29 C136.72,23.8,105.97,66,84.36,55.57l-8.73,11.09L65.98,55.65L65.98,55.65z"></path> </g> </g></svg>
-                                            </div>
-                                        </button>
-                                        <div class="color-palette hidden"></div>
-                                    </div>
-                                        
-                                    <button class="category-description" type="button">
-                                        <span class="category-title">Work</span>
-                                        <span class="category-expense">$0,00</span>
-                                    </button>
-
-                                    <button class="category-settings" type="button">
-                                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                                    </button>
-                                </li>
-                            </ul>
+                            <button class="delete-option-btn" type="button">
+                                <span>Delete</span>
+                            </button>
+                            <button class="move-transactions-option-btn" type="button">
+                                <span>Move transactions</span>
+                            </button>
                         </div>
                     </div>
+                </li>
 
-                    <button class="category-settings" type="button">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                    </button>
-                    <div class="settings-dropdown hidden">
-                        <button class="edit-option-btn" type="button">
-                            <span>Edit</span>
-                        </button>
+            </template>
 
-                        <button class="delete-option-btn" type="button">
-                            <span>Delete</span>
-                        </button>
-                        <button class="move-transactions-option-btn" type="button">
-                            <span>Move transactions</span>
-                        </button>
-                    </div>
-                </div>
-            </li>
+            <template id="subcategory-template">
+                
+                <div class="subcategories-container hidden">
+                    <ul class="subcategories">
+                        <li class="subcategory">
+                            <div class="category-header">
+                                <button class="category-main" type="button">
+                                    <div class="icon-container">
+                                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 -3.84 122.88 122.88" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="enable-background:new 0 0 122.88 115.21" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M29.03,100.46l20.79-25.21l9.51,12.13L41,110.69C33.98,119.61,20.99,110.21,29.03,100.46L29.03,100.46z M53.31,43.05 c1.98-6.46,1.07-11.98-6.37-20.18L28.76,1c-2.58-3.03-8.66,1.42-6.12,5.09L37.18,24c2.75,3.34-2.36,7.76-5.2,4.32L16.94,9.8 c-2.8-3.21-8.59,1.03-5.66,4.7c4.24,5.1,10.8,13.43,15.04,18.53c2.94,2.99-1.53,7.42-4.43,3.69L6.96,18.32 c-2.19-2.38-5.77-0.9-6.72,1.88c-1.02,2.97,1.49,5.14,3.2,7.34L20.1,49.06c5.17,5.99,10.95,9.54,17.67,7.53 c1.03-0.31,2.29-0.94,3.64-1.77l44.76,57.78c2.41,3.11,7.06,3.44,10.08,0.93l0.69-0.57c3.4-2.83,3.95-8,1.04-11.34L50.58,47.16 C51.96,45.62,52.97,44.16,53.31,43.05L53.31,43.05z M65.98,55.65l7.37-8.94C63.87,23.21,99-8.11,116.03,6.29 C136.72,23.8,105.97,66,84.36,55.57l-8.73,11.09L65.98,55.65L65.98,55.65z"></path> </g> </g></svg>
+                                    </div>
+                                </button>
+                                <div class="color-palette hidden"></div>
+                            </div>
+                                
+                            <button class="category-description" type="button">
+                                <span class="category-title"></span>
+                                <span class="category-expense">$0,00</span>
+                            </button>
 
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 14 14" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m 12.499079,12.25525 c 0.0968,0 0.188377,-0.0436 0.249339,-0.11884 0.06096,-0.0752 0.08473,-0.17385 0.06473,-0.26853 l -0.202146,-0.95662 c 0.115125,-0.11137 0.187491,-0.26686 0.187491,-0.43975 0,-0.182 -0.08106,-0.34343 -0.206876,-0.45558 l 0,-3.32202 -0.810333,0.50146 0,2.82056 c -0.125815,0.11215 -0.2069,0.27358 -0.2069,0.45558 0,0.17291 0.07239,0.32841 0.187515,0.43975 l -0.20217,0.95662 c -0.02,0.0947 0.0038,0.19335 0.06473,0.26853 0.06096,0.0752 0.152539,0.11884 0.249339,0.11884 l 0.625281,0 z M 12.773741,4.75539 7.5021019,1.49209 C 7.3477151,1.39699 7.1736728,1.34925 6.9996305,1.34925 c -0.1740423,0 -0.3482077,0.0477 -0.5016586,0.14284 l -5.271713,3.2633 C 1.0854931,4.84249 0.99999905,4.99633 0.99999905,5.1619 c 0,0.1656 0.085494,0.31949 0.22625985,0.40673 l 5.2716883,3.26333 c 0.153451,0.0952 0.3276163,0.14284 0.5016586,0.14284 0.1740423,0 0.3481092,-0.0477 0.5024714,-0.14284 L 12.773741,5.56863 c 0.140766,-0.0872 0.22626,-0.24113 0.22626,-0.40673 0,-0.16557 -0.08549,-0.31946 -0.22626,-0.40651 z M 6.9996059,9.78508 c -0.3283798,0 -0.6488777,-0.0912 -0.928242,-0.26411 l -3.0750017,-1.90368 0,3.27796 c 0,0.97016 1.7931578,1.7555 4.0032436,1.7555 2.2108742,0 4.0038842,-0.78536 4.0038842,-1.7555 l 0,-3.27796 -3.0748786,1.90368 C 7.6492472,9.69388 7.3279857,9.78508 6.9996059,9.78508 Z"></path></g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Degree</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
+                            <button class="category-settings" type="button">
+                                <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, -1, 0, 0)rotate(90)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
+            </template>
 
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="-1 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M7.181 15.129a1.81 1.81 0 0 0 .223.872H1.85a1.27 1.27 0 0 1-1.267-1.267v-1.9A3.176 3.176 0 0 1 3.75 9.667h5.478a3.177 3.177 0 0 0 .557 1.067 3.135 3.135 0 0 0-2.604 3.086zM6.6 8.717a3.236 3.236 0 1 1 3.236-3.236A3.236 3.236 0 0 1 6.6 8.717zm9.817 6.412a.875.875 0 0 1-.872.872H9.003a.875.875 0 0 1-.872-.872V13.82a2.187 2.187 0 0 1 2.18-2.18h3.925a2.187 2.187 0 0 1 2.18 2.18zm-1.915-6.372a2.228 2.228 0 1 1-2.228-2.228 2.228 2.228 0 0 1 2.228 2.228z"></path></g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Family</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" height="1.5rem" width="1.5rem" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 423.812 423.812" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M162.511,52.303C176.775,40.983,193.938,35,212.144,35c18.402,0,35.705,6.093,50.04,17.621 c3.232,2.6,7.106,3.863,10.956,3.863c5.118,0,10.191-2.235,13.648-6.534c6.057-7.531,4.861-18.547-2.671-24.604 C263.793,9.001,238.233,0,212.144,0c-26.188,0-50.875,8.606-71.391,24.887c-7.57,6.008-8.837,17.016-2.829,24.587 C143.934,57.045,154.941,58.312,162.511,52.303z"></path> <path d="M260.679,81.838c-13.679-11.001-30.882-17.06-48.44-17.06c-17.374,0-34.437,5.949-48.045,16.75 c-7.57,6.008-8.836,17.016-2.828,24.586c6.007,7.57,17.015,8.837,24.586,2.828c7.554-5.995,16.644-9.164,26.287-9.164 c9.748,0,18.913,3.228,26.505,9.333c3.233,2.6,7.107,3.864,10.957,3.864c5.118,0,10.19-2.234,13.647-6.533 C269.405,98.911,268.21,87.895,260.679,81.838z"></path> <path d="M411.112,281.428c-0.005-4.441-0.009-8.977-0.009-13.605c0-30.593-10.766-59.648-30.313-81.815 c-21.424-24.293-51.35-38.273-86.54-40.429l-0.146-0.009l-166.237,0.149l-0.35,0.013c-34.611,2.601-64.015,16.75-85.032,40.918 c-19.201,22.08-29.776,50.907-29.776,81.172c0,4.597-0.005,9.102-0.009,13.514c-0.07,69.621-0.116,115.615,18.113,133.862 c5.71,5.716,13.135,8.614,22.068,8.614c24.501,0,44.836-21.946,75.617-55.166c10.896-11.76,23.246-25.088,37.558-39.404 c2.481-1.981,18.354-4.771,45.872-4.771c27.518,0,43.39,2.79,45.813,4.717c14.387,14.387,26.747,27.729,37.651,39.501 c30.749,33.194,51.063,55.123,75.554,55.123c8.933,0,16.355-2.897,22.064-8.612C411.231,396.961,411.184,351,411.112,281.428z M136.492,267.269h-16.433v16.433c0,9.298-7.564,16.862-16.862,16.862S86.335,293,86.335,283.702v-16.433H69.901 c-9.298,0-16.862-7.564-16.862-16.862s7.564-16.863,16.862-16.863h16.433v-16.433c0-9.298,7.564-16.862,16.862-16.862 s16.862,7.564,16.862,16.862v16.433h16.433c9.298,0,16.862,7.565,16.862,16.863S145.79,267.269,136.492,267.269z M368.729,270.265 c0,8.16-6.676,14.836-14.836,14.836h-51.126c-8.16,0-14.836-6.676-14.836-14.836v-39.718c0-8.16,6.676-14.836,14.836-14.836h51.126 c8.16,0,14.836,6.676,14.836,14.836V270.265z"></path> </g> </g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Leisure</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11.3861 1.21065C11.7472 0.929784 12.2528 0.929784 12.6139 1.21065L21.6139 8.21065C21.8575 8.4001 22 8.69141 22 9V20.5C22 21.3284 21.3284 22 20.5 22H15V14C15 13.4477 14.5523 13 14 13H10C9.44772 13 9 13.4477 9 14V22H3.5C2.67157 22 2 21.3284 2 20.5V9C2 8.69141 2.14247 8.4001 2.38606 8.21065L11.3861 1.21065Z" fill="currentColor"></path> </g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">House</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>health</title> <path d="M27 28.031h-2v1.938h-4v-1.938h-11v1.938h-4v-1.938h-2c-1.105 0-2-0.896-2-2v-17c0-1.105 0.895-2 2-2h23c1.104 0 2 0.896 2 2v17c0 1.105-0.896 2-2 2zM20.999 16.031h-3.999v-4h-3v4h-4v3h4v4h3v-4h3.999v-3zM19 4.010h-6v2.021h-2v-0.979h1v-3.021h7.958v3h1.042v1h-2v-2.021z"></path> </g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Health</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg height="1.5rem" width="1.5rem" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 502.672 502.672" xml:space="preserve" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <g> <path style="fill:currentColor;" d="M138.29,168.019h258.806v-16.178c0-13.352-10.936-24.267-24.267-24.267H266.011v-14.129 c0-20.104-16.351-36.39-36.39-36.39h-62.124c-9.707,0-18.831,3.796-25.734,10.699c-6.903,6.903-10.678,15.962-10.678,25.691 v14.15H24.267C10.915,127.574,0,138.488,0,151.841v216.722l81.581-165.275C91.482,183.161,115.9,168.019,138.29,168.019z M155.353,113.445c0-3.214,1.316-6.256,3.581-8.542c2.265-2.33,5.328-3.602,8.542-3.602h62.124 c6.709,0,12.123,5.436,12.123,12.144v14.15h-86.369V113.445z"></path> <path style="fill:currentColor;" d="M486.874,192.243H138.29c-13.331,0-29.099,9.793-34.945,21.743L9.599,403.895 c-5.91,11.929,0.194,21.722,13.525,21.722h348.584c13.331,0,29.121-9.772,34.988-21.722l93.725-189.909 C506.309,202.036,500.248,192.243,486.874,192.243z"></path> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Services</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm1-5h1a3 3 0 0 0 0-6H7.99a1 1 0 0 1 0-2H14V5h-3V3H9v2H8a3 3 0 1 0 0 6h4a1 1 0 1 1 0 2H6v2h3v2h2v-2z"></path></g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Payments</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="-3.47 0 27.993 27.993" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path id="Path_6" data-name="Path 6" d="M231.518,134.265c-.006-.085-.022-.166-.03-.242,0,0-.8-6.744-.813-6.866a2.691,2.691,0,0,0-.65-1.745c-.016-.022-.04-.043-.068-.075-1.876-1.8-5.121-2.981-8.828-2.981h0c-3.709,0-6.953,1.183-8.828,2.981a.968.968,0,0,0-.069.075,2.707,2.707,0,0,0-.649,1.745c-.016.122-.812,6.866-.812,6.866-.007.076-.022.157-.031.242a20.63,20.63,0,0,0-.053,4.352c.007.038.876,6.282.884,6.336l0,0c0,.19.706.445,1.919.675a1.161,1.161,0,0,0,1.154,1.06h.8l-2.232,3.021v.636h2.756l.37-.5,2.332-3.157h4.928l2.33,3.157.37.5h2.756v-.636l-2.232-3.021h.8a1.157,1.157,0,0,0,1.152-1.06c1.206-.23,1.909-.483,1.912-.674h0s.878-6.3.885-6.341A20.5,20.5,0,0,0,231.518,134.265Zm-12.558-5.321a.8.8,0,0,1,.8-.8H222.5a.8.8,0,0,1,.8.8v5.4a.8.8,0,0,1-.8.8h-2.742a.8.8,0,0,1-.8-.8Zm-6.811,6.638.792-6.644a.906.906,0,0,1,.906-.9h2.9a.8.8,0,0,1,.8.8v6.858a.8.8,0,0,1-.8.8h-3.691A.907.907,0,0,1,212.149,135.582Zm2.451,7.482a1.47,1.47,0,1,1,1.47-1.473A1.471,1.471,0,0,1,214.6,143.064Zm13.057,0a1.47,1.47,0,1,1,1.47-1.473A1.473,1.473,0,0,1,227.657,143.064Zm1.544-6.576H225.51a.8.8,0,0,1-.8-.8v-6.858a.8.8,0,0,1,.8-.8h2.9a.9.9,0,0,1,.9.9l.791,6.644A.9.9,0,0,1,229.2,136.488Z" transform="translate(-210.598 -122.356)"></path> </g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Transport</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
-
-            <li class="category-list">
-
-                <div class="category-main">
-                    <div class="icon-container">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.cls-1{fill:none;stroke:#020202;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><path class="cls-1" d="M20.76,18.68H3.24A1.74,1.74,0,0,1,1.5,16.94h0a1.76,1.76,0,0,1,1-1.59L12,11.05l9.48,4.3a1.76,1.76,0,0,1,1,1.59h0A1.74,1.74,0,0,1,20.76,18.68Z"></path><path class="cls-1" d="M12,11.05v-.26a2.53,2.53,0,0,1,1.13-2,1.91,1.91,0,1,0-3-1.54"></path></g></svg>
-                    </div>
-                    
-                    <div class="category-description">
-                        <span class="category-title">Clothing</span>
-                        <span class="category-expense">$0,00</span>
-                    </div>
-                </div>
-
-                <div class="category-options">
-                    <button class="category-tag">
-                        <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.678 11.422a2.5 2.5 0 0 0 0 3.536l6.364 6.364a2.5 2.5 0 0 0 3.536 0l7.69-7.69A2.5 2.5 0 0 0 21 11.864V4.5A1.5 1.5 0 0 0 19.5 3h-7.365a2.5 2.5 0 0 0-1.768.732l-7.69 7.69zM14.988 7C13.878 7 13 7.832 13 8.988c0 1.157.878 2.012 1.988 2.012C16.121 11 17 10.145 17 8.988 17 7.832 16.12 7 14.988 7z" fill="currentColor"></path></g></svg>
-                    </button>
-
-                    <button class="category-settings">
-                        <svg fill="currentColor" width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"></path></g></svg>
-                        
-                    </button>
-                </div>
-
-            </li>
         </ul>
         
     </div>
@@ -419,15 +181,21 @@
                     </button>
                 </div>
 
-                <div class="safe-remove-panel hidden">
-                    <ul class="categories-remove-list"></ul>
-                </div>
-
             </div>
 
         </div>
 
     </dialog>
+
+    <div class="safe-remove-panel hidden">
+        <h3>Choose destination category</h3>
+
+        <ul class="categories-remove-list"></ul>
+
+        <button class="confirm-category-remove">
+            Done
+        </button>
+    </div>
 
 
 </div>

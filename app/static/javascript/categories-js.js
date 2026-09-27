@@ -1,3 +1,102 @@
+const defaultCategories = [
+    {
+        name: "Food",
+        subcategories: ["Groceries", "Restaurants", "Delivery", "Snacks"]
+    },
+    {
+        name: "Transport",
+        subcategories: ["Fuel", "Public Transport", "Uber", "Parking"]
+    },
+    {
+        name: "Housing",
+        subcategories: ["Rent", "Electricity", "Water", "Internet"]
+    },
+    {
+        name: "Health",
+        subcategories: ["Medicine", "Doctor", "Dentist"]
+    },
+    {
+        name: "Education",
+        subcategories: ["Tuition", "Courses", "Books"]
+    },
+    {
+        name: "Entertainment",
+        subcategories: ["Movies", "Games", "Streaming"]
+    },
+    {
+        name: "Shopping",
+        subcategories: ["Clothing", "Electronics", "Personal Care"]
+    },
+    {
+        name: "Family",
+        subcategories: ["Children", "Gifts", "Family Support"]
+    },
+    {
+        name: "Services",
+        subcategories: ["Subscriptions", "Cloud Services"]
+    },
+    {
+        name: "Financial",
+        subcategories: ["Bank Fees", "Loans", "Credit Card"]
+    },
+    {
+        name: "Leisure",
+        subcategories: ["Travel", "Hobbies", "Sports"]
+    }
+];
+
+
+const categoryTemplate = document.querySelector("#category-template");
+const subcategoryTemplate = document.querySelector("#subcategory-template");
+const categoriesList = document.querySelector(".categories-list");
+
+
+function createSubcategory(name) {
+
+    const subcategory = subcategoryTemplate.content.cloneNode(true);
+
+    const title = subcategory.querySelector(".category-title");
+
+    title.textContent = name;
+
+    return subcategory;
+}
+
+
+function createCategory(categoryData) {
+
+    const category = categoryTemplate.content.cloneNode(true);
+
+    const title = category.querySelector(".category-title");
+    const subcategoriesList = category.querySelector(".subcategories");
+
+    title.textContent = categoryData.name;
+
+    categoryData.subcategories?.forEach(subcategoryName => {
+
+        const subcategory = createSubcategory(subcategoryName);
+
+        subcategoriesList.append(subcategory);
+    });
+
+    return category;
+}
+
+
+function generateCategories() {
+
+    defaultCategories.forEach(categoryData => {
+
+        const category = createCategory(categoryData);
+
+        categoriesList.append(category);
+    });
+}
+
+
+generateCategories();
+
+
 // Reusable pallete color
 function createColorOptions(palette, onColorSelected) {
     const colors = [
@@ -689,8 +788,7 @@ let categoryBeingRemoved = null;
 
 function setupRemoveCategory() {
 
-    const categories =
-        document.querySelectorAll(".category");
+    const categories = document.querySelectorAll(".category");
 
     const removePanel =
         document.querySelector(".remove-panel");
@@ -698,63 +796,100 @@ function setupRemoveCategory() {
     const removeCategoryName =
         document.querySelector(".remove-category-name");
 
-    const removeCategoriesUl =
-        document.querySelector(".categories-remove-list");
-
-    const chooseCategoryRemoveBtn = 
+    const chooseCategoryRemoveBtn =
         document.querySelector(".choose-category-remove");
 
-    const defaultCategoryRemoveBtn = 
+    const defaultCategoryRemoveBtn =
         document.querySelector(".default-remove-category");
-        
-    const cancelCategoryRemoveBtn = 
+
+    const cancelCategoryRemoveBtn =
         document.querySelector(".cancel-remove-category");
+
+    const chooseCategoriesPanel =
+        document.querySelector(".safe-remove-panel");
+
+    const removeCategoriesList =
+        document.querySelector(".categories-remove-list");
 
 
     categories.forEach(category => {
 
         const removePanelBtn =
-            category.querySelector(".delete-option-btn");
+            category.querySelector(
+                ":scope > .category-options > .settings-dropdown > .delete-option-btn"
+            );
 
-        const settingsPanel = category.querySelector(
+        const settingsPanel =
+            category.querySelector(
                 ":scope > .category-options > .settings-dropdown"
             );
-            
-        const categoryTitle = category.querySelector(".category-title");
 
-        removePanelBtn.addEventListener("click", (event) => {
+        const categoryTitle =
+            category.querySelector(".category-title");
+
+
+        removePanelBtn.addEventListener("click", event => {
 
             event.stopPropagation();
 
+            categoryBeingRemoved = category;
+
             const currentCategoryName =
-                categoryBeingRemoved.querySelector(".category-title").textContent;
+                categoryTitle.textContent;
 
             settingsPanel.classList.add("hidden");
 
-            removeCategoryName.innerHTML = categoryTitle.textContent
-            
+            removeCategoryName.textContent =
+                currentCategoryName;
+
             removePanel.showModal();
-
-        })
-
+        });
     });
 
-    chooseCategoryRemoveBtn.addEventListener("click", (event) => {
+
+    chooseCategoryRemoveBtn.addEventListener("click", event => {
 
         event.stopPropagation();
 
-        categoryBeingRemoved = currentCategoryName;
+        removeCategoriesList.innerHTML = "";
 
-        categoryTitleLi.innerHTML = categoryBeingRemoved.textContent;
+        categories.forEach(category => {
 
-        const categoryTitleLi = document.createElement("li");
+            if (category === categoryBeingRemoved) {
+                return;
+            }
 
-        categoryTitleLi.innerHTML = categoryBeingRemoved;
+            const categoryListItem =
+                document.createElement("li");
 
-        removeCategoriesUl.appendChild(categoryTitleLi);
+            categoryListItem.textContent =
+                category.querySelector(".category-title").textContent;
 
-    })
+            removeCategoriesList.appendChild(categoryListItem);
+        });
 
+        removePanel.close();
+        chooseCategoriesPanel.classList.remove("hidden");
+
+    });
+
+
+    defaultCategoryRemoveBtn.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        // Move transactions to "Others" here.
+    });
+
+
+    cancelCategoryRemoveBtn.addEventListener("click", event => {
+
+        event.stopPropagation();
+
+        removePanel.close();
+
+        categoryBeingRemoved = null;
+    });
 }
 
 setupRemoveCategory();
