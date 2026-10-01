@@ -60,14 +60,25 @@ def delete_category(category_id):
         connection.close()
 
 
-def list_categories():
-
+def list_categories(user_id, page=1, limit=20):
     connection = get_connection()
 
-    try: 
+    try:
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM categories")
+        offset = (page - 1) * limit
+
+        cursor.execute(
+            """
+            SELECT *
+            FROM categories
+            WHERE user_id = ?
+            ORDER BY name
+            LIMIT ?
+            OFFSET ?
+            """,
+            (user_id, limit, offset)
+        )
 
         return cursor.fetchall()
 

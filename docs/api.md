@@ -1,107 +1,13 @@
 
-# 📁 Project Structure
-
-This structure follows a common organization for **FastAPI** applications, making the project easier to maintain, scale, and understand.
-
----
-
-# 📂 Folder and File Responsibilities
-
-| Folder/File     | Responsibility                                                                                         |
-| --------------- | ------------------------------------------------------------------------------------------------------ |
-| **main.py**     | Entry point of the application. Initializes the FastAPI app, registers routers, and starts the server. |
-| **routers/**    | Defines API endpoints and organizes routes by feature or resource.                                     |
-| **models.py**   | Contains SQLAlchemy models that represent the database tables.                                         |
-| **schemas.py**  | Defines Pydantic models used for request validation and API responses.                                 |
-| **crud.py**     | Implements database operations such as Create, Read, Update, and Delete.                               |
-| **database.py** | Configures the database connection, engine, and session management.                                    |
-| **auth.py**     | Handles authentication, authorization, JWT tokens, and password hashing.                               |
-| **templates/**  | Stores HTML templates rendered by Jinja2.                                                              |
-| **static/**     | Contains static assets such as CSS, JavaScript, images, and fonts.                                     |
-| **utils/**      | Stores reusable helper functions, utilities, and common logic shared across the project.               |
-| **tests/**      | Contains automated tests for the application.                                                          |
-
----
-
-# FastAPI Backend Learning Roadmap
-
-## 2. Authentication & Authorization ⭐⭐⭐
-
-1. [x] **Authentication vs Authorization**
-   ↓
-2. [x] **Password hashing & verification**
-   ↓
-3. [x] **OAuth2 basics**
-   ↓
-4. [x] **Bearer tokens**
-   ↓
-5. [x] **JWT structure & claims**
-   ↓
-6. [x] **Token expiration**
-   ↓
-7. [x] **Access vs Refresh tokens**
-   ↓
-8. [x] **`get_current_user` + `Depends()`**
-   ↓
-9. [x] **Resource ownership** ⭐
-   ↓
-10. [x] **401 vs 403**
-    ↓
-11. [x] **Roles / permissions**
-    ↓ Later
-12. [ ] **Cookies vs `localStorage`**
-    ↓
-13. [ ] **XSS**
-    ↓
-14. [ ] **CSRF**
-    ↓
-15. [ ] **CORS**
-    ↓
-16. [ ] **OAuth2 scopes**
-
----
-
-# 7. Pagination ⭐⭐⭐
-
-## Fundamentals
-
-* [ ] What pagination is
-* [ ] `page` and `limit`
-* [ ] SQL `LIMIT`
-* [ ] SQL `OFFSET`
-* [ ] Understand the formula:
-
-```text
-offset = (page - 1) * limit
-```
-
-## FastAPI Pagination
-
-* [ ] Pagination validation with `Query`
-* [ ] Set minimum/maximum values for `page` and `limit`
-* [ ] Return pagination metadata
-* [ ] Calculate `total` count
-* [ ] Calculate `has_next`
-* [ ] Calculate `has_previous`
-
-## SQL Pagination
-
-* [ ] Pagination with SQL
-* [ ] Combine `LIMIT` and `OFFSET`
-* [ ] Order results before pagination
-* [ ] Understand how pagination interacts with filtering and sorting
-
----
-
 # 8. Testing ⭐⭐⭐
 
 ## Testing Fundamentals
 
-1. [ ] **pytest**
+1. [x] **pytest**
    ↓
-2. [ ] **`assert`**
+2. [x] **`assert`**
    ↓
-3. [ ] **Basic unit tests**
+3. [x] **Basic unit tests**
    ↓
 4. [ ] **FastAPI `TestClient`**
    ↓
@@ -308,4 +214,3 @@ Response
 * [ ] Debug vs production mode
 * [ ] Never commit secrets to Git
 
->>>>>>> feature/api

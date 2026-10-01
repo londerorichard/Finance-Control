@@ -50,12 +50,14 @@ def create_transaction(
         connection.close()
 
 
-def list_transactions(user_id):
-
+def list_transactions(user_id, page=1, limit=20):
+    
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
+
+        offset = (page - 1) * limit
 
         cursor.execute(
             """
@@ -63,8 +65,10 @@ def list_transactions(user_id):
             FROM transactions
             WHERE user_id = ?
             ORDER BY created_at DESC
+            LIMIT ?
+            OFFSET ?
             """,
-            (user_id,)
+            (user_id, limit, offset)
         )
 
         return cursor.fetchall()
