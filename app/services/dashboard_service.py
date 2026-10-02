@@ -8,24 +8,31 @@ def get_dashboard_summary(user_id):
         cursor = connection.cursor()
 
         cursor.execute("""
-        SELECT 
-            SUM(
-                CASE
-                    WHEN transaction_type = 'expense'
-                    THEN amount
-                    ELSE 0
-                END
-            ) AS total_expenses,
-            SUM(
-                CASE
-                    WHEN transaction_type = 'income'
-                    THEN amount
-                    ELSE 0
-                END
-            ) AS total_income,
-            COUNT (id)
-        FROM transactions
-        WHERE user_id = ?
+            SELECT 
+                COALESCE(
+                    SUM(
+                        CASE
+                            WHEN transaction_type = 'expense'
+                            THEN amount
+                            ELSE 0
+                        END
+                    ), 0
+                ) AS total_expenses,
+
+                COALESCE(
+                    SUM(
+                        CASE
+                            WHEN transaction_type = 'income'
+                            THEN amount
+                            ELSE 0
+                        END
+                    ), 0
+                ) AS total_income,
+
+                COUNT(id) AS transaction_count
+
+            FROM transactions
+            WHERE user_id = ?
         """, (user_id,))
 
         summary = cursor.fetchone()
@@ -49,9 +56,9 @@ def get_recent_transactions(user_id):
                 t.amount,
                 t.transaction_type,
                 t.description,
-                t.created_at,
+                t.created_at,   
                 t.account,
-                c.name AS category_name
+                COALESCE(c.name, 'Uncategorized') AS category_name
             FROM transactions AS t
             LEFT JOIN categories AS c
                 ON t.category_id = c.id
