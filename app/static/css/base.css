@@ -147,7 +147,7 @@ main {
 
 /* Chrome, Edge, Safari */
 main::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 main::-webkit-scrollbar-track {
@@ -543,7 +543,7 @@ main {
 }
 
 .notification-list::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
 }
 
 .notification-list::-webkit-scrollbar-track {

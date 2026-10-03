@@ -61,6 +61,13 @@ async def categories(request: Request):
         request=request,
         name="categories.html"
     )
+    
+@app.get("/category")
+async def category(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="category.html"
+    )
 
 
 

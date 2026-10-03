@@ -231,72 +231,68 @@ setupColorPalettes();
 
 
 function setupOpenSubcategories() {
+    const categoriesContainer = document.querySelector(".categories-list");
 
-    const categories = document.querySelectorAll(".category");
+    if (!categoriesContainer) {
+        return;
+    }
 
-    categories.forEach(category => {
+    categoriesContainer.addEventListener("click", event => {
+        const tagBtn = event.target.closest(".category-tag");
 
-        const tagBtn = category.querySelector(".category-tag");
-
-        const subcategories =
-            category.querySelector(".subcategories-container");
-
-        const settingsPanel =
-            category.querySelector(".settings-dropdown");
-
-        if (!tagBtn || !subcategories) {
+        if (!tagBtn) {
             return;
         }
 
-        tagBtn.addEventListener("click", event => {
+        event.stopPropagation();
 
-            event.stopPropagation();
+        const category = tagBtn.closest(".category");
 
-            // Close settings in THIS category
-            if (settingsPanel) {
+        if (!category) {
+            return;
+        }
+
+        const subcategories = category.querySelector(
+            ":scope > .category-options .subcategories-container"
+        );
+
+        if (!subcategories) {
+            return;
+        }
+
+        // Close ALL settings panels
+        categoriesContainer
+            .querySelectorAll(".settings-dropdown")
+            .forEach(settingsPanel => {
                 settingsPanel.classList.add("hidden");
-            }
+            });
 
-            // Close subcategories in OTHER categories
-            categories.forEach(otherCategory => {
-
-                const otherSubcategories =
-                    otherCategory.querySelector(".subcategories-container");
-
-                if (
-                    otherSubcategories &&
-                    otherSubcategories !== subcategories
-                ) {
+        // Close subcategories in OTHER categories
+        categoriesContainer
+            .querySelectorAll(".subcategories-container")
+            .forEach(otherSubcategories => {
+                if (otherSubcategories !== subcategories) {
                     otherSubcategories.classList.add("hidden");
                 }
             });
 
-            // Toggle this category's subcategories
-            subcategories.classList.toggle("hidden");
-        });
+        // Toggle this category's subcategories
+        subcategories.classList.toggle("hidden");
     });
 
-    // Close subcategories when clicking somewhere else
     document.addEventListener("click", event => {
+        if (event.target.closest(".category-tag")) {
+            return;
+        }
 
-        categories.forEach(category => {
-
-            const subcategories =
-                category.querySelector(".subcategories-container");
-
-            const tagBtn =
-                category.querySelector(".category-tag");
-
-            if (
-                subcategories &&
-                !subcategories.contains(event.target) &&
-                !tagBtn.contains(event.target)
-            ) {
-                subcategories.classList.add("hidden");
-            }
-        });
+        categoriesContainer
+            .querySelectorAll(".subcategories-container")
+            .forEach(subcategories => {
+                if (!subcategories.contains(event.target)) {
+                    subcategories.classList.add("hidden");
+                }
+            });
     });
-
 }
 
 setupOpenSubcategories();
@@ -862,14 +858,20 @@ function setupRemoveCategory() {
             const categoryListItem =
                 document.createElement("li");
 
-            categoryListItem.textContent =
+            const categoryButton =
+                document.createElement("button");
+
+            categoryButton.className = "category-button";
+
+            categoryButton.textContent =
                 category.querySelector(".category-title").textContent;
 
             removeCategoriesList.appendChild(categoryListItem);
+            categoryListItem.appendChild(categoryButton);
         });
 
         removePanel.close();
-        chooseCategoriesPanel.classList.remove("hidden");
+        chooseCategoriesPanel.showModal();
 
     });
 
@@ -893,6 +895,11 @@ function setupRemoveCategory() {
 }
 
 setupRemoveCategory();
+
+
+// function setupMoveCategories(categoryBeingRemoved) {
+    
+// }
 
 
 function setSameIcon(category) {
