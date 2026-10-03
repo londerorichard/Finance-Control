@@ -1,18 +1,67 @@
 {% extends "base.html" %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="/app/static/css/categories.css">
+<link rel="stylesheet" href="/app/static/css/category.css">
 {% endblock %}
 
 {% block content %}
 <div class="main-container">
 
+    <div class="transactions-container">
 
-    
+        <ul class="transactions-list">
+
+            <template id="transactions-category-template">
+
+                <li class="transaction">
+                    <div class="transaction-header">
+                        <span class="category-name">Food</span>
+                        <span class="subcategory-name">Fast Food</span>
+                        <span class="transaction-day-time">Yesterday - 14:57 PM</span>
+                        <span class="transaction-expense">$37,90</span>
+                    </div>
+                </li>
+
+            </template>
+
+        </ul>
+
+    </div>
+
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="/app/static/javascript/categories-js.js"></script>
+<script src="/app/static/javascript/category-js.js"></script>
 {% endblock %}
+
+
+<!-- ┌─────────────────────────────────────────────────┐
+│ Lunch                              - R$ 35,90   │
+│ Restaurants · Today · Credit Card               │
+└─────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────┐
+│ Supermarket                       - R$ 120,00   │
+│ Groceries · Yesterday · Debit Card              │
+└─────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────┐
+│ Transaction details             ×    │
+│                                      │
+│ Lunch                                │
+│                                      │
+│ Amount       - R$ 35,90              │
+│ Type         Expense                 │
+│ Category     Food                    │
+│ Subcategory  Restaurants             │
+│ Account      Credit Card             │
+│ Date         27/09/2026              │
+│ Time         12:30                   │
+│                                      │
+│ Description                          │
+│ Lunch with friends                   │
+│                                      │
+│ [ Edit ]              [ Delete ]     │
+└──────────────────────────────────────┘ -->
