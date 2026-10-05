@@ -23,7 +23,7 @@ def get_user_by_id_endpoint(user_id: int):
     }
 
 
-@router.put("/upddate/{user_id}", response_model=UserUpdate)
+@router.put("/update/{user_id}", response_model=UserUpdate)
 def update_user_profile_endpoint(user_id: int, new_email: str):
 
     user = get_user_by_id(user_id)
