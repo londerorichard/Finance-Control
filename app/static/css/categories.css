@@ -90,8 +90,6 @@ body {
     min-height: 100%;
 
     background-color: var(--bg-primary);
-
-    border-radius: 0 0 0 2rem;
 }
 
 
@@ -101,7 +99,7 @@ body {
 
 .categories-container {
     width: 100%;
-    padding: 1rem;
+    padding: 0 1rem 1rem;
 }
 
 .categories-list {
