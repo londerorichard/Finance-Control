@@ -1,6 +1,12 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas import (CreateCategory, UpdateCategory, ResponseCategory)
-from app.services.categories_service import create_category, list_categories
+from app.services.categories_service import (
+    create_category, 
+    list_categories, 
+    get_category_by_id, 
+    get_category_by_name,
+    update_category,
+    delete_category)
 
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
@@ -27,68 +33,73 @@ def list_categories_endpoint():
 
 
 @router.get("/get-by-name", response_model=ResponseCategory)
-def get_category_by_name(category_name: str):
+def get_category_by_name_endpoint(category_name: str):
 
-    for category_id, category in categories.items():
-        if category["category_name"] == category_name:
-            return ResponseCategory(
-                id=category_id,
-                name=category["category_name"]
-            )
+    category = get_category_by_name(category_name)
 
-    raise HTTPException(
-        status_code=404,
-        detail="Category not found"
+    if not category:
+        raise HTTPException(
+            status_code=404,
+            detail="Category not found"
+        )
+
+    return ResponseCategory(
+        id=category["id"], 
+        name=category["name"]
     )
 
 
 @router.get("/get-by-id/{id}", response_model=ResponseCategory)
-def get_category_by_id(id: int):
+def get_category_by_id_endpoint(category_id: int):
 
-    if id not in categories:
+    category = get_category_by_id(category_id)
+    
+    if not category:
         raise HTTPException(
             status_code=404,
             detail="Category not found"
         )
 
-    category = categories[id]
-
     return ResponseCategory(
-        id=id,
-        name=category["category_name"]
+        id=category["id"],
+        name=category["name"]
     )
 
 
-@router.put("/update-category/{id}", response_model=ResponseCategory)
-def update_category(id: int, category_updated: UpdateCategory):
+@router.put("/update-category/{category_id}", response_model=ResponseCategory)
+def update_category(category_id: int, category_updated: UpdateCategory):
+    
+    category = get_category_by_id(category_id)
 
-    if id not in categories:
+    if not category:
         raise HTTPException(
             status_code=404,
             detail="Category not found"
         )
 
-    categories[id]["category_name"] = category_updated.name
+    update_category(category_id, category_updated)
+
+    updated_category = get_category_by_id(category_id)
 
     return ResponseCategory(
-        id=id,
-        name=category_updated.name
+        id=updated_category["id"],
+        name=updated_category["name"]
     )
 
 
-@router.delete("/delete-category/{id}")
-def delete_category(category_id: int):
+@router.delete("/delete-category/{category_id}")
+def delete_category_endpoint(category_id: int):
 
-    if category_id not in categories:
+    category = get_category_by_id(category_id)
+
+    if not category:
         raise HTTPException(
             status_code=404,
             detail="Category not found"
         )
 
-    category_name = categories[category_id]["category_name"]
-
-    del categories[category_id]
+    delete_category(category_id)
 
     return {
-        "success": f"{category_name} successfully deleted"
+        "success": f"Category {category_id} successfully deleted"
     }

@@ -16,12 +16,6 @@ import sqlite3
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-
-# ==========================================================
-# ENDPOINTS
-# ==========================================================
-
-
 @router.post("/register", response_model=UserResponse)
 def register_user(new_user: UserCreate):
 

@@ -10,6 +10,7 @@ def create_transaction(
     category_id,
     account
 ):
+    
     connection = get_connection()
 
     try:
@@ -49,14 +50,22 @@ def create_transaction(
         connection.close()
 
 
-def list_transactions():
+def list_transactions(user_id):
 
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
 
-        cursor.execute("SELECT * FROM transactions")
+        cursor.execute(
+            """
+            SELECT *
+            FROM transactions
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+            """,
+            (user_id,)
+        )
 
         return cursor.fetchall()
 
@@ -71,24 +80,172 @@ def calculate_balance(user_id):
     try:
         cursor = connection.cursor()
 
+        cursor.execute(
+            """
+            SELECT
+                COALESCE(
+                    SUM(
+                        CASE
+                            WHEN transaction_type = 'income'
+                                THEN amount
+
+                            WHEN transaction_type = 'expense'
+                                THEN -amount
+
+                            ELSE 0
+                        END
+                    ),
+                    0
+                ) AS balance
+            FROM transactions
+            WHERE user_id = ?
+            """,
+            (user_id,)
+        )
+
+        result = cursor.fetchone()
+
+        return result["balance"]
+
+    finally:
+        connection.close()
+
+
+def get_single_transaction(user_id, transaction_id):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
         cursor.execute("""
-        SELECT * FROM transactions
-        WHERE user_id = ?
-        """,(user_id,))
+            SELECT
+                t.id,
+                t.amount,
+                t.transaction_type,
+                t.description,
+                t.created_at,
+                t.category_id,
+                c.name AS category_name
+            FROM transactions t
+            LEFT JOIN categories c
+                ON t.category_id = c.id
+            WHERE t.user_id = ?
+            AND t.id = ?
+        """, (user_id, transaction_id))
 
-        transactions = cursor.fetchall()
+        return cursor.fetchone()
 
-        balance = 0
+    finally:
+        connection.close()
 
-        for transaction in transactions:
 
-            if transaction["type"] == "income":
-                balance += transaction["amount"]
+def update_transaction(
+    user_id,
+    transaction_id,
+    amount,
+    transaction_type,
+    description,
+    category_id,
+    account
+):
+    connection = get_connection()
 
-            elif transaction["type"] == "expense":
-                balance -= transaction["amount"]
+    try:
+        cursor = connection.cursor()
 
-        return balance
+        cursor.execute("""
+            UPDATE transactions
+            SET
+                amount = ?,
+                transaction_type = ?,
+                description = ?,
+                category_id = ?,
+                account = ?
+            WHERE user_id = ?
+            AND id = ?
+        """, (
+            amount,
+            transaction_type.value,
+            description,
+            category_id,
+            account,
+            user_id,
+            transaction_id
+        ))
+
+        connection.commit()
+
+        cursor.execute("""
+            SELECT *
+            FROM transactions
+            WHERE user_id = ?
+            AND id = ?
+        """, (user_id, transaction_id))
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()
+
+
+def delete_transaction(user_id, transaction_id):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            DELETE FROM transactions
+            WHERE user_id = ?
+            AND id = ?
+        """, (user_id, transaction_id))
+
+        connection.commit()
+
+    finally:
+        connection.close()
+
+
+
+
+def get_transaction_by_type(user_id, transaction_type):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT * FROM transactions
+            WHERE user_id = ?
+            AND transaction_type = ?
+        """, (user_id, transaction_type))
+
+        result = cursor.fetchall()
+
+        return result
+
+    finally:
+        connection.close()
+
+
+def get_transaction_by_category(user_id, transaction_type):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT * FROM 
+            JOIN transaction
+        """, (user_id, transaction_type))
+
+        result = cursor.fetchall()
+
+        return result
 
     finally:
         connection.close()
