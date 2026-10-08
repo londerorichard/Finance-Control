@@ -9,9 +9,9 @@
    ↓
 3. [x] **Basic unit tests**
    ↓
-4. [ ] **FastAPI `TestClient`**
+4. [x] **FastAPI `TestClient`**
    ↓
-5. [ ] **Testing GET / POST / PATCH / DELETE**
+5. [x] **Testing GET / POST / PATCH / DELETE**
    ↓
 6. [ ] **Testing status codes + response JSON**
    ↓

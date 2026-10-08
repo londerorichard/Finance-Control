@@ -1,9 +1,7 @@
 from app.auth.security import hash_password, verify_password
 from app.auth.jwt import create_access_token, decode_token
 from datetime import datetime, timedelta, timezone
-
 from jose import jwt
-
 from app.auth.jwt import (
     ALGORITHM,
     SECRET_KEY,
