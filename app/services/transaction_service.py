@@ -303,7 +303,6 @@ def delete_transaction(user_id, transaction_id):
 
 
 
-
 def get_transaction_by_type(user_id, transaction_type):
 
     connection = get_connection()
