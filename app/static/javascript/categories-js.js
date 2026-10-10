@@ -299,26 +299,31 @@ setupOpenSubcategories();
 
 
 function setupCategoriesSettings() {
+    const categories = document.querySelectorAll(".category, .subcategory");
 
-    const categories = document.querySelectorAll(".category");
+    function getSettingsButton(category) {
+        return category.querySelector(
+            ":scope > .category-options > .category-settings, :scope > .category-settings"
+        );
+    }
+
+    function getSettingsPanel(category) {
+        return category.querySelector(
+            ":scope > .category-options > .settings-dropdown, :scope > .settings-dropdown"
+        );
+    }
 
     categories.forEach(category => {
+        const settingsButton = getSettingsButton(category);
+        const settingsPanel = getSettingsPanel(category);
 
-        const categorySettingsBtn =
-            category.querySelector(":scope > .category-options > .category-settings");
+        const subcategories = category.querySelector(
+            ":scope > .category-options > .subcategories-container"
+        );
 
-        const settingsPanel =
-            category.querySelector(":scope > .category-options > .settings-dropdown");
+        if (!settingsButton || !settingsPanel) return;
 
-        const subcategories =
-            category.querySelector(":scope > .category-options .subcategories-container");
-
-        if (!categorySettingsBtn || !settingsPanel) {
-            return;
-        }
-
-        categorySettingsBtn.addEventListener("click", event => {
-
+        settingsButton.addEventListener("click", event => {
             event.stopPropagation();
 
             if (subcategories) {
@@ -326,11 +331,7 @@ function setupCategoriesSettings() {
             }
 
             categories.forEach(otherCategory => {
-
-                const otherPanel =
-                    otherCategory.querySelector(
-                        ":scope > .category-options > .settings-dropdown"
-                    );
+                const otherPanel = getSettingsPanel(otherCategory);
 
                 if (otherPanel && otherPanel !== settingsPanel) {
                     otherPanel.classList.add("hidden");
@@ -341,23 +342,14 @@ function setupCategoriesSettings() {
         });
     });
 
-    // Close settings when clicking somewhere else
     document.addEventListener("click", event => {
-
         categories.forEach(category => {
-
-            const settingsPanel =
-                category.querySelector(
-                    ":scope > .category-options > .settings-dropdown"
-                );
-
-            const settingsButton =
-                category.querySelector(
-                    ":scope > .category-options > .category-settings"
-                );
+            const settingsPanel = getSettingsPanel(category);
+            const settingsButton = getSettingsButton(category);
 
             if (
                 settingsPanel &&
+                settingsButton &&
                 !settingsPanel.contains(event.target) &&
                 !settingsButton.contains(event.target)
             ) {
@@ -436,192 +428,143 @@ setupIconPicker();
 
 
 let categoryBeingEdited = null;
-
 let editedCategoryName = null;
 let editedCategoryColor = null;
 let editedCategoryIcon = null;
 
-
 function setupEditCategory() {
+    const categories = document.querySelectorAll(".category, .subcategory");
 
-    const categories =
-        document.querySelectorAll(".category");
+    const editCategoryPanel = document.querySelector(".edit-category");
 
-    const editCategoryPanel =
-        document.querySelector(".edit-category");
+    if (!editCategoryPanel) {
+        console.error("Edit category panel not found.");
+        return;
+    }
 
-    const input =
-        editCategoryPanel.querySelector(".edit-category-input");
+    const input = editCategoryPanel.querySelector(".edit-category-input");
+    const colorPickerBtn = editCategoryPanel.querySelector(".collor-picker-btn");
+    const colorPalette = editCategoryPanel.querySelector(".edit-color-palette");
+    const iconPickerBtn = editCategoryPanel.querySelector(".icon-picker-btn");
+    const iconPickerPanel = editCategoryPanel.querySelector(".icon-picker-panel");
+    const saveChanges = editCategoryPanel.querySelector(".save-category-edition");
+    const cancelChanges = editCategoryPanel.querySelector(".cancel-category-edition");
 
-    const colorPickerBtn =
-        editCategoryPanel.querySelector(".collor-picker-btn");
-
-    const colorPalette =
-        editCategoryPanel.querySelector(".edit-color-palette");
-
-    const iconPickerBtn =
-        editCategoryPanel.querySelector(".icon-picker-btn");
-
-    const iconPickerPanel =
-        editCategoryPanel.querySelector(".icon-picker-panel");
-
-    const saveChanges =
-        editCategoryPanel.querySelector(".save-category-edition");
-
-    const cancelChanges =
-        editCategoryPanel.querySelector(".cancel-category-edition");
-
+    if (
+        !input ||
+        !colorPickerBtn ||
+        !colorPalette ||
+        !iconPickerBtn ||
+        !iconPickerPanel ||
+        !saveChanges ||
+        !cancelChanges
+    ) {
+        console.error("One or more edit category panel elements were not found.");
+        return;
+    }
 
     // Create color options once
-
     createColorOptions(colorPalette, color => {
-
         if (!categoryBeingEdited) {
             return;
         }
 
-        // Change only the temporary value
         editedCategoryColor = color;
 
-        // Update both picker buttons
         colorPickerBtn.style.backgroundColor = color;
         iconPickerBtn.style.backgroundColor = color;
 
         colorPalette.classList.add("hidden");
     });
 
-
-    // Setup Edit buttons
-
+    // Setup Edit buttons for categories and subcategories
     categories.forEach(category => {
-
-        const editCategoryBtn =
-            category.querySelector(
-                ":scope > .category-options > .settings-dropdown > .edit-option-btn"
-            );
+        const editCategoryBtn = category.querySelector(
+            ":scope > .category-options > .settings-dropdown > .edit-option-btn, " +
+            ":scope > .settings-dropdown > .edit-option-btn"
+        );
 
         if (!editCategoryBtn) {
             return;
         }
 
-
         editCategoryBtn.addEventListener("click", event => {
-
             event.stopPropagation();
 
             categoryBeingEdited = category;
 
-
             // Get current category name
+            const categoryTitle = category.querySelector(".category-title");
 
-            const categoryTitle =
-                category.querySelector(".category-title");
-
-            editedCategoryName =
-                categoryTitle.textContent;
-
-            input.value =
-                editedCategoryName;
-
+            editedCategoryName = categoryTitle.textContent;
+            input.value = editedCategoryName;
 
             // Get current category color
-            // The icon-container is the source of truth
-
-            const iconContainer =
-                category.querySelector(".icon-container");
+            const iconContainer = category.querySelector(".icon-container");
 
             if (iconContainer) {
-
                 editedCategoryColor =
                     getComputedStyle(iconContainer).backgroundColor;
 
-                colorPickerBtn.style.backgroundColor =
-                    editedCategoryColor;
-
-                iconPickerBtn.style.backgroundColor =
-                    editedCategoryColor;
+                colorPickerBtn.style.backgroundColor = editedCategoryColor;
+                iconPickerBtn.style.backgroundColor = editedCategoryColor;
             }
 
-
             // Get current category icon
-
-            const categoryIcon =
-                category.querySelector(".icon-container svg");
+            const categoryIcon = category.querySelector(".icon-container svg, .icon-container i");
 
             if (categoryIcon) {
-
                 editedCategoryIcon =
                     categoryIcon.getAttribute("data-lucide");
 
                 iconPickerBtn.innerHTML = "";
 
-                const pickerIcon =
-                    categoryIcon.cloneNode(true);
-
+                const pickerIcon = categoryIcon.cloneNode(true);
                 iconPickerBtn.appendChild(pickerIcon);
 
                 lucide.createIcons();
             }
 
-
             // Close pickers when opening modal
-
             colorPalette.classList.add("hidden");
-
             iconPickerPanel.classList.add("hidden");
 
-
             // Show edit modal
-
             editCategoryPanel.showModal();
 
-
-
-            // Hide settings panel when one option is clicked
-
+            // Hide settings dropdown
             const settingsPanel = category.querySelector(
-                ":scope > .category-options > .settings-dropdown"
+                ":scope > .category-options > .settings-dropdown, " +
+                ":scope > .settings-dropdown"
             );
 
-            settingsPanel.classList.add("hidden");
-
+            if (settingsPanel) {
+                settingsPanel.classList.add("hidden");
+            }
         });
     });
 
-
     // Update temporary name
-
     input.addEventListener("input", () => {
-
-        editedCategoryName =
-            input.value;
+        editedCategoryName = input.value;
     });
 
-
     // Open / close edit color picker
-
     colorPickerBtn.addEventListener("click", event => {
-
         event.stopPropagation();
 
-        const isHidden =
-            colorPalette.classList.contains("hidden");
+        const isHidden = colorPalette.classList.contains("hidden");
 
         closeAllColorPalettes();
-
         iconPickerPanel.classList.add("hidden");
 
         if (isHidden) {
             colorPalette.classList.remove("hidden");
         }
-        
     });
 
-
     // Close edit color picker when clicking outside
-
     document.addEventListener("click", event => {
-
         if (
             !colorPalette.contains(event.target) &&
             !colorPickerBtn.contains(event.target)
@@ -630,9 +573,7 @@ function setupEditCategory() {
         }
     });
 
-
     // Open / close edit icon picker
-
     iconPickerBtn.addEventListener("click", event => {
         event.stopPropagation();
 
@@ -645,33 +586,21 @@ function setupEditCategory() {
         }
     });
 
-
     // Icon selection
-
     iconPickerPanel.addEventListener("click", event => {
-
-        const iconOption =
-            event.target.closest(".icon-option");
+        const iconOption = event.target.closest(".icon-option");
 
         if (!iconOption) {
             return;
         }
 
-        editedCategoryIcon =
-            iconOption.dataset.icon;
-
+        editedCategoryIcon = iconOption.dataset.icon;
 
         // Show selected icon in modal
-
         iconPickerBtn.innerHTML = "";
 
-        const selectedIcon =
-            document.createElement("i");
-
-        selectedIcon.setAttribute(
-            "data-lucide",
-            editedCategoryIcon
-        );
+        const selectedIcon = document.createElement("i");
+        selectedIcon.setAttribute("data-lucide", editedCategoryIcon);
 
         iconPickerBtn.appendChild(selectedIcon);
 
@@ -680,11 +609,8 @@ function setupEditCategory() {
         iconPickerPanel.classList.add("hidden");
     });
 
-
     // Close edit icon picker when clicking outside
-
     document.addEventListener("click", event => {
-
         if (
             !iconPickerPanel.contains(event.target) &&
             !iconPickerBtn.contains(event.target)
@@ -693,63 +619,44 @@ function setupEditCategory() {
         }
     });
 
-
     // SAVE
-
     saveChanges.addEventListener("click", event => {
-
         event.stopPropagation();
 
         if (!categoryBeingEdited) {
             return;
         }
 
-
         // Apply name
-
         const categoryTitle =
             categoryBeingEdited.querySelector(".category-title");
 
-        categoryTitle.textContent =
-            editedCategoryName;
-
+        categoryTitle.textContent = editedCategoryName;
 
         // Apply color
-
         applyEditCategoryColor(
             editedCategoryColor,
             colorPickerBtn,
             categoryBeingEdited
         );
 
-
         // Apply icon
-
         if (editedCategoryIcon) {
-
             const categoryIconContainer =
-                categoryBeingEdited.querySelector(
-                    ".icon-container"
-                );
+                categoryBeingEdited.querySelector(".icon-container");
 
             categoryIconContainer.innerHTML = "";
 
-            const newIcon =
-                document.createElement("i");
+            const newIcon = document.createElement("i");
 
-            newIcon.setAttribute(
-                "data-lucide",
-                editedCategoryIcon
-            );
+            newIcon.setAttribute("data-lucide", editedCategoryIcon);
 
             categoryIconContainer.appendChild(newIcon);
 
             lucide.createIcons();
         }
 
-
-        // Close modal
-
+        // Close modal and reset temporary values
         editCategoryPanel.close();
 
         categoryBeingEdited = null;
@@ -758,16 +665,11 @@ function setupEditCategory() {
         editedCategoryIcon = null;
     });
 
-
     // CANCEL
-
     cancelChanges.addEventListener("click", event => {
-
         event.stopPropagation();
 
-        // Nothing needs to be restored because
-        // the real category was never modified.
-
+        // The actual category wasn't changed before saving
         editCategoryPanel.close();
 
         categoryBeingEdited = null;
@@ -783,113 +685,122 @@ setupEditCategory();
 let categoryBeingRemoved = null;
 
 function setupRemoveCategory() {
+    const categories = document.querySelectorAll(".category, .subcategory");
 
-    const categories = document.querySelectorAll(".category");
+    const removePanel = document.querySelector(".remove-panel");
+    const removeCategoryName = document.querySelector(".remove-category-name");
+    const chooseCategoryRemoveBtn = document.querySelector(".choose-category-remove");
+    const defaultCategoryRemoveBtn = document.querySelector(".default-remove-category");
+    const cancelCategoryRemoveBtn = document.querySelector(".cancel-remove-category");
+    const chooseCategoriesPanel = document.querySelector(".safe-remove-panel");
+    const removeCategoriesList = document.querySelector(".categories-remove-list");
+    const closeRemoveCategoriesListBtn = document.querySelector(".cancel-category-remove");
 
-    const removePanel =
-        document.querySelector(".remove-panel");
+    if (
+        !removePanel ||
+        !removeCategoryName ||
+        !chooseCategoryRemoveBtn ||
+        !defaultCategoryRemoveBtn ||
+        !cancelCategoryRemoveBtn ||
+        !chooseCategoriesPanel ||
+        !removeCategoriesList ||
+        !closeRemoveCategoriesListBtn
+    ) {
+        console.error("One or more remove category panel elements were not found.");
+        return;
+    }
 
-    const removeCategoryName =
-        document.querySelector(".remove-category-name");
-
-    const chooseCategoryRemoveBtn =
-        document.querySelector(".choose-category-remove");
-
-    const defaultCategoryRemoveBtn =
-        document.querySelector(".default-remove-category");
-
-    const cancelCategoryRemoveBtn =
-        document.querySelector(".cancel-remove-category");
-
-    const chooseCategoriesPanel =
-        document.querySelector(".safe-remove-panel");
-
-    const removeCategoriesList =
-        document.querySelector(".categories-remove-list");
-
-
+    // Setup Delete buttons for categories and subcategories
     categories.forEach(category => {
+        const removePanelBtn = category.querySelector(
+            ":scope > .category-options > .settings-dropdown > .delete-option-btn, " +
+            ":scope > .settings-dropdown > .delete-option-btn"
+        );
 
-        const removePanelBtn =
-            category.querySelector(
-                ":scope > .category-options > .settings-dropdown > .delete-option-btn"
-            );
+        const settingsPanel = category.querySelector(
+            ":scope > .category-options > .settings-dropdown, " +
+            ":scope > .settings-dropdown"
+        );
 
-        const settingsPanel =
-            category.querySelector(
-                ":scope > .category-options > .settings-dropdown"
-            );
+        const categoryTitle = category.querySelector(".category-title");
 
-        const categoryTitle =
-            category.querySelector(".category-title");
-
+        if (!removePanelBtn || !settingsPanel || !categoryTitle) {
+            return;
+        }
 
         removePanelBtn.addEventListener("click", event => {
-
             event.stopPropagation();
 
             categoryBeingRemoved = category;
 
-            const currentCategoryName =
-                categoryTitle.textContent;
+            removeCategoryName.textContent = categoryTitle.textContent;
 
             settingsPanel.classList.add("hidden");
-
-            removeCategoryName.textContent =
-                currentCategoryName;
 
             removePanel.showModal();
         });
     });
 
-
+    // Choose another category to receive the transactions
     chooseCategoryRemoveBtn.addEventListener("click", event => {
-
         event.stopPropagation();
 
         removeCategoriesList.innerHTML = "";
 
         categories.forEach(category => {
-
             if (category === categoryBeingRemoved) {
                 return;
             }
 
-            const categoryListItem =
-                document.createElement("li");
+            const categoryTitle = category.querySelector(".category-title");
 
-            const categoryButton =
-                document.createElement("button");
+            if (!categoryTitle) {
+                return;
+            }
 
+            const categoryListItem = document.createElement("li");
+            const categoryButton = document.createElement("button");
+
+            categoryButton.type = "button";
             categoryButton.className = "category-button";
+            categoryButton.textContent = categoryTitle.textContent;
 
-            categoryButton.textContent =
-                category.querySelector(".category-title").textContent;
+            categoryButton.addEventListener("click", event => {
+                event.stopPropagation();
 
-            removeCategoriesList.appendChild(categoryListItem);
+                // Move transactions to the selected category here.
+                // categoryBeingRemoved is the category being deleted.
+                // category is the selected destination.
+            });
+
             categoryListItem.appendChild(categoryButton);
+            removeCategoriesList.appendChild(categoryListItem);
         });
 
         removePanel.close();
         chooseCategoriesPanel.showModal();
-
     });
 
+    // Close the destination selection and return to the removal dialog
+    closeRemoveCategoriesListBtn.addEventListener("click", event => {
+        event.stopPropagation();
 
+        chooseCategoriesPanel.close();
+        removePanel.showModal();
+    });
+
+    // Remove the category and move its transactions to "Others"
     defaultCategoryRemoveBtn.addEventListener("click", event => {
-
         event.stopPropagation();
 
         // Move transactions to "Others" here.
     });
 
-
+    // Cancel removal
     cancelCategoryRemoveBtn.addEventListener("click", event => {
-
         event.stopPropagation();
 
         removePanel.close();
-
         categoryBeingRemoved = null;
     });
 }

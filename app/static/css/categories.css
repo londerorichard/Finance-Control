@@ -602,6 +602,8 @@ body {
 
         border: none;
         border-radius: var(--radius-sm);
+
+        cursor: pointer;
     }
     
     .category-button:hover {
