@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import BaseModel, EmailStr, Field
 from enum import Enum
 
@@ -117,11 +117,58 @@ class ResponseCategory(BaseModel):
 
 
 # ==========================================================
-# GOAL SCHEMAS
+# DASHBOARD SCHEMAS
 # ==========================================================
 
+class DashboardSummary(BaseModel):
+    total_income: float
+    total_expenses: float
+    balance: float
+    transaction_count: int
+
+class CategorySummary(BaseModel):
+    category_name: str
+    total_spent: float
+
+class RecentTransaction(BaseModel):
+    id: int
+    amount: float
+    transaction_type: TransactionType
+    description: str | None
+    created_at: datetime
+    account: str | None
+    category_name: str | None
 
 
+# ==========================================================
+# CHARTS SCHEMAS
+# ==========================================================
+
+class MonthlyIncomeExpenses(BaseModel):
+    month: date
+    monthly_income: float
+    monthly_expenses: float
+
+class CategoryExpense(BaseModel):
+    category_id: int | None
+    category_name: str
+    total_expenses: float
+
+class MonthlyBalance(BaseModel):
+    month: date
+    monthly_income: float
+    monthly_expenses: float
+    monthly_balance: float
+
+class SavingsData(BaseModel):
+    month: date
+    monthly_savings: float
+    cumulative_savings: float
+
+
+# ==========================================================
+# GOAL SCHEMAS
+# ==========================================================
 
 # GoalCreate
 # GoalResponse

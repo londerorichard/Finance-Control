@@ -50,12 +50,14 @@ def create_transaction(
         connection.close()
 
 
-def list_transactions(user_id):
-
+def list_transactions(user_id, page=1, limit=20):
+    
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
+
+        offset = (page - 1) * limit
 
         cursor.execute(
             """
@@ -63,8 +65,10 @@ def list_transactions(user_id):
             FROM transactions
             WHERE user_id = ?
             ORDER BY created_at DESC
+            LIMIT ?
+            OFFSET ?
             """,
-            (user_id,)
+            (user_id, limit, offset)
         )
 
         return cursor.fetchall()
@@ -140,6 +144,96 @@ def get_single_transaction(user_id, transaction_id):
         connection.close()
 
 
+def get_transaction_after_date(user_id, date):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT * FROM transactions
+            WHERE created_at >= ?
+            AND user_id = ?
+            ORDER BY created_at ASC
+        """, (date, user_id))
+
+        result = cursor.fetchall()
+        return result
+
+    finally:
+        connection.close()
+
+        
+def get_transactions_between_dates(user_id, start_date, end_date):
+
+    connection = get_connection()
+
+    try:
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT * FROM transactions
+            WHERE created_at >= ?
+            AND created_at < ?
+            AND user_id = ?
+            ORDER BY created_at ASC
+        """, (start_date, end_date, user_id))
+
+        result = cursor.fetchall()
+        return result
+
+    finally:
+        connection.close()
+
+def get_recent_transactions(user_id):
+
+    connection = get_connection()
+
+    try:
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT * FROM transactions
+            WHERE created_at >= date('now', '-7 days')
+            AND user_id = ?
+            ORDER BY created_at DESC
+        """, (user_id,))
+
+        result = cursor.fetchall()
+        return result
+
+    finally:
+        connection.close()
+
+
+def get_transaction_dates(user_id):
+
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT
+                id,
+                amount,
+                created_at,
+                strftime('%Y', created_at) AS year,
+                strftime('%m', created_at) AS month
+            FROM transactions
+            WHERE user_id = ?
+        """, (user_id,))
+
+        result = cursor.fetchall()
+        return result
+
+    finally:
+        connection.close()
+
+
 def update_transaction(
     user_id,
     transaction_id,
@@ -209,7 +303,6 @@ def delete_transaction(user_id, transaction_id):
 
 
 
-
 def get_transaction_by_type(user_id, transaction_type):
 
     connection = get_connection()
@@ -249,3 +342,5 @@ def get_transaction_by_category(user_id, transaction_type):
 
     finally:
         connection.close()
+
+

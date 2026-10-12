@@ -16,7 +16,7 @@ import sqlite3
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-@router.post("/register", response_model=UserResponse)
+@router.post("/register", response_model=UserResponse, status_code=200)
 def register_user(new_user: UserCreate):
 
     try:

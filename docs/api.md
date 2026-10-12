@@ -1,130 +1,17 @@
 
-# 📁 Project Structure
-
-This structure follows a common organization for **FastAPI** applications, making the project easier to maintain, scale, and understand.
-
----
-
-# 📂 Folder and File Responsibilities
-
-| Folder/File     | Responsibility                                                                                         |
-| --------------- | ------------------------------------------------------------------------------------------------------ |
-| **main.py**     | Entry point of the application. Initializes the FastAPI app, registers routers, and starts the server. |
-| **routers/**    | Defines API endpoints and organizes routes by feature or resource.                                     |
-| **models.py**   | Contains SQLAlchemy models that represent the database tables.                                         |
-| **schemas.py**  | Defines Pydantic models used for request validation and API responses.                                 |
-| **crud.py**     | Implements database operations such as Create, Read, Update, and Delete.                               |
-| **database.py** | Configures the database connection, engine, and session management.                                    |
-| **auth.py**     | Handles authentication, authorization, JWT tokens, and password hashing.                               |
-| **templates/**  | Stores HTML templates rendered by Jinja2.                                                              |
-| **static/**     | Contains static assets such as CSS, JavaScript, images, and fonts.                                     |
-| **utils/**      | Stores reusable helper functions, utilities, and common logic shared across the project.               |
-| **tests/**      | Contains automated tests for the application.                                                          |
-
-
-
-=======
-* [x] Create the project structure
-* [x] Configure the virtual environment
-* [x] Install dependencies
-* [x] Configure the database connection (`database.py`)
-* [x] Create the database models (`models.py`)
-* [x] Create the Pydantic schemas (`schemas.py`)
-* [x] Implement CRUD operations (`crud.py`)
-* [x] Build the API routes (`routers/`)
-* [x] Implement authentication (`auth.py`)
-* [x] Create the HTML templates (`templates/`)
-* [ ] Add CSS, JavaScript, and images (`static/`)
-* [ ] Write automated tests (`tests/`)
-* [ ] Refactor and improve the code
-* [ ] Update the documentation (`README.md`)
-* [ ] Deploy the application
-
----
-
-# FastAPI Backend Learning Roadmap
-
-## 2. Authentication & Authorization ⭐⭐⭐
-
-1. [x] **Authentication vs Authorization**
-   ↓
-2. [x] **Password hashing & verification**
-   ↓
-3. [ ] **OAuth2 basics**
-   ↓
-4. [ ] **Bearer tokens**
-   ↓
-5. [ ] **JWT structure & claims**
-   ↓
-6. [ ] **Token expiration**
-   ↓
-7. [ ] **Access vs Refresh tokens**
-   ↓
-8. [ ] **`get_current_user` + `Depends()`**
-   ↓
-9. [ ] **Resource ownership** ⭐
-   ↓
-10. [ ] **401 vs 403**
-    ↓
-11. [ ] **Roles / permissions**
-    ↓
-12. [ ] **Cookies vs `localStorage`**
-    ↓
-13. [ ] **XSS**
-    ↓
-14. [ ] **CSRF**
-    ↓
-15. [ ] **CORS**
-    ↓
-16. [ ] **OAuth2 scopes**
-
----
-
-# 7. Pagination ⭐⭐⭐
-
-## Fundamentals
-
-* [ ] What pagination is
-* [ ] `page` and `limit`
-* [ ] SQL `LIMIT`
-* [ ] SQL `OFFSET`
-* [ ] Understand the formula:
-
-```text
-offset = (page - 1) * limit
-```
-
-## FastAPI Pagination
-
-* [ ] Pagination validation with `Query`
-* [ ] Set minimum/maximum values for `page` and `limit`
-* [ ] Return pagination metadata
-* [ ] Calculate `total` count
-* [ ] Calculate `has_next`
-* [ ] Calculate `has_previous`
-
-## SQL Pagination
-
-* [ ] Pagination with SQL
-* [ ] Combine `LIMIT` and `OFFSET`
-* [ ] Order results before pagination
-* [ ] Understand how pagination interacts with filtering and sorting
-
----
-
 # 8. Testing ⭐⭐⭐
 
 ## Testing Fundamentals
 
-1. [ ] **pytest**
+1. [x] **pytest**
    ↓
-2. [ ] **`assert`**
+2. [x] **`assert`**
    ↓
-3. [ ] **Basic unit tests**
+3. [x] **Basic unit tests**
    ↓
-4. [ ] **FastAPI `TestClient`**
+4. [x] **FastAPI `TestClient`**
    ↓
-5. [ ] **Testing GET / POST / PATCH / DELETE**
+5. [x] **Testing GET / POST / PATCH / DELETE**
    ↓
 6. [ ] **Testing status codes + response JSON**
    ↓
@@ -327,4 +214,3 @@ Response
 * [ ] Debug vs production mode
 * [ ] Never commit secrets to Git
 
->>>>>>> feature/api
