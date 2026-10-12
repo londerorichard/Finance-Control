@@ -34,11 +34,16 @@ def register_user(new_user: UserCreate):
 
 @router.post("/login", response_model=Token)
 def login_user_endpoint(user_data: UserLogin):
-
     user = login_user(
         user_data.email,
         user_data.password
     )
+
+    if user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
 
     token = create_access_token(user["id"])
 

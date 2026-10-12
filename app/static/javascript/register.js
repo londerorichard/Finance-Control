@@ -1,4 +1,4 @@
-import { registerUser } from "./api.js";
+import { registerUser } from "./api/auth.js";
 
 function activateIconEye() {
     const boxes = document.querySelectorAll(".password-box");

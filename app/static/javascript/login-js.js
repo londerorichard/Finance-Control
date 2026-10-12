@@ -1,3 +1,5 @@
+import { loginUser } from "./api/auth.js";
+
 function activateIconEye() {
     const boxes = document.querySelectorAll(".password-box");
 
@@ -35,3 +37,30 @@ function validateEmail() {
         console.log("Email inválido!")
     }
 }
+validateEmail();
+
+
+function setupLoginUser() {
+    const loginBox = document.querySelector(".login-box");
+    const errorBox = document.querySelector(".error-message");
+
+    loginBox.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = loginBox.querySelector("#email").value;
+        const password = loginBox.querySelector("#password").value;
+
+        try {
+            const data = await loginUser(email, password);
+
+            console.log("SUCCESS:", data);
+
+            loginBox.reset();
+            errorBox.textContent = "";
+        } catch (error) {
+            console.error("Login failed:", error);
+            errorBox.textContent = error.message;
+        }
+    });
+}
+setupLoginUser();
