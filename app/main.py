@@ -70,5 +70,12 @@ async def category(request: Request):
         name="category.html"
     )
 
+@app.get("/news")
+async def news(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="news.html"
+    )
+
 
 

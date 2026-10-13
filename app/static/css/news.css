@@ -1,3 +1,100 @@
+
+/* ==========================================================================
+   RESET
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+
+/* ==========================================================================
+   VARIABLES
+   ========================================================================== */
+
+:root {
+
+    /* ===================================
+       Colors
+    =================================== */
+
+    --bg-primary: #1f1f21;
+    --bg-secondary: #030a0f;
+    --bg-terciary: #302f39;
+
+    --green: rgb(8, 116, 8);
+    --blue: rgb(6, 6, 153);
+    --red: rgb(150, 5, 5);
+
+    --text-primary: #f0f8ff;
+    --text-secondary: #b9b9b9;
+
+    --border: rgba(255, 255, 255, 0.08);
+
+    /* ===================================
+       Spacing
+    =================================== */
+
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+    --space-3xl: 3rem;
+
+    /* ===================================
+       Border Radius
+    =================================== */
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+
+    /* ===================================
+       Shadows
+    =================================== */
+
+    --shadow-sm: 0 2px 10px var(--border);
+
+    /* ===================================
+       Transitions
+    =================================== */
+
+    --transition-fast: .2s ease;
+    --transition-normal: .3s ease;
+}
+
+
+/* ==========================================================================
+   MAIN CONTAINER
+   ========================================================================== */
+
+.main-container {
+    background-color: var(--bg-terciary);
+    height: 100%;
+}
+
+.news-container {
+    background-color: var(--bg-terciary);
+    height: 100%;
+}
+
+
 .news-header {
     grid-area: news-header;
 
