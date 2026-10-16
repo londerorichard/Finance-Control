@@ -64,7 +64,7 @@ class TransactionType(str, Enum):
 
 
 class TransactionCreate(BaseModel):
-    amount: float
+    amount: float = Field(gt=0)
     transaction_type: TransactionType
     description: str | None = None
     category_id: int | None = None
@@ -74,7 +74,7 @@ class TransactionCreate(BaseModel):
 class TransactionResponse(BaseModel):
     id: int
     user_id: int
-    amount: float
+    amount: float = Field(gt=0)
     transaction_type: TransactionType
     description: str | None
     created_at: datetime
@@ -82,7 +82,7 @@ class TransactionResponse(BaseModel):
     account: str | None
 
 class TransactionUpdate(BaseModel):
-    amount: float
+    amount: float = Field(gt=0)
     transaction_type: TransactionType
     description: str | None = None
     category_id: int | None = None
@@ -132,7 +132,7 @@ class CategorySummary(BaseModel):
 
 class RecentTransaction(BaseModel):
     id: int
-    amount: float
+    amount: float = Field(gt=0)
     transaction_type: TransactionType
     description: str | None
     created_at: datetime
