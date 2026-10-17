@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
+from app.auth.dependency import get_current_user
 
 from app.routers import users, categories, transactions, auth
 
@@ -48,8 +49,28 @@ async def base(request: Request):
         name="base.html"
     )
 
+
+@app.get("/login")
+async def login(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="auth/login.html"
+    )
+
+
+@app.get("/register")
+async def register(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="auth/register.html"
+    )
+
+
 @app.get("/dashboard")
-async def dashboard(request: Request):
+async def dashboard(
+    request: Request,
+    current_user=Depends(get_current_user)
+):
     return templates.TemplateResponse(
         request=request,
         name="dashboard.html"
