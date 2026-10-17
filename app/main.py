@@ -78,4 +78,3 @@ async def news(request: Request):
     )
 
 
-

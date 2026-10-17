@@ -1,5 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends
-
+from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi.responses import RedirectResponse
+from app.auth.oauth import oauth
+from app.auth.jwt import create_access_token
+from app.auth.dependency import get_current_user
+import sqlite3
 from app.schemas import (
     UserCreate,
     UserLogin,
@@ -8,11 +12,15 @@ from app.schemas import (
     PasswordChange,
     Token
 )
+from app.services.auth_service import (
+    create_user, 
+    change_password, 
+    login_user, 
+    get_user_by_google_id, 
+    get_user_by_email,
+    create_google_user
+    )
 
-from app.auth.jwt import create_access_token
-from app.auth.dependency import get_current_user
-from app.services.auth_service import create_user, change_password, login_user
-import sqlite3
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -73,6 +81,74 @@ def change_password_endpoint(
     )
 
     return {"message": "Password changed successfully"}
+
+
+@router.get("/google")
+async def google_login(request: Request):
+    redirect_uri = request.url_for("google_callback")
+
+    return await oauth.google.authorize_redirect(
+        request,
+        redirect_uri
+    )
+
+
+@router.get("/google/callback", name="google_callback")
+async def google_callback(request: Request):
+    token = await oauth.google.authorize_access_token(request)
+
+    user_info = token.get("userinfo")
+
+    if not user_info:
+        return RedirectResponse(
+            url="/login?error=google_auth_failed",
+            status_code=303,
+        )
+
+    google_id = user_info.get("sub")
+    email = user_info.get("email")
+    email_verified = user_info.get("email_verified", False)
+
+    if not google_id or not email or not email_verified:
+        return RedirectResponse(
+            url="/login?error=google_auth_failed",
+            status_code=303,
+        )
+
+    user = get_user_by_google_id(google_id)
+
+    if user is None:
+        existing_user = get_user_by_email(email)
+
+        if existing_user is not None:
+            return RedirectResponse(
+                url="/login?error=account_exists",
+                status_code=303,
+            )
+
+        user = create_google_user(email, google_id)
+
+    user_id = user["id"]
+
+    access_token = create_access_token(user_id)
+
+    response = RedirectResponse(
+        url="/dashboard",
+        status_code=303,
+    )
+
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=False,  # Use True in production with HTTPS
+        samesite="lax",
+        max_age=30 * 60,
+        path="/",
+    )
+
+    return response
+
 
 
 # @router.post("/auth/logout")
