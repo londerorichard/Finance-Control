@@ -84,31 +84,14 @@ body {
    MAIN CONTAINER
    ========================================================================== */
 
-.main-container {
-    background-color: var(--bg-terciary);
-    height: 100%;
-}
-
-.news-container {
-    background-color: var(--bg-terciary);
-    height: 100%;
-}
-
-
 .news-header {
     grid-area: news-header;
-
     height: 40px;
-
-    background-color: var(--bg-primary);
 }
 
 .news {
     grid-area: news;
-
     padding: var(--space-sm);
-
-    background-color: var(--bg-primary);
 }
 
 
@@ -119,7 +102,7 @@ body {
 .news-title {
     position: relative;
 
-    padding: var(--space-xs) 0 0 var(--space-lg);
+    padding: 1rem 2.5rem 1.5rem;
 
     color: var(--text-secondary);
     font-size: 1rem;
@@ -155,20 +138,30 @@ body {
 
     position: relative;
 
-    width: 100%;
+    min-width: 0;
+
+    padding: 0.75rem 0.75rem;
 }
+
 
 .carousel-container {
     flex: 1;
-
-    overflow: hidden;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
 }
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
 
 .carousel-track {
     display: flex;
-    gap: var(--space-md);
-
-    transition: transform .3s ease;
+    gap: 1rem;
+    transition: transform 0.3s ease;
 }
 
 
@@ -211,12 +204,12 @@ body {
    ========================================================================== */
 
 .news-card {
-    flex: 0 0 calc((100% - (2 * var(--space-md))) / 3);
+    flex: 0 0 30%;
     
     display: flex;
     flex-direction: column;
 
-    height: 220px;
+    height: auto;
 
     overflow: hidden;
 
@@ -264,7 +257,37 @@ body {
     flex: 1;
     flex-direction: column;
 
-    padding: var(--space-lg)
+    min-width: 0;
+
+    padding: var(--space-lg);
+}
+
+.news-content a {
+    margin-top: auto;
+}
+
+.news-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.news-content p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    margin: 0;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
 }
 
 .news-card h2 {
@@ -289,6 +312,3 @@ body {
     -webkit-line-clamp: 3;
 }
 
-.news-content a {
-    margin-top: auto;
-}
