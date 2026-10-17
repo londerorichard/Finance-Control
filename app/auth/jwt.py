@@ -32,6 +32,9 @@ def decode_token(token: str):
             algorithms=[ALGORITHM],
         )
 
+        if "sub" not in payload:
+            return None
+
         return payload
 
     except JWTError:

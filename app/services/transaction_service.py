@@ -187,6 +187,7 @@ def get_transactions_between_dates(user_id, start_date, end_date):
     finally:
         connection.close()
 
+
 def get_recent_transactions(user_id):
 
     connection = get_connection()
@@ -324,21 +325,31 @@ def get_transaction_by_type(user_id, transaction_type):
         connection.close()
 
 
-def get_transaction_by_category(user_id, transaction_type):
-
+def get_transaction_by_category(user_id, category_name):
     connection = get_connection()
 
     try:
         cursor = connection.cursor()
-
         cursor.execute("""
-            SELECT * FROM 
-            JOIN transaction
-        """, (user_id, transaction_type))
+            SELECT
+                t.id,
+                t.amount,
+                t.transaction_type,
+                t.description,
+                t.created_at,
+                t.account,
+                t.category_id,
+                c.name AS category_name
+            FROM transactions t
+            INNER JOIN categories c
+                ON t.category_id = c.id
+                AND c.user_id = t.user_id
+            WHERE t.user_id = ?
+                AND c.name = ?
+            ORDER BY t.created_at DESC
+        """, (user_id, category_name))
 
-        result = cursor.fetchall()
-
-        return result
+        return cursor.fetchall()
 
     finally:
         connection.close()
