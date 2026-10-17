@@ -1,5 +1,6 @@
 from app.auth.jwt import create_access_token
-from app.routers.users import create 
+from app.services.auth_service import create_user, login_user
+from app.auth.dependency import get_current_user
 
 def test_register_user(db_session):
     email = "newuser@example.com"
@@ -17,7 +18,7 @@ def test_register_user(db_session):
 
 
 def test_login_valid_credentials(db_session, test_user):
-    user = authenticate_user(
+    user = login_user(
         db_session,
         email=test_user.email,
         password="MyPassword123",
@@ -28,7 +29,7 @@ def test_login_valid_credentials(db_session, test_user):
 
 
 def test_login_wrong_password(db_session, test_user):
-    user = authenticate_user(
+    user = login_user(
         db_session,
         email=test_user.email,
         password="WrongPassword123",
@@ -38,7 +39,7 @@ def test_login_wrong_password(db_session, test_user):
 
 
 def test_login_nonexistent_email(db_session):
-    user = authenticate_user(
+    user = login_user(
         db_session,
         email="nonexistent@example.com",
         password="MyPassword123",

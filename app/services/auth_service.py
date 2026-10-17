@@ -48,10 +48,10 @@ def create_user(email, password):
 
 def login_user(email, password):
 
-    connetion = get_connection()
+    connection = get_connection()
     
     try:
-        cursor = connetion.cursor()
+        cursor = connection.cursor()
 
         cursor.execute(""" 
         SELECT * FROM users 
@@ -77,7 +77,7 @@ def login_user(email, password):
         return user
 
     finally:
-        connetion.close()
+        connection.close()
 
 
 def get_user_by_id(user_id):
