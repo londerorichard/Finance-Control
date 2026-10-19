@@ -1,9 +1,35 @@
-export async function updateUserProfile(email) {
+export async function getuserById(user_id, token) {
+    const response = await fetch(
+        `http://127.0.0.1:8000/users/get-by-id/${encodeURIComponent(user_id)}`,
+        {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        const message = typeof data.detail === "string"
+            ? data.detail
+            : "Could not find user";
+
+        throw new Error(message);
+    }
+
+    return data;
+}
+
+
+export async function updateUserProfile(email, token) {
     const response = await fetch(
         "http://127.0.0.1:8000/users/update",
         {
             method: "POST",
             headers: {
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -15,14 +41,18 @@ export async function updateUserProfile(email) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.detail || "Could not update user profile");
+        const message = typeof data.detail === "string"
+            ? data.detail
+            : "Could not update user profile";
+
+        throw new Error(message);
     }
 
     return data;
 }
 
 
-export async function deleteProfile() {
+export async function deleteProfile(token) {
     const response = await fetch(
         "http://127.0.0.1:8000/users/delete_profile",
         {
@@ -36,7 +66,11 @@ export async function deleteProfile() {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.detail || "Coud not delete user profile");
+        const message = typeof data.detail === "string"
+            ? data.detail
+            : "Could not delete user profile";
+
+        throw new Error(message);
     }
 
     return data;

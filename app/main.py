@@ -4,8 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from app.auth.dependency import get_current_user
-
-from app.routers import users, categories, transactions, auth
+from app.routers import users, categories, transactions, auth, charts, dashboard
 
 
 app = FastAPI()
@@ -35,11 +34,12 @@ app.add_middleware(
 
 
 # Routers
-# app.include_router(users.router)
 app.include_router(categories.router)
 app.include_router(transactions.router)
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(charts.router)
+app.include_router(dashboard.router)
 
 
 @app.get("/base")
