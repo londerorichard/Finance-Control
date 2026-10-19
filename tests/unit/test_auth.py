@@ -1,7 +1,7 @@
-from app.auth.security import hash_password, verify_password
-from app.auth.jwt import create_access_token, decode_token
 from datetime import datetime, timedelta, timezone
 from jose import jwt
+
+from app.auth.security import hash_password, verify_password
 from app.auth.jwt import (
     ALGORITHM,
     SECRET_KEY,
@@ -9,6 +9,8 @@ from app.auth.jwt import (
     decode_token,
 )
 
+
+# PASSWORD HASHING
 
 def test_password_hashing():
     password = "MyPassword123"
@@ -20,12 +22,26 @@ def test_password_hashing():
     assert verify_password("WrongPassword", hashed) is False
 
 
+def test_same_password_generates_different_hashes():
+    password = "MyPassword123"
+
+    first_hash = hash_password(password)
+    second_hash = hash_password(password)
+
+    assert first_hash != second_hash
+    assert verify_password(password, first_hash) is True
+    assert verify_password(password, second_hash) is True
+
+
+# JWT TOKENS
+
 def test_create_and_decode_token():
     user_id = 15
 
     token = create_access_token(user_id)
     payload = decode_token(token)
 
+    assert isinstance(token, str)
     assert payload is not None
     assert payload["sub"] == str(user_id)
     assert "exp" in payload
@@ -56,11 +72,13 @@ def test_expired_token():
     assert payload is None
 
 
-def test_tampered_token():
+def test_invalid_signature():
     token = create_access_token(15)
 
     parts = token.split(".")
-    parts[1] = parts[1][::-1]
+
+    # Change the signature without changing the header or payload.
+    parts[2] = ("A" if parts[2][0] != "A" else "B") + parts[2][1:]
 
     tampered_token = ".".join(parts)
 
@@ -69,11 +87,24 @@ def test_tampered_token():
     assert payload is None
 
 
-# [ ] transaction amount validation
-# [ ] valid transaction type
-# [ ] category ownership logic
-# [ ] order/status logic, if applicable
-# [ ] financial calculation functions
+def test_token_missing_subject():
+    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+
+    token = jwt.encode(
+        {
+            "exp": expire,
+        },
+        SECRET_KEY,
+        algorithm=ALGORITHM,
+    )
+
+    payload = decode_token(token)
+
+    assert payload is None
+
+
+
+
 
 
 # [ ] create user

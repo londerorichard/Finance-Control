@@ -148,3 +148,42 @@ def get_category_for_user(category_id, user_id):
 
     finally:
         connection.close()
+
+
+def get_categories_above_amount(user_id, amount):
+    
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            WITH category_amount AS (
+                SELECT
+                    c.id AS category_id,
+                    c.name AS category_name,
+                    SUM(t.amount) AS total_expenses
+                FROM categories c
+                INNER JOIN transactions t
+                    ON c.id = t.category_id
+                    AND c.user_id = t.user_id
+                WHERE c.user_id = ?
+                    AND t.transaction_type = 'expense'
+                GROUP BY c.id, c.name
+            )
+            
+            SELECT
+                category_id,
+                category_name,
+                total_expenses
+            FROM category_amount
+            WHERE total_expenses >= ?
+            ORDER BY total_expenses DESC
+        """, (user_id, amount))
+
+        result = cursor.fetchall()
+
+        return result
+
+    finally:
+        connection.close()

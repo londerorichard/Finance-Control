@@ -162,6 +162,8 @@ function setupRegisterForm() {
             console.log("SUCCESS:", data);
             registerForm.reset();
 
+            window.location.href = "/dashboard";
+
         } catch (error) {
             console.error("Registration failed:", error);
             errorBox.textContent = error.message;

@@ -57,6 +57,9 @@ function setupLoginUser() {
 
             loginBox.reset();
             errorBox.textContent = "";
+
+            window.location.href = "/dashboard";
+
         } catch (error) {
             console.error("Login failed:", error);
             errorBox.textContent = error.message;
