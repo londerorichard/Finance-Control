@@ -2,9 +2,38 @@
 # Python
 # =========================
 
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+tempCodeRunnerFile.py
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment variables
+.env
+
+# IDE settings
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
 
 # Compiled extensions
 *.so
