@@ -187,3 +187,34 @@ def get_categories_above_amount(user_id, amount):
 
     finally:
         connection.close()
+
+
+def get_category_spending_overtime(user_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT
+                strftime('%Y-%m', t.created_at) AS month,
+                COALESCE(c.name, 'Uncategorized') AS category_name,
+                SUM(t.amount) AS monthly_amount
+            FROM transactions t
+            LEFT JOIN categories c
+                ON c.id = t.category_id
+                AND c.user_id = t.user_id
+            WHERE t.user_id = ?
+                AND t.transaction_type = 'expense'
+            GROUP BY
+                month,
+                c.id,
+                c.name
+            ORDER BY
+                month DESC,
+                monthly_amount DESC
+        """, (user_id,))
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
