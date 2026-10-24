@@ -3,6 +3,7 @@ export async function createCategory(newCategoryName, token) {
         "http://127.0.0.1:8000/categories/create",
         {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -32,6 +33,7 @@ export async function listCategories(token) {
         "http://127.0.0.1:8000/categories/list",
         {    
             method: "GET",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -57,6 +59,7 @@ export async function getCategoryByName(categoryName, token) {
         `http://127.0.0.1:8000/categories/get-by-name?categoryName=${encodeURIComponent(categoryName)}`,
         {
             method: "GET",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -82,6 +85,7 @@ export async function getCategoryById(category_id, token) {
         `http://127.0.0.1:8000/categories/get-by-id/${encodeURIComponent(category_id)}`,
         {
             method: "GET",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -107,6 +111,7 @@ export async function updateCategory(category_id, token, categoryUpdated) {
         `http://127.0.0.1:8000/categories/update-category/${encodeURIComponent(category_id)}`,
         {
             method: "PUT",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -134,6 +139,7 @@ export async function deleteCategory(category_id, token) {
         `http://127.0.0.1:8000/categories/delete-category/${encodeURIComponent(category_id)}`,
         {
             method: "DELETE",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`,
             }

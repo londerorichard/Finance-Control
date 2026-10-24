@@ -3,6 +3,7 @@ export async function registerUser(email, password) {
         "http://127.0.0.1:8000/auth/register",
         {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
@@ -32,12 +33,13 @@ export async function loginUser(email, password) {
         "http://127.0.0.1:8000/auth/login",
         {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                email: email,
-                password: password
+                email,
+                password
             })
         }
     );
@@ -45,11 +47,9 @@ export async function loginUser(email, password) {
     const data = await response.json();
 
     if (!response.ok) {
-        const message = typeof data.detail === "string"
-            ? data.detail
-            : "User coundn't be logged in";
-
-        throw new Error(message);
+        throw new Error(
+            data.detail || "User couldn't be logged in"
+        );
     }
 
     return data;
@@ -61,6 +61,7 @@ export async function getCurrentUser(token) {
         "http://127.0.0.1:8000/auth/me",
         {
             method: "GET",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -88,6 +89,7 @@ export async function changePassword(current_password, new_password, token) {
 
     const response = await fetch("http://127.0.0.1:8000/auth/change-password", {
         method: "PUT",
+        credentials: "include",
         headers: {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"

@@ -8,9 +8,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def create_access_token(user_id: int):
-    expire = datetime.now(timezone.utc) + timedelta(
-        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
-    )
+    # expire = datetime.now(timezone.utc) + timedelta(
+    #     minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+    # )
+
+    expire = 60 * 24 * 7
 
     payload = {
         "sub": str(user_id),

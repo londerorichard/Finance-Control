@@ -1,29 +1,26 @@
-const NEWS_API_URL = "http://127.0.0.1:8000/news";
+const NEWS_API_URL = "http://127.0.0.1:8000/news/";
 
 
-export async function getFinancialNews(token, limit = 3) {
+export async function getFinancialNews(limit = 3) {
     const url = new URL(NEWS_API_URL);
-
     url.searchParams.set("limit", limit);
 
-    const response = await fetch(url, {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    console.log("Requesting financial news:", url.href);
 
-    const data = await response.json();
+    const response = await fetch(url);
+
+    console.log("HTTP status:", response.status);
+
+    const responseText = await response.text();
+
+    console.log("Response body:", responseText);
 
     if (!response.ok) {
-        throw new Error(
-            data.detail || "Could not retrieve financial news."
-        );
+        throw new Error("Could not retrieve financial news.");
     }
 
-    return data;
+    return JSON.parse(responseText);
 }
-
 
 export async function searchNewsBySymbol(token, symbol, limit = 3) {
     const normalizedSymbol = symbol.trim().toUpperCase();
@@ -40,6 +37,7 @@ export async function searchNewsBySymbol(token, symbol, limit = 3) {
 
     const response = await fetch(url, {
         method: "GET",
+        credentials: "include",
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -71,6 +69,7 @@ export async function searchNews(token, query, limit = 3) {
 
     const response = await fetch(url, {
         method: "GET",
+        credentials: "include",
         headers: {
             Authorization: `Bearer ${token}`,
         },

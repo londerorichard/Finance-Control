@@ -3,6 +3,7 @@ export async function getuserById(user_id, token) {
         `http://127.0.0.1:8000/users/get-by-id/${encodeURIComponent(user_id)}`,
         {
             method: "GET",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }
@@ -28,6 +29,7 @@ export async function updateUserProfile(email, token) {
         "http://127.0.0.1:8000/users/update",
         {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -57,6 +59,7 @@ export async function deleteProfile(token) {
         "http://127.0.0.1:8000/users/delete_profile",
         {
             method: "DELETE",
+            credentials: "include",
             headers: {
                 "Authorization": `Bearer ${token}`
             }

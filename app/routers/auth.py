@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends, Request, Response
 from fastapi.responses import RedirectResponse
 from app.auth.oauth import oauth
 from app.auth.jwt import create_access_token
@@ -40,8 +40,11 @@ def register_user(new_user: UserCreate):
         )
 
 
-@router.post("/login", response_model=Token)
-def login_user_endpoint(user_data: UserLogin):
+@router.post("/login")
+def login_user_endpoint(
+    user_data: UserLogin,
+    response: Response
+):
     user = login_user(
         user_data.email,
         user_data.password
@@ -55,10 +58,17 @@ def login_user_endpoint(user_data: UserLogin):
 
     token = create_access_token(user["id"])
 
-    return {
-        "access_token": token,
-        "token_type": "bearer"
-    }
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=False,  # Development only: use HTTPS and True in production
+        samesite="lax",
+        max_age=60 * 60 * 24 * 7,
+        path="/"
+    )
+
+    return {"message": "Login successful"}
 
 
 @router.get("/me", response_model=UserResponse)
@@ -150,9 +160,19 @@ async def google_callback(request: Request):
     return response
 
 
+@router.post("/logout")
+def logout_user_endpoint(response: Response):
+    response.delete_cookie(
+        key="access_token",
+        path="/",
+        secure=False,  # Match the development cookie settings
+        httponly=True,
+        samesite="lax"
+    )
 
-# @router.post("/auth/logout")
-# def logout_user(user: UserAuth):
+    return {"message": "Logged out successfully"}
+
+
 
 # PATCH /auth/update
 # DELETE /auth/delete-account

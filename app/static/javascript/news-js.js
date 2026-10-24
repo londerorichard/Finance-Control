@@ -1,3 +1,5 @@
+import { getFinancialNews } from "./api/news.js";
+
 const newsTemplate = document.querySelector("#news-template");
 
 function createNewsCard(article) {
@@ -25,6 +27,7 @@ function createNewsCard(article) {
                   year: "numeric",
                   month: "short",
                   day: "numeric",
+                  timeZone: "UTC"
               }).format(publishedDate);
     } else {
         date.textContent = "Date unavailable";
@@ -105,12 +108,6 @@ function renderNews(articles) {
 
 
 async function loadNews() {
-    const token = localStorage.getItem("access_token");
-
-    if (!token) {
-        console.error("Authentication token was not found.");
-        return;
-    }
 
     const newsList = document.querySelector(".news-list");
 
@@ -125,7 +122,7 @@ async function loadNews() {
             newsList.appendChild(loadingMessage);
         }
 
-        const data = await getFinancialNews(token);
+        const data = await getFinancialNews();
 
         renderNews(data.articles);
     } catch (error) {

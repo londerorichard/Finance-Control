@@ -70,7 +70,7 @@ async def register(request: Request):
 @app.get("/dashboard")
 async def dashboard(
     request: Request,
-    current_user=Depends(get_current_user)
+    # current_user=Depends(get_current_user)
 ):
     return templates.TemplateResponse(
         request=request,
