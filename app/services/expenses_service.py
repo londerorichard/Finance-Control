@@ -26,6 +26,7 @@ def get_expenses_by_months(user_id):
 
 
 def get_largest_expense_by_category(user_id):
+
     connection = get_connection()
 
     try:
@@ -44,6 +45,37 @@ def get_largest_expense_by_category(user_id):
             GROUP BY c.id, c.name
             ORDER BY largest_category_expense DESC
         """, (user_id,))
+
+        return cursor.fetchall()
+
+    finally:
+        connection.close()
+
+
+def identify_unusual_spending(user_id):
+# Spending more than twice the average expense amount
+    connection = get_connection()
+    
+    try:
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT
+                t.id,
+                t.amount,
+                t.description,
+                t.created_at,
+                t.category_id
+            FROM transactions t
+            WHERE t.transaction_type = 'expense'
+                AND t.user_id = ?
+                AND t.amount > 2 * (
+                    SELECT AVG(t2.amount)
+                    FROM transactions t2
+                    WHERE t2.transaction_type = 'expense'
+                        AND t2.user_id = ?
+                )
+            ORDER BY t.amount DESC
+        """, (user_id, user_id))
 
         return cursor.fetchall()
 
