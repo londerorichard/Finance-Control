@@ -203,6 +203,12 @@ a {
     color: var(--text-primary);
 }
 
+.prev-btn:disabled,
+.next-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 
 /* ==========================================================================
    NEWS CARD
