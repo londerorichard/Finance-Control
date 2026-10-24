@@ -163,3 +163,42 @@ def change_password(user_id, current_password, new_password):
         connection.close()
 
 
+def get_user_by_google_id(google_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            SELECT *
+            FROM users
+            WHERE google_id = ?
+        """, (google_id,))
+
+        return cursor.fetchone()
+
+    finally:
+        connection.close()
+
+
+def create_google_user(email, google_id):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        created_at = datetime.now().isoformat()
+
+        cursor.execute("""
+            INSERT INTO users (email, google_id, created_at)
+            VALUES (?, ?, ?)
+            RETURNING id, email, google_id, created_at
+        """, (email, google_id, created_at))
+
+        user = cursor.fetchone()
+        connection.commit()
+
+        return user
+
+    finally:
+        connection.close()
