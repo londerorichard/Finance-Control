@@ -21,6 +21,11 @@ body {
     min-height: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: var(--text-secondary);
+}
+
 
 /* ==========================================================================
    VARIABLES
@@ -161,7 +166,7 @@ body {
 .carousel-track {
     display: flex;
     gap: 1rem;
-    transition: transform 0.3s ease;
+    width: max-content;
 }
 
 
@@ -205,11 +210,10 @@ body {
 
 .news-card {
     flex: 0 0 30%;
+    min-width: 0;
     
     display: flex;
     flex-direction: column;
-
-    height: auto;
 
     overflow: hidden;
 
@@ -312,3 +316,43 @@ body {
     -webkit-line-clamp: 3;
 }
 
+.news-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-date {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.header-date svg {
+    background-color: var(--bg-terciary);
+}
+
+.resource {
+    border: 1.5px solid var(--text-secondary);
+    border-radius: var(--radius-md)
+}
+
+.resource span{
+    padding: 0.5rem;
+}
+
+.read-full-article {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+
+    background-color: var(--bg-terciary);
+    border: none;
+
+    padding: 0.25rem;
+}
+
+.read-full-article svg {
+    color: var(--text-secondary);
+}

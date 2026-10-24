@@ -84,7 +84,7 @@ Exercise 8.5 — Goals with the greatest remaining amount ⭐⭐
 Retrieve the three goals that require the most additional savings.
 
 Return:
-
+ 
 Goal name.
 Target amount.
 Current amount.
