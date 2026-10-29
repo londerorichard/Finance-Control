@@ -28,11 +28,11 @@ Test the functions responsible for creating and decoding tokens.
 
 Test the logic that authenticates users and resolves the current user.
 
-- [ ] Valid credentials authenticate successfully.
-- [ ] An incorrect password is rejected.
-- [ ] An email that doesn't exist is rejected.
-- [ ] A token referring to a nonexistent user is rejected.
-- [ ] A user who has been deleted cannot authenticate using an old token.
+- [x] Valid credentials authenticate successfully.
+- [x] An incorrect password is rejected.
+- [x] An email that doesn't exist is rejected.
+- [x] A token referring to a nonexistent user is rejected.
+- [x] A user who has been deleted cannot authenticate using an old token.
 
 ---
 
