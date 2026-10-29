@@ -17,6 +17,8 @@ def create_user(email, password):
         password_hash = hash_password(password)
         created_at = datetime.now().isoformat()
 
+        print(f"Attempting to create user with email: {email}")
+
         cursor.execute(
             """
             INSERT INTO users (
@@ -27,11 +29,7 @@ def create_user(email, password):
             VALUES (?, ?, ?)
             RETURNING id, email
             """,
-            (
-                email,
-                password_hash,
-                created_at
-            )
+            (email, password_hash, created_at)
         )
 
         user = cursor.fetchone()

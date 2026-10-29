@@ -1,5 +1,6 @@
 from app.database.connection import get_connection
 
+
 def get_user_by_id(user_id):
 
     connection = get_connection()
