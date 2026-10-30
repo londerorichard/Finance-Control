@@ -12,33 +12,33 @@ def create_user(email, password):
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
+        with connection:
+            cursor = connection.cursor()
 
-        password_hash = hash_password(password)
-        created_at = datetime.now().isoformat()
+            password_hash = hash_password(password)
+            created_at = datetime.now().isoformat()
 
-        print(f"Attempting to create user with email: {email}")
+            print(f"Attempting to create user with email: {email}")
 
-        cursor.execute(
-            """
-            INSERT INTO users (
-                email,
-                password_hash,
-                created_at
+            cursor.execute(
+                """
+                INSERT INTO users (
+                    email,
+                    password_hash,
+                    created_at
+                )
+                VALUES (?, ?, ?)
+                RETURNING id, email
+                """,
+                (email, password_hash, created_at)
             )
-            VALUES (?, ?, ?)
-            RETURNING id, email
-            """,
-            (email, password_hash, created_at)
-        )
 
-        user = cursor.fetchone()
-        connection.commit()
+            user = cursor.fetchone()
 
-        return UserResponse(
-            id=user["id"],
-            email=user["email"]
-        )
+            return UserResponse(
+                id=user["id"],
+                email=user["email"]
+            )
 
     finally:
         connection.close()

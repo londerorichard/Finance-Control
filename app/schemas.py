@@ -82,8 +82,8 @@ class TransactionResponse(BaseModel):
     account: str | None
 
 class TransactionUpdate(BaseModel):
-    amount: float = Field(gt=0)
-    transaction_type: TransactionType
+    amount: float | None = Field(default=None, gt=0)
+    transaction_type: TransactionType | None = None
     description: str | None = None
     category_id: int | None = None
     account: str | None = None

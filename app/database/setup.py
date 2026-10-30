@@ -1,8 +1,7 @@
-from connection import get_connection
+from .connection import get_connection
 
-def create_tables():
-
-    connection = get_connection()
+def create_tables(db_path="finance.db"):
+    connection = get_connection(db_path)
     cursor = connection.cursor()
 
     cursor.execute("""
@@ -21,7 +20,8 @@ def create_tables():
         name TEXT NOT NULL,
         user_id INTEGER NOT NULL,
 
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        UNIQUE (name, user_id)
     )
     """)
 
@@ -29,7 +29,7 @@ def create_tables():
     CREATE TABLE IF NOT EXISTS transactions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
-        amount REAL NOT NULL,
+        amount REAL NOT NULL CHECK (amount > 0),
         transaction_type TEXT NOT NULL,
         description TEXT,
         created_at TEXT NOT NULL,
@@ -37,7 +37,9 @@ def create_tables():
         account TEXT,
 
         FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (category_id) REFERENCES categories(id)
+        FOREIGN KEY (category_id)
+            REFERENCES categories(id)
+            ON DELETE SET NULL
     )
     """)
 
@@ -50,7 +52,8 @@ def create_tables():
         current_amount REAL DEFAULT 0,
         deadline TEXT,
 
-        FOREIGN KEY (user_id) REFERENCES users(id)
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        UNIQUE (goal_name, user_id)
     )
     """)
 

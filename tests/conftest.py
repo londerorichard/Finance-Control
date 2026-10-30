@@ -1,10 +1,14 @@
 import sqlite3
-
 import pytest
+
 from fastapi.testclient import TestClient
 
 import app.services.auth_service as auth_service
+import app.services.transaction_service as transaction_service
+
 from app.database.connection import get_connection
+from app.database.setup import create_tables
+
 from app.main import app
 
 
@@ -12,24 +16,18 @@ from app.main import app
 def test_db(tmp_path):
     db_path = tmp_path / "test_finance.db"
 
-    connection = sqlite3.connect(db_path)
-
-    try:
-        connection.execute(
-            """
-            CREATE TABLE users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT NOT NULL UNIQUE,
-                password_hash TEXT NOT NULL,
-                created_at TEXT NOT NULL
-            )
-            """
-        )
-        connection.commit()
-    finally:
-        connection.close()
+    create_tables(str(db_path))
 
     return str(db_path)
+
+
+@pytest.fixture
+def db_connection(test_db):
+    connection = get_connection(test_db)
+
+    yield connection
+
+    connection.close()
 
 
 @pytest.fixture
@@ -45,12 +43,15 @@ def test_auth_db(test_db, monkeypatch):
 
 
 @pytest.fixture
-def db_connection(test_db):
-    connection = get_connection(test_db)
+def test_transaction_db(test_db, monkeypatch):
+    def get_test_connection():
+        return get_connection(test_db)
 
-    yield connection
-
-    connection.close()
+    monkeypatch.setattr(
+        transaction_service,
+        "get_connection",
+        get_test_connection
+    )
 
 
 @pytest.fixture
@@ -60,6 +61,12 @@ def client(test_db, monkeypatch):
 
     monkeypatch.setattr(
         auth_service,
+        "get_connection",
+        get_test_connection
+    )
+
+    monkeypatch.setattr(
+        transaction_service,
         "get_connection",
         get_test_connection
     )

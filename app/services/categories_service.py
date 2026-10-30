@@ -161,13 +161,13 @@ def get_categories_above_amount(user_id, amount):
             WITH category_amount AS (
                 SELECT
                     c.id AS category_id,
-                    c.name AS category_name,
+                    COALESCE(c.name, 'Uncategorized') AS category_name,
                     SUM(t.amount) AS total_expenses
-                FROM categories c
-                INNER JOIN transactions t
+                FROM transactions t
+                LEFT JOIN categories c
                     ON c.id = t.category_id
                     AND c.user_id = t.user_id
-                WHERE c.user_id = ?
+                WHERE t.user_id = ?
                     AND t.transaction_type = 'expense'
                 GROUP BY c.id, c.name
             )
