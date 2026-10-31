@@ -9,348 +9,291 @@
 
     <div class="submain">
 
-        <div class="resume-expenses">
+        <div class="left-column">
 
+        <div class="resume-expenses">
             <div class="expenses-container">
 
-                <article class="expenses-card">
-                    <h4 class="expenses-title">Account Balances</h4>
-                    <h1 class="expenses-value">$4,900</h1>
-                    <div class="create-report">
-                        <button class="create-report-btn">
-                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                        </button>
-                        <p>Create report</p>
+                <!-- Account Balance -->
+                <article class="expenses-card balance-card">
+                    <div class="expenses-card-header">
+                        <h4>Account Balance</h4>
+                        <span class="expenses-icon">💰</span>
+                    </div>
+
+                    <h2 class="expenses-value">$4,900.00</h2>
+
+                    <div class="expenses-footer">
+                        <span class="expenses-trend positive">↑ 8.2%</span>
+                        <span>vs. last month</span>
                     </div>
                 </article>
 
-                <article class="expenses-card">
-                    <h4 class="expenses-title">Total Income</h4>
-                    <h1 class="expenses-value">$7,100</h1>
-                    <div class="create-report">
-                        <button class="create-report-btn">
-                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                        </button>
-                        <p>Create report</p>
+                <!-- Total Income -->
+                <article class="expenses-card income-card">
+                    <div class="expenses-card-header">
+                        <h4>Total Income</h4>
+                        <span class="expenses-icon">↗</span>
+                    </div>
+
+                    <h2 class="expenses-value">$7,100.00</h2>
+
+                    <div class="expenses-footer">
+                        <span class="expenses-trend positive">↑ 12.5%</span>
+                        <span>vs. last month</span>
                     </div>
                 </article>
 
-                <article class="expenses-card">
-                    <h4 class="expenses-title">Total Expenses</h4>
-                    <h1 class="expenses-value">$52,064</h1>
-                    <div class="create-report">
-                        <button class="create-report-btn">
-                            <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 12H20M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                        </button>
-                        <p>Create report</p>
+                <!-- Total Expenses -->
+                <article class="expenses-card expense-card">
+                    <div class="expenses-card-header">
+                        <h4>Total Expenses</h4>
+                        <span class="expenses-icon">↘</span>
+                    </div>
+
+                    <h2 class="expenses-value">$2,064.00</h2>
+
+                    <div class="expenses-footer">
+                        <span class="expenses-trend negative">↑ 4.3%</span>
+                        <span>vs. last month</span>
                     </div>
                 </article>
 
             </div>
-
         </div>
 
-        <div class="resume-market">
 
-            <div class="market-content">
+            <div class="resume-market">
+                <div class="market-content">
 
-                <div class="market-sections">
-
-
-                    <!-- Global Markets -->
-                    <section class="market-section">
-
-                        <h2>Global Markets</h2>
-
-                        <div class="market-list">
-
-                            <div class="market-card" data-symbol="SP500">
-
-                                <p class="market-name">S&P 500</p>
-
-                                <strong class="market-price">
-                                    290$
-                                </strong>
-
-                                <span class="market-change positive">
-                                    +3,5%
-                                </span>
-
-                            </div>
-
-
-                            <div class="market-card" data-symbol="NASDAQ">
-
-                                <p class="market-name">NASDAQ</p>
-
-                                <strong class="market-price">
-                                    195$
-                                </strong>
-
-                                <span class="market-change positive">
-                                    +0.9%
-                                </span>
-
-                            </div>
-
-
-                            <div class="market-card" data-symbol="DOW">
-
-                                <p class="market-name">Dow Jones</p>
-
-                                <strong class="market-price">
-                                    55$
-                                </strong>
-
-                                <span class="market-change negative">
-                                    1,75%
-                                </span>
-
-                            </div>
-
+                    <div class="market-header">
+                        <div>
+                            <h2>Market Overview</h2>
+                            <p>Latest market information</p>
                         </div>
+                        <span class="market-updated">Live data</span>
+                    </div>
 
-                    </section>
+                    <table class="market-table">
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Price</th>
+                                <th>24h Change</th>
+                            </tr>
+                        </thead>
 
+                        <!-- Global Markets -->
+                        <tbody>
+                            <tr class="market-section-title">
+                                <th colspan="3">Global Markets</th>
+                            </tr>
 
+                            <tr data-symbol="SP500">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>S&P 500</strong>
+                                        <span>US Stock Index</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">$290.00</td>
+                                <td class="positive">↑ 3.50%</td>
+                            </tr>
+                        </tbody>
 
-                    <!-- Currencies -->
-                    <section class="market-section">
+                        <!-- Currencies -->
+                        <tbody>
+                            <tr class="market-section-title">
+                                <th colspan="3">Currencies</th>
+                            </tr>
 
-                        <h2>Currencies</h2>
+                            <tr data-symbol="USD-BRL">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>USD/BRL</strong>
+                                        <span>US Dollar / Brazilian Real</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">5.65</td>
+                                <td class="positive">↑ 0.25%</td>
+                            </tr>
 
-                        <div class="market-list">
+                            <tr data-symbol="EUR-BRL">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>EUR/BRL</strong>
+                                        <span>Euro / Brazilian Real</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">6.12</td>
+                                <td class="negative">↓ 0.18%</td>
+                            </tr>
 
-                            <div class="market-card" data-symbol="USD-BRL">
+                            <tr data-symbol="GBP-BRL">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>GBP/BRL</strong>
+                                        <span>British Pound / Brazilian Real</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">7.08</td>
+                                <td class="positive">↑ 0.42%</td>
+                            </tr>
+                        </tbody>
 
-                                <p class="market-name">
-                                    USD/BRL
-                                </p>
+                        <!-- Cryptocurrency -->
+                        <tbody>
+                            <tr class="market-section-title">
+                                <th colspan="3">Cryptocurrency</th>
+                            </tr>
 
-                                <strong class="market-price">
-                                    5,65%
-                                </strong>
+                            <tr data-symbol="BTC">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>Bitcoin</strong>
+                                        <span>BTC</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">$1,100.00</td>
+                                <td class="positive">↑ 8.00%</td>
+                            </tr>
 
-                                <span class="market-change">
-                                    0.25%
-                                </span>
-
-                            </div>
-
-
-                            <div class="market-card" data-symbol="EUR-BRL">
-
-                                <p class="market-name">
-                                    EUR/BRL
-                                </p>
-
-                                <strong class="market-price">
-                                    6.56$
-                                </strong>
-
-                                <span class="market-change">
-                                    2,7%
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-
-                    <!-- Crypto -->
-                    <section class="market-section">
-
-                        <h2>Cryptocurrency</h2>
-
-                        <div class="market-list">
-
-                            <div class="market-card" data-symbol="BTC">
-
-                                <p class="market-name">
-                                    Bitcoin
-                                </p>
-
-                                <strong class="market-price">
-                                    1.100$
-                                </strong>
-
-                                <span class="market-change positive">
-                                    +8%
-                                </span>
-
-                            </div>
-
-
-                            <div class="market-card" data-symbol="ETH">
-
-                                <p class="market-name">
-                                    Ethereum
-                                </p>
-
-                                <strong class="market-price">
-                                    850$
-                                </strong>
-
-                                <span class="market-change positive">
-                                    -0.2%
-                                </span>
-
-                            </div>
-
-
-                        </div>
-
-                    </section>
-
-
+                            <tr data-symbol="ETH">
+                                <td>
+                                    <div class="asset-info">
+                                        <strong>Ethereum</strong>
+                                        <span>ETH</span>
+                                    </div>
+                                </td>
+                                <td class="asset-price">$3,200.00</td>
+                                <td class="negative">↓ 1.25%</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                 </div>
-
             </div>
-
+        
         </div>
-
-        <section class="goals-section">
-
-            <article class="goals-container">
-
-                <div class="goal-card">
-                    
-                </div>
-
-            </article>
-
-        </section>
-
 
         <aside class="statistics">
-
             <div class="statistics-content">
 
-                <!-- BOX 1 -->
+                <!-- Expense Categories -->
                 <section class="categories-section">
 
-                    <h5>This week</h5>
-                    <h2>Categories</h2>
+                    <div class="statistics-header">
+                        <div>
+                            <h5>This week</h5>
+                            <h2>Expense Categories</h2>
+                        </div>
+                        <button class="statistics-action">View all</button>
+                    </div>
 
                     <div class="expenses-categories">
 
                         <div class="donut-chart">
-
                             <svg viewBox="0 0 100 100">
-
-                                <!-- Background circle -->
                                 <circle
                                     class="donut-background"
                                     cx="50"
                                     cy="50"
                                     r="35"
                                 />
-
-                                <!-- Progress -->
                                 <circle
                                     class="donut-progress"
                                     cx="50"
                                     cy="50"
                                     r="35"
                                 />
-
                             </svg>
 
                             <div class="donut-value">
-                                R$ 0,00
+                                <strong>R$ 2,450</strong>
+                                <span>Total spent</span>
                             </div>
-
                         </div>
 
-                        <article class="categories-card">
-                            <p>Food</p>
-                            <p>35%</p>
+                        <div class="categories-list">
+
+                            <article class="categories-card">
+                                <div class="category-info">
+                                    <span class="category-indicator food"></span>
+                                    <p>Food</p>
+                                </div>
+                                <strong>35%</strong>
+                            </article>
+
+                            <article class="categories-card">
+                                <div class="category-info">
+                                    <span class="category-indicator transport"></span>
+                                    <p>Transport</p>
+                                </div>
+                                <strong>15%</strong>
+                            </article>
+
+                            <article class="categories-card">
+                                <div class="category-info">
+                                    <span class="category-indicator housing"></span>
+                                    <p>Housing</p>
+                                </div>
+                                <strong>45%</strong>
+                            </article>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recent Transactions -->
+                <section class="recent-transactions">
+
+                    <div class="statistics-header">
+                        <div>
+                            <h5>This week</h5>
+                            <h2>Recent Transactions</h2>
+                        </div>
+                        <button class="statistics-action">View all</button>
+                    </div>
+
+                    <div class="transactions-list">
+
+                        <article class="transaction-card">
+                            <div class="transaction-icon">S</div>
+
+                            <div class="transaction-description">
+                                <p>Spotify</p>
+                                <span>11 min ago</span>
+                            </div>
+
+                            <strong class="transaction-expense">-R$ 19.00</strong>
                         </article>
 
-                        <article class="categories-card">
-                            <p>Transport</p>
-                            <p>15%</p>
+                        <article class="transaction-card">
+                            <div class="transaction-icon">A</div>
+
+                            <div class="transaction-description">
+                                <p>Amazon</p>
+                                <span>1 hour ago</span>
+                            </div>
+
+                            <strong class="transaction-expense">-R$ 45.00</strong>
                         </article>
 
-                        <article class="categories-card">
-                            <p>Housing</p>
-                            <p>45%</p>
+                        <article class="transaction-card">
+                            <div class="transaction-icon">A</div>
+
+                            <div class="transaction-description">
+                                <p>Apple</p>
+                                <span>1 min ago</span>
+                            </div>
+
+                            <strong class="transaction-expense">-R$ 8.00</strong>
                         </article>
 
                     </div>
-
-                </section>
-
-
-                <!-- BOX 2 -->
-                <section class="recent-transactions">
-
-                    <h2>Transactions</h2>
-
-                    <div class="donut-chart">
-
-                            <svg viewBox="0 0 100 100">
-
-                                <!-- Background circle -->
-                                <circle
-                                    class="donut-background"
-                                    cx="50"
-                                    cy="50"
-                                    r="35"
-                                />
-
-                                <!-- Progress -->
-                                <circle
-                                    class="donut-progress"
-                                    cx="50"
-                                    cy="50"
-                                    r="35"
-                                />
-
-                            </svg>
-
-                            <div class="donut-value">
-                                R$ 0,00
-                            </div>
-
-                        </div>
-
-
-                    <article class="transaction-card">
-                        <!-- app icon -->
-                        <div class="transaction-description">
-                            <p>Spotify</p>
-                            <p>11min ago</p>
-                        </div>
-                        <p>-19$</p>
-                    </article>
-
-                    <article class="transaction-card">
-                        <!-- app icon -->
-                        <div class="transaction-description">
-                            <p>Amazon</p>
-                            <p>1hour ago</p>
-                        </div>
-                        <p>-45$</p>
-                    </article>
-
-                    <article class="transaction-card">
-                        <!-- app icon -->
-                        <div class="transaction-description">
-                            <p>Apple</p>
-                            <p>1min ago</p>
-                        </div>
-                        <p>-8$</p>
-                    </article>
-
                 </section>
 
             </div>
-
         </aside>
 
     </div>

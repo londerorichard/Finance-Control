@@ -1,46 +1,79 @@
 const defaultCategories = [
     {
         name: "Food",
+        type: "food",
+        icon: "utensils",
+        color: "#F59E0B",
         subcategories: ["Groceries", "Restaurants", "Delivery", "Snacks"]
     },
     {
         name: "Transport",
+        type: "transport",
+        icon: "car",
+        color: "#3B82F6",
         subcategories: ["Fuel", "Public Transport", "Uber", "Parking"]
     },
     {
         name: "Housing",
+        type: "housing",
+        icon: "house",
+        color: "#A855F7",
         subcategories: ["Rent", "Electricity", "Water", "Internet"]
     },
     {
         name: "Health",
+        type: "health",
+        icon: "heart-pulse",
+        color: "#EF4444",
         subcategories: ["Medicine", "Doctor", "Dentist"]
     },
     {
         name: "Education",
+        type: "education",
+        icon: "book-open",
+        color: "#06B6D4",
         subcategories: ["Tuition", "Courses", "Books"]
     },
     {
         name: "Entertainment",
+        type: "entertainment",
+        icon: "gamepad-2",
+        color: "#EC4899",
         subcategories: ["Movies", "Games", "Streaming"]
     },
     {
         name: "Shopping",
+        type: "shopping",
+        icon: "shopping-bag",
+        color: "#EAB308",
         subcategories: ["Clothing", "Electronics", "Personal Care"]
     },
     {
         name: "Family",
+        type: "family",
+        icon: "users",
+        color: "#F97316",
         subcategories: ["Children", "Gifts", "Family Support"]
     },
     {
         name: "Services",
+        type: "services",
+        icon: "wrench",
+        color: "#64748B",
         subcategories: ["Subscriptions", "Cloud Services"]
     },
     {
         name: "Financial",
+        type: "financial",
+        icon: "wallet",
+        color: "#10B981",
         subcategories: ["Bank Fees", "Loans", "Credit Card"]
     },
     {
         name: "Leisure",
+        type: "leisure",
+        icon: "plane",
+        color: "#14B8A6",
         subcategories: ["Travel", "Hobbies", "Sports"]
     }
 ];
@@ -64,18 +97,24 @@ function createSubcategory(name) {
 
 
 function createCategory(categoryData) {
-
     const category = categoryTemplate.content.cloneNode(true);
 
+    const categoryElement = category.querySelector(".category");
     const title = category.querySelector(".category-title");
     const subcategoriesList = category.querySelector(".subcategories");
+
+    categoryElement.style.setProperty(
+        "--category-color",
+        categoryData.color
+    );
+
+    categoryElement.dataset.category = categoryData.type;
+    categoryElement.dataset.color = categoryData.color;
 
     title.textContent = categoryData.name;
 
     categoryData.subcategories?.forEach(subcategoryName => {
-
         const subcategory = createSubcategory(subcategoryName);
-
         subcategoriesList.append(subcategory);
     });
 
@@ -362,19 +401,30 @@ function setupCategoriesSettings() {
 setupCategoriesSettings();
 
 
-function applyEditCategoryColor(
-    color,
-    colorPickerBtn,
-    category
-) {
+function initializeEditCategoryColor(category, colorPickerBtn) {
+    const color = category.dataset.color;
+
+    console.log("Category color:", color);
+
     colorPickerBtn.style.backgroundColor = color;
 
-    const iconContainer =
-        category.querySelector(".icon-container");
+    console.log(
+        "Picker background:",
+        getComputedStyle(colorPickerBtn).backgroundColor
+    );
+}
 
-    if (iconContainer) {
-        iconContainer.style.backgroundColor = color;
-    }
+function applyEditCategoryColor(color, colorPickerBtn, category) {
+    colorPickerBtn.style.backgroundColor = color;
+    category.style.setProperty("--category-color", color);
+}
+
+function openEditCategory(category) {
+    const colorPickerBtn = editCategoryDialog.querySelector(".collor-picker-btn");
+
+    initializeEditCategoryColor(category, colorPickerBtn);
+
+    editCategoryDialog.showModal();
 }
 
 
@@ -814,44 +864,27 @@ setupRemoveCategory();
 
 
 function setSameIcon(category) {
+    const categoryIcon = category.querySelector(".icon-container svg");
+    const pickerBtn = editCategoryDialog.querySelector(".icon-picker-btn");
+    const colorPickerBtn = editCategoryDialog.querySelector(".collor-picker-btn");
 
-    const categoryIcon =
-        category.querySelector(".icon-container svg");
+    if (!categoryIcon || !pickerBtn || !colorPickerBtn) return;
 
-    const categoryIconContainer =
-        category.querySelector(".icon-container");
+    // Get the original category color
+    const categoryColor = category.dataset.color;
 
-    const pickerBtn =
-        document.querySelector(".icon-picker-btn");
+    // Initialize color picker
+    colorPickerBtn.style.backgroundColor = categoryColor;
 
-    const colorPickerBtn =
-        document.querySelector(".collor-picker-btn");
-
-    if (!categoryIcon || !categoryIconContainer) {
-        return;
-    }
-
-    // Icon picker
+    // Initialize icon picker
     pickerBtn.innerHTML = "";
+    pickerBtn.appendChild(categoryIcon.cloneNode(true));
 
-    const pickerIcon =
-        categoryIcon.cloneNode(true);
-
-    pickerIcon.style.color =
-        getComputedStyle(categoryIcon).color;
-
-    pickerBtn.style.backgroundColor =
-        getComputedStyle(categoryIconContainer).backgroundColor;
-
-    pickerBtn.appendChild(pickerIcon);
-
-    // Color picker button
-    colorPickerBtn.style.backgroundColor =
-        getComputedStyle(categoryIconContainer).backgroundColor;
+    // Initialize icon picker background
+    pickerBtn.style.backgroundColor = categoryColor;
 }
 
-setSameIcon();
-
+setSameIcon(category);
 
 
 
