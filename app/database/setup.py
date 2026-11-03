@@ -20,9 +20,15 @@ def create_tables():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         user_id INTEGER NOT NULL,
+        icon TEXT,
+        color TEXT,
+        parent_id INTEGER,
+        is_default BOOLEAN NOT NULL DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-        FOREIGN KEY (user_id) REFERENCES users(id)
-    )
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (parent_id) REFERENCES categories(id)
+    );
     """)
 
     cursor.execute("""
