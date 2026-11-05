@@ -85,11 +85,11 @@ async def categories(request: Request):
         name="categories.html"
     )
     
-@app.get("/category")
-async def category(request: Request):
+@app.get("/transaction")
+async def transaction(request: Request):
     return templates.TemplateResponse(
         request=request,
-        name="category.html"
+        name="transaction.html"
     )
 
 @app.get("/news")

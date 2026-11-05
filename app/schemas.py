@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from enum import Enum
 
 
@@ -93,27 +93,41 @@ class TransactionUpdate(BaseModel):
 # CATEGORY SCHEMAS
 # ==========================================================
 
-class CreateCategory(BaseModel):
+class CategoryBase(BaseModel):
     name: str = Field(
-            min_length=2,
-            max_length=50,
-            description="User full name",
-            examples=["Income"]
-        )
+        min_length=2,
+        max_length=50,
+        description="Category name",
+        examples=["Food"]
+    )
+    icon: str | None = None
+    color: str | None = None
 
-    user_id: int
+class CreateCategory(CategoryBase):
+    parent_id: int | None = None
     
 class UpdateCategory(BaseModel):
-    name: str = Field(
-            min_length=2,
-            max_length=50,
-            description="User full name",
-            examples=["Income"]
-        )
+    name: str | None = Field(
+        default=None,
+        min_length=2,
+        max_length=50,
+        description="Category name",
+        examples=["Food"]
+    )
+    icon: str | None = None
+    color: str | None = None
     
 class ResponseCategory(BaseModel):
     id: int
     name: str
+    user_id: int
+    type: str
+    icon: str | None = None
+    color: str | None = None
+    parent_id: int | None = None
+    is_default: bool
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ==========================================================

@@ -111,28 +111,21 @@ body {
 
 .submain {
     display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(250px, 350px);
-
-    grid-template-rows:
-        auto
-        1fr;
-
-    grid-template-areas:
-        "resume-expenses statistics"
-        "resume-market statistics";
-
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 350px);
+    align-items: start;
+    width: 100%;
     min-width: 0;
-
-    background-color: var(--bg-primary);
-
-    border-radius: 0 0 0 2rem;
-
-    overflow: hidden;
 }
 
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    min-width: 0;
+
+    padding: 0 1rem 1rem;
+}
 
 /* =========================================================
    TABLET
@@ -158,74 +151,136 @@ body {
    MAIN SECTIONS
    ========================================================================== */
 
+.resume-expenses,
+.resume-market,
+.statistics {
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    align-self: start;
+}
+
 .resume-expenses {
-    display: grid;
-
-    grid-area: resume-expenses;
-
-    background-color: var(--bg-primary);
-
-    margin-top: 2rem;
+    width: 100%;
 }
 
 .resume-market {
-    grid-area: resume-market;
-
-    min-height: 0;
-    overflow: hidden;
-
-    display: flex;
-
-    background-color: var(--bg-primary);
-
-    margin: 4rem 0 0 1rem;
+    width: 100%;
+    min-width: 0;
 }
 
 .statistics {
-    grid-area: statistics;
-
-    min-height: 0;
+    width: 100%;
     min-width: 0;
-
     background-color: var(--bg-primary);
-
-    margin: 2rem 1rem 0 0;
+    height: fit-content;
 }
-
 
 /* ==========================================================================
    EXPENSES
    ========================================================================== */
 
+.resume-expenses {
+    width: 100%;
+    min-width: 0;
+}
+
 .expenses-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-lg);
-
     width: 100%;
-    height: 100%;
-
-    align-items: center;
-
-    color: var(--text-secondary);
-    background-color: var(--bg-primary);
-
-    padding: 0 1rem 0 1rem;
+    box-sizing: border-box;
 }
 
 .expenses-card {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-
-    height: 100%;
-
+    min-width: 0;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
     background-color: var(--bg-terciary);
     color: var(--text-secondary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    border-radius: var(--space-lg);
-    
-    padding: var(--space-lg);
+.expenses-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Card header */
+
+.expenses-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.expenses-card-header h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.expenses-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    font-size: 1rem;
+}
+
+/* Values */
+
+.expenses-value {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* Footer */
+
+.expenses-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.expenses-trend {
+    font-weight: 700;
+}
+
+.expenses-trend.positive {
+    color: #22c55e;
+}
+
+.expenses-trend.negative {
+    color: #ef4444;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .expenses-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .expenses-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 .create-report {
@@ -267,87 +322,152 @@ body {
    MARKET
    ========================================================================== */
 
-.resume-market {
-    grid-area: resume-market;
-
-    width: 100%;
-    overflow: hidden;
-
-    padding-right: 2rem;
-
-    background-color: var();
-}
-
-
 .market-content {
-    height: 450px;
-    width: 100%;
-
     display: flex;
     flex-direction: column;
-
+    width: 100%;
+    height: fit-content;
+    box-sizing: border-box;
+    padding: var(--space-lg);
     color: var(--text-secondary);
     background-color: var(--bg-terciary);
-
     border-radius: var(--radius-lg);
-
-    padding: var(--space-lg);
-
+    overflow-x: auto;
 }
 
-
-.market-sections {
-    flex: 1;
-
-    max-height: 450px;
-    width: 100%;
-}
-
-.market-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    margin-top: 1rem;
-}
-.market-sections h2 {
-    font-size: 1rem;
-    font-weight: 800;
-}
-
-.market-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.market-card {
+/* Market header */
+.market-header {
     display: flex;
     justify-content: space-between;
-
-    border-radius: var(--radius-md);
-
-    padding: var(--space-sm);
-
-    position: relative;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.market-card::after {
-    content: "";
+.market-header h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
 
-    position: absolute;
+.market-header p {
+    margin: 0.35rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
 
-    bottom: 0;
+.market-updated {
+    padding: 0.35rem 0.65rem;
+    border-radius: 2rem;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
 
+/* Market table */
+.market-table {
     width: 100%;
-    height: 2px;
+    min-width: 350px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
 
-    background: linear-gradient(
-        to right,
-        transparent,
-        var(--border),
-        transparent
-    );
+.market-table th,
+.market-table td {
+    padding: 0.85rem 0.5rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Table headings */
+.market-table thead th {
+    padding-top: 0;
+    padding-bottom: 0.85rem;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Column alignment */
+.market-table th:nth-child(2),
+.market-table td:nth-child(2) {
+    text-align: center;
+}
+
+
+
+/* Section headings */
+.market-table .market-section-title th {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: left;
+    border-bottom: none;
+}
+
+/* Asset information */
+.asset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.asset-info strong {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.asset-info span {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+/* Prices */
+.asset-price {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Positive and negative changes */
+.market-table .positive,
+.market-table .negative {
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.market-table .positive {
+    color: #22c55e;
+}
+
+.market-table .negative {
+    color: #ef4444;
+}
+
+/* Table rows */
+.market-table tbody tr:not(.market-section-title) {
+    transition: background-color 0.2s ease;
+}
+
+.market-table tbody tr:not(.market-section-title):hover {
+    background-color: var(--bg-primary);
+}
+
+/* Remove unnecessary border from last row */
+.market-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 
@@ -357,118 +477,213 @@ body {
 
 .statistics-content {
     display: grid;
-
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-
+    grid-template-rows: auto auto;
     gap: 1rem;
-
     min-width: 0;
-    max-width: 100%;
-
-    box-sizing: border-box;
+    padding-bottom: 1rem;
 }
 
 .categories-section,
 .recent-transactions {
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: var(--radius-lg);
     background-color: var(--bg-terciary);
     color: var(--text-secondary);
 }
 
+/* Section headers */
 
-.statistics-content::-webkit-scrollbar {
-    width: 5px;
-}
-
-.statistics-content::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.statistics-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 235, 205, 0.2);
-    border-radius: 999px;
-}
-
-.expenses-categories,
-.recent-transactions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    width: 100%;
-}
-
-.recent-transactions {
-    padding-top: 2rem;
-}
-
-.categories-card,
-.transaction-card {
+.statistics-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
 
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+.statistics-header h5 {
+    margin: 0 0 0.4rem;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.statistics-header h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.statistics-action {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+/* Categories */
+
+.expenses-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .donut-chart {
     position: relative;
-
-    width: min(100%, 270px);
-    aspect-ratio: 1 / 1;
-    height: auto;
-
-    margin: 0 auto;
-
-    min-width: 0;
+    width: 140px;
+    height: 140px;
 }
 
 .donut-chart svg {
-    display: block;
-
     width: 100%;
     height: 100%;
-
     transform: rotate(-90deg);
 }
 
 .donut-background,
 .donut-progress {
     fill: none;
-
-    stroke-width: 12;
+    stroke-width: 9;
 }
 
 .donut-background {
-    stroke: var(--bg-secondary);
+    stroke: var(--bg-primary);
 }
 
 .donut-progress {
-    stroke: #6ea8e5;
-
+    stroke: #22c55e;
+    stroke-dasharray: 219.9;
+    stroke-dashoffset: 77;
     stroke-linecap: round;
-
-    stroke-dasharray: 220;
-    stroke-dashoffset: 60;
 }
 
 .donut-value {
     position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    color: var(--text-secondary);
-
-    font-size: 1.2rem;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
 }
 
+.donut-value strong {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.donut-value span {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+/* Categories list */
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+}
+
+.categories-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.category-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.category-info p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.categories-card strong {
+    color: var(--text-primary);
+    font-size: 0.8rem;
+}
+
+.category-indicator {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.category-indicator.food {
+    background-color: #22c55e;
+}
+
+.category-indicator.transport {
+    background-color: #3b82f6;
+}
+
+.category-indicator.housing {
+    background-color: #f59e0b;
+}
+
+/* Transactions */
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.transaction-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.transaction-description {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 0.25rem;
+}
+
+.transaction-description p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.transaction-description span {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+}
+
+.transaction-expense {
+    color: #ef4444;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
 
 
 /* ==========================================================================
