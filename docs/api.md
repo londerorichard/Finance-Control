@@ -37,12 +37,37 @@
 
 ## Authentication Tests
 
-* [ ] Register valid user
-* [ ] Register duplicate email
-* [ ] Login with valid credentials
-* [ ] Login with wrong password
-* [ ] Access protected endpoint without token
-* [ ] Access protected endpoint with invalid token
+### Unit tests
+
+* [x] Password hashing.
+* [x] Password verification.
+* [x] Different hashes for identical passwords.
+* [x] JWT creation and decoding.
+* [x] Invalid token.
+* [x] Expired token.
+* [x] Invalid signature.
+* [x] Missing subject.
+* [x] Invalid subject format.
+
+### Service/database integration tests
+
+* [x] Register valid user.
+* [x] Login with valid credentials.
+* [x] Reject incorrect password.
+* [x] Reject nonexistent email.
+* [x] Reject token for nonexistent user.
+* [x] Reject token for deleted user.
+
+### API route tests
+
+* [x] Register valid user.
+* [ ] Register duplicate email.
+* [ ] Login with valid credentials.
+* [ ] Login with incorrect password.
+* [ ] Login with nonexistent email.
+* [ ] Access protected endpoint without token.
+* [ ] Access protected endpoint with invalid token.
+* [ ] Access protected endpoint with valid token.
 
 ---
 

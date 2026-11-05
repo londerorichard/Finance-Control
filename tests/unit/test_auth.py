@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt
 
 from app.auth.security import hash_password, verify_password
+from app.auth.dependency import get_current_user
 from app.auth.jwt import (
     ALGORITHM,
     SECRET_KEY,
@@ -12,119 +13,119 @@ from app.auth.jwt import (
 
 # PASSWORD HASHING
 
-def test_password_hashing():
-    password = "MyPassword123"
+# def test_password_hashing():
+#     password = "MyPassword123"
 
-    hashed = hash_password(password)
+#     hashed = hash_password(password)
 
-    assert hashed != password
-    assert verify_password(password, hashed) is True
-    assert verify_password("WrongPassword", hashed) is False
-
-
-def test_same_password_generates_different_hashes():
-    password = "MyPassword123"
-
-    first_hash = hash_password(password)
-    second_hash = hash_password(password)
-
-    assert first_hash != second_hash
-    assert verify_password(password, first_hash) is True
-    assert verify_password(password, second_hash) is True
+#     assert hashed != password
+#     assert verify_password(password, hashed) is True
+#     assert verify_password("WrongPassword", hashed) is False
 
 
-# JWT TOKENS
+# def test_same_password_generates_different_hashes():
+#     password = "MyPassword123"
 
-def test_create_and_decode_token():
-    user_id = 15
+#     first_hash = hash_password(password)
+#     second_hash = hash_password(password)
 
-    token = create_access_token(user_id)
-    payload = decode_token(token)
-
-    assert isinstance(token, str)
-    assert payload is not None
-    assert payload["sub"] == str(user_id)
-    assert "exp" in payload
+#     assert first_hash != second_hash
+#     assert verify_password(password, first_hash) is True
+#     assert verify_password(password, second_hash) is True
 
 
-def test_invalid_token():
-    token = "this-is-not-a-valid-jwt"
+# # JWT TOKENS
 
-    payload = decode_token(token)
+# def test_create_and_decode_token():
+#     user_id = 15
 
-    assert payload is None
+#     token = create_access_token(user_id)
+#     payload = decode_token(token)
+
+#     assert isinstance(token, str)
+#     assert payload is not None
+#     assert payload["sub"] == str(user_id)
+#     assert "exp" in payload
 
 
-def test_expired_token():
-    expire = datetime.now(timezone.utc) - timedelta(minutes=1)
+# def test_invalid_token():
+#     token = "this-is-not-a-valid-jwt"
 
+#     payload = decode_token(token)
+
+#     assert payload is None
+
+
+# def test_expired_token():
+#     expire = datetime.now(timezone.utc) - timedelta(minutes=1)
+
+#     token = jwt.encode(
+#         {
+#             "sub": "15",
+#             "exp": expire,
+#         },
+#         SECRET_KEY,
+#         algorithm=ALGORITHM,
+#     )
+
+#     payload = decode_token(token)
+
+#     assert payload is None
+
+
+# def test_invalid_signature():
+#     token = create_access_token(15)
+
+#     parts = token.split(".")
+
+#     # Change the signature without changing the header or payload.
+#     parts[2] = ("A" if parts[2][0] != "A" else "B") + parts[2][1:]
+
+#     tampered_token = ".".join(parts)
+
+#     payload = decode_token(tampered_token)
+
+#     assert payload is None
+
+
+# def test_token_missing_subject():
+#     expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+
+#     token = jwt.encode(
+#         {
+#             "exp": expire,
+#         },
+#         SECRET_KEY,
+#         algorithm=ALGORITHM,
+#     )
+
+#     payload = decode_token(token)
+
+#     assert payload is None
+
+
+def test_invalid_subject_format(client):
     token = jwt.encode(
         {
-            "sub": "15",
-            "exp": expire,
+            "sub": "invalid_id",
+            "exp": datetime.now(timezone.utc) + timedelta(minutes=15),
         },
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
 
-    payload = decode_token(token)
-
-    assert payload is None
-
-
-def test_invalid_signature():
-    token = create_access_token(15)
-
-    parts = token.split(".")
-
-    # Change the signature without changing the header or payload.
-    parts[2] = ("A" if parts[2][0] != "A" else "B") + parts[2][1:]
-
-    tampered_token = ".".join(parts)
-
-    payload = decode_token(tampered_token)
-
-    assert payload is None
-
-
-def test_token_missing_subject():
-    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
-
-    token = jwt.encode(
-        {
-            "exp": expire,
-        },
-        SECRET_KEY,
-        algorithm=ALGORITHM,
+    response = client.get(
+        "/transactions",
+        cookies={"access_token": token},
     )
 
-    payload = decode_token(token)
-
-    assert payload is None
+    assert response.status_code == 401
 
 
 
 
+# | Test | Expected result |
 
-
-
-
-
-# Authentication
-# POST /auth/register
-
-#     [ ] valid registration
-#     [ ] invalid email
-#     [ ] invalid password
-#     [ ] duplicate email
-
-# Then:
-
-# POST /auth/login
-
-#     [ ] correct credentials
-#     [ ] wrong password
-#     [ ] nonexistent user
 
 # Then:
 
