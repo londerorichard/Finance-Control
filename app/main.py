@@ -92,6 +92,13 @@ async def transaction(request: Request):
         name="transaction.html"
     )
 
+@app.get("/reports")
+async def reports(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="reports.html"
+    )
+
 @app.get("/news")
 async def news(request: Request):
     return templates.TemplateResponse(

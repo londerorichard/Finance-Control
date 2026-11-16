@@ -7,9 +7,37 @@
 {% block content %}
 <div class="main-container">
 
-    <div class="submain">
+    <!-- Dashboard Controls -->
+    <div class="dashboard-controls">
 
-        <div class="left-column">
+        <div class="dashboard-actions">
+            <button class="dashboard-action primary-action">
+                <i data-lucide="plus"></i>
+                Add Transaction
+            </button>
+
+            <button class="dashboard-action secondary-action">
+                <i data-lucide="file-chart-column"></i>
+                View Reports
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Period Selector -->
+    <div class="dashboard-period">
+
+        <select class="period-selector" aria-label="Select financial period">
+            <option value="month">This month</option>
+            <option value="last-month">Last month</option>
+            <option value="three-months">Last 3 months</option>
+            <option value="year">This year</option>
+            <option value="custom">Custom period</option>
+        </select>
+
+    </div>
+
+    <div class="submain">
 
         <div class="resume-expenses">
             <div class="expenses-container">
@@ -59,9 +87,27 @@
                     </div>
                 </article>
 
+                <!-- Net Balance -->
+                <article class="expenses-card net-balance-card">
+
+                    <div class="expenses-card-header">
+                        <h4>Net Balance</h4>
+                        <span class="expenses-icon">
+                            <i data-lucide="wallet"></i>
+                        </span>
+                    </div>
+
+                    <h2 class="expenses-value">R$ 5,036.00</h2>
+
+                    <div class="expenses-footer">
+                        <span class="expenses-trend positive">↑ 8.5%</span>
+                        <span>vs. last month</span>
+                    </div>
+
+                </article>
+
             </div>
         </div>
-
 
             <div class="resume-market">
                 <div class="market-content">
@@ -173,9 +219,76 @@
 
                 </div>
             </div>
-        
-        </div>
 
+            <!-- Financial Goals -->
+            <section class="financial-goals">
+
+                <div class="goals-header">
+                    <div>
+                        <span class="goals-subtitle">Keep moving forward</span>
+                        <h2>Financial Goals</h2>
+                    </div>
+
+                    <button class="goals-view-all">View all</button>
+                </div>
+
+                <div class="goals-list">
+
+                    <article class="goal-card">
+
+                        <div class="goal-info">
+                            <div>
+                                <h4>Emergency Fund</h4>
+                                <span>R$ 6,500 of R$ 10,000</span>
+                            </div>
+
+                            <strong>65%</strong>
+                        </div>
+
+                        <div class="goal-progress">
+                            <div class="goal-progress-bar" style="width: 65%;"></div>
+                        </div>
+
+                    </article>
+
+                    <article class="goal-card">
+
+                        <div class="goal-info">
+                            <div>
+                                <h4>New Computer</h4>
+                                <span>R$ 2,000 of R$ 5,000</span>
+                            </div>
+
+                            <strong>40%</strong>
+                        </div>
+
+                        <div class="goal-progress">
+                            <div class="goal-progress-bar" style="width: 40%;"></div>
+                        </div>
+
+                    </article>
+
+                    <article class="goal-card">
+
+                        <div class="goal-info">
+                            <div>
+                                <h4>Vacation</h4>
+                                <span>R$ 750 of R$ 3,000</span>
+                            </div>
+
+                            <strong>25%</strong>
+                        </div>
+
+                        <div class="goal-progress">
+                            <div class="goal-progress-bar" style="width: 25%;"></div>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+        
         <aside class="statistics">
             <div class="statistics-content">
 

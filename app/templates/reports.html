@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/app/static/css/reports.css">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+
+    <div class="reports-container">
+
+        <div class="reports-container">
+
+            <!-- Reports Header -->
+            <div class="reports-header">
+                <div>
+                    <h1>Financial Reports</h1>
+                    <p>Analyze your financial activity and spending patterns.</p>
+                </div>
+
+                <div class="reports-filters">
+                    <select class="period-selector">
+                        <option value="week">This week</option>
+                        <option value="month" selected>This month</option>
+                        <option value="last-month">Last month</option>
+                        <option value="three-months">Last 3 months</option>
+                        <option value="year">This year</option>
+                    </select>
+
+                    <button class="custom-period-btn" type="button">
+                        Custom period
+                    </button>
+                </div>
+            </div>
+
+            <!-- Financial Summary -->
+            <section class="reports-summary">
+
+                <article class="report-card">
+                    <span class="report-label">Total Income</span>
+                    <strong class="report-value">$ 5,000.00</strong>
+                    <span class="report-trend positive">↑ 12.5% vs. previous period</span>
+                </article>
+
+                <article class="report-card">
+                    <span class="report-label">Total Expenses</span>
+                    <strong class="report-value">$ 3,200.00</strong>
+                    <span class="report-trend negative">↑ 8.2% vs. previous period</span>
+                </article>
+
+                <article class="report-card">
+                    <span class="report-label">Net Balance</span>
+                    <strong class="report-value">$ 1,800.00</strong>
+                    <span class="report-trend positive">↑ 15.3% vs. previous period</span>
+                </article>
+
+                <article class="report-card">
+                    <span class="report-label">Savings Rate</span>
+                    <strong class="report-value">36%</strong>
+                    <span class="report-trend positive">↑ 4.5% vs. previous period</span>
+                </article>
+
+            </section>
+
+            <!-- Income vs Expenses -->
+            <section class="report-panel income-expenses-panel">
+
+                <div class="report-section-header">
+                    <div>
+                        <h2>Income vs. Expenses</h2>
+                        <p>Compare your income and expenses over time.</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="income-expenses-chart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- Expense Analysis -->
+            <section class="reports-analysis">
+
+                <article class="report-panel">
+
+                    <div class="report-section-header">
+                        <div>
+                            <h2>Expense Breakdown</h2>
+                            <p>Distribution of your expenses by category.</p>
+                        </div>
+                    </div>
+
+                    <div class="expense-breakdown-content">
+
+                        <div class="donut-chart-container">
+                            <canvas id="expense-breakdown-chart"></canvas>
+                        </div>
+
+                        <div class="expense-legend">
+
+                            <div class="legend-item">
+                                <span class="legend-color food"></span>
+                                <span>Food</span>
+                                <strong>25%</strong>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-color housing"></span>
+                                <span>Housing</span>
+                                <strong>37.5%</strong>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-color transport"></span>
+                                <span>Transport</span>
+                                <strong>12.5%</strong>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-color entertainment"></span>
+                                <span>Entertainment</span>
+                                <strong>9.4%</strong>
+                            </div>
+
+                            <div class="legend-item">
+                                <span class="legend-color other"></span>
+                                <span>Other</span>
+                                <strong>15.6%</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- Top Spending Categories -->
+                <article class="report-panel">
+
+                    <div class="report-section-header">
+                        <div>
+                            <h2>Top Spending Categories</h2>
+                            <p>Categories with the highest expenses.</p>
+                        </div>
+                    </div>
+
+                    <div class="top-categories-list">
+
+                        <div class="top-category">
+                            <div class="top-category-info">
+                                <span>Housing</span>
+                                <strong>$ 1,200.00</strong>
+                            </div>
+                            <div class="category-progress">
+                                <span class="housing-progress"></span>
+                            </div>
+                        </div>
+
+                        <div class="top-category">
+                            <div class="top-category-info">
+                                <span>Food</span>
+                                <strong>$ 800.00</strong>
+                            </div>
+                            <div class="category-progress">
+                                <span class="food-progress"></span>
+                            </div>
+                        </div>
+
+                        <div class="top-category">
+                            <div class="top-category-info">
+                                <span>Transport</span>
+                                <strong>$ 400.00</strong>
+                            </div>
+                            <div class="category-progress">
+                                <span class="transport-progress"></span>
+                            </div>
+                        </div>
+
+                        <div class="top-category">
+                            <div class="top-category-info">
+                                <span>Entertainment</span>
+                                <strong>$ 300.00</strong>
+                            </div>
+                            <div class="category-progress">
+                                <span class="entertainment-progress"></span>
+                            </div>
+                        </div>
+
+                        <div class="top-category">
+                            <div class="top-category-info">
+                                <span>Other</span>
+                                <strong>$ 500.00</strong>
+                            </div>
+                            <div class="category-progress">
+                                <span class="other-progress"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- Monthly Trends -->
+            <section class="report-panel monthly-trends-panel">
+
+                <div class="report-section-header">
+                    <div>
+                        <h2>Monthly Trends</h2>
+                        <p>Track your financial performance over time.</p>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="monthly-trends-chart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- Financial Insights -->
+            <section class="reports-insights">
+
+                <div class="report-section-header">
+                    <div>
+                        <h2>Financial Insights</h2>
+                        <p>Highlights from your financial activity.</p>
+                    </div>
+                </div>
+
+                <div class="insights-list">
+
+                    <article class="insight-card">
+                        <span class="insight-indicator positive"></span>
+                        <div>
+                            <strong>Expenses decreased</strong>
+                            <p>Your expenses decreased by 8% compared to the previous period.</p>
+                        </div>
+                    </article>
+
+                    <article class="insight-card">
+                        <span class="insight-indicator neutral"></span>
+                        <div>
+                            <strong>Highest spending category</strong>
+                            <p>Housing represents 37.5% of your total expenses.</p>
+                        </div>
+                    </article>
+
+                    <article class="insight-card">
+                        <span class="insight-indicator positive"></span>
+                        <div>
+                            <strong>Good savings performance</strong>
+                            <p>You saved 36% of your income during this period.</p>
+                        </div>
+                    </article>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/app/static/javascript/reports-js.js"></script>
+{% endblock %}
