@@ -14,37 +14,36 @@ def create_transaction(
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
+        with connection:
+            cursor = connection.cursor()
 
-        created_at = datetime.now().isoformat()
+            created_at = datetime.now().isoformat()
 
-        cursor.execute(
-            """
-            INSERT INTO transactions (
-                user_id,
-                amount,
-                transaction_type,
-                description,
-                created_at,
-                category_id,
-                account
+            cursor.execute(
+                """
+                INSERT INTO transactions (
+                    user_id,
+                    amount,
+                    transaction_type,
+                    description,
+                    created_at,
+                    category_id,
+                    account
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    user_id,
+                    amount,
+                    transaction_type.value,
+                    description,
+                    created_at,
+                    category_id,
+                    account
+                )
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                user_id,
-                amount,
-                transaction_type.value,
-                description,
-                created_at,
-                category_id,
-                account
-            )
-        )
 
-        connection.commit()
-
-        return cursor.lastrowid
+            return cursor.lastrowid
 
     finally:
         connection.close()
@@ -199,7 +198,7 @@ def get_recent_transactions(user_id):
         cursor.execute("""
             SELECT * FROM transactions
             WHERE created_at >= date('now', '-7 days')
-            AND user_id = ?
+                AND user_id = ?
             ORDER BY created_at DESC
         """, (user_id,))
 
@@ -247,38 +246,37 @@ def update_transaction(
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
+        with connection:
+            cursor = connection.cursor()
 
-        cursor.execute("""
-            UPDATE transactions
-            SET
-                amount = ?,
-                transaction_type = ?,
-                description = ?,
-                category_id = ?,
-                account = ?
-            WHERE user_id = ?
-            AND id = ?
-        """, (
-            amount,
-            transaction_type.value,
-            description,
-            category_id,
-            account,
-            user_id,
-            transaction_id
-        ))
+            cursor.execute("""
+                UPDATE transactions
+                SET
+                    amount = ?,
+                    transaction_type = ?,
+                    description = ?,
+                    category_id = ?,
+                    account = ?
+                WHERE user_id = ?
+                AND id = ?
+            """, (
+                amount,
+                transaction_type.value,
+                description,
+                category_id,
+                account,
+                user_id,
+                transaction_id
+            ))
 
-        connection.commit()
+            cursor.execute("""
+                SELECT *
+                FROM transactions
+                WHERE user_id = ?
+                AND id = ?
+            """, (user_id, transaction_id))
 
-        cursor.execute("""
-            SELECT *
-            FROM transactions
-            WHERE user_id = ?
-            AND id = ?
-        """, (user_id, transaction_id))
-
-        return cursor.fetchone()
+            return cursor.fetchone()
 
     finally:
         connection.close()
@@ -289,15 +287,14 @@ def delete_transaction(user_id, transaction_id):
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
+        with connection:
+            cursor = connection.cursor()
 
-        cursor.execute("""
-            DELETE FROM transactions
-            WHERE user_id = ?
-            AND id = ?
-        """, (user_id, transaction_id))
-
-        connection.commit()
+            cursor.execute("""
+                DELETE FROM transactions
+                WHERE user_id = ?
+                AND id = ?
+            """, (user_id, transaction_id))
 
     finally:
         connection.close()
@@ -341,7 +338,7 @@ def get_transaction_by_category(user_id, category_name):
                 t.category_id,
                 c.name AS category_name
             FROM transactions t
-            INNER JOIN categories c
+            LEFT JOIN categories c
                 ON t.category_id = c.id
                 AND c.user_id = t.user_id
             WHERE t.user_id = ?

@@ -71,3 +71,5 @@ def test_deleted_user_cannot_use_old_token(db_session, test_user):
     )
 
     assert user is None
+
+

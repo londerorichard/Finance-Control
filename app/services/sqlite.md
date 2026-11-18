@@ -1,90 +1,156 @@
 
-Exercise 9.1 — Prevent invalid transaction amounts
+. Transactions
+This table has the greatest potential for performance improvements.
+A. Retrieve transactions by user and date
+You've used queries similar to:
+SELECT *
+FROM transactions
+WHERE user_id = ?
+ORDER BY created_at DESC;
 
-Design a table constraint that prevents a transaction from having an amount less than or equal to zero.
+Recommended index:
+CREATE INDEX idx_transactions_user_created
+ON transactions(user_id, created_at);
 
-Concepts: CHECK.
+Why:
+- Finds transactions belonging to a specific user.
+- Helps with date ordering.
+- Useful for recent transactions and pagination.
+Priority: High.
+B. Retrieve a specific transaction
+Your ownership-sensitive queries follow this pattern:
+SELECT *
+FROM transactions
+WHERE id = ?
+  AND user_id = ?;
 
-Question: Should the constraint live only in the application, or also in the database?
+Your id column is already a primary key, so SQLite automatically creates an index for it.
 
-Exercise 9.2 — Protect against duplicate categories
+You probably don't need another index here. SQLite can locate the transaction by id and then check user_id.
+C. Filter transactions by type
+For example:
+SELECT *
+FROM transactions
+WHERE user_id = ?
+  AND transaction_type = ?;
 
-Your application allows users to create categories.
+Potential index:
+CREATE INDEX idx_transactions_user_type
+ON transactions(user_id, transaction_type);
 
-Consider whether a user should be able to create two categories with the same name.
+Useful for:
+- Listing only expenses.
+- Listing only income.
+- Filtering transaction history.
+Priority: Medium.
+D. Filter transactions by category
+For example:
+SELECT *
+FROM transactions
+WHERE user_id = ?
+  AND category_id = ?;
 
-If not, design a database constraint that prevents duplicate category names for the same user while still allowing different users to have a category with that name.
+Potential index:
+CREATE INDEX idx_transactions_user_category
+ON transactions(user_id, category_id);
 
-Concepts: UNIQUE, composite constraints.
+Useful for category-specific transaction lists and reports.
 
-Exercise 9.3 — Transaction rollback
+Priority: Medium.
+E. Filter transactions by date range
+For example:
+SELECT *
+FROM transactions
+WHERE user_id = ?
+  AND created_at BETWEEN ? AND ?
+ORDER BY created_at DESC;
 
-Imagine a financial operation requires two database changes:
+Your existing (user_id, created_at) index already supports this query pattern.
 
-Insert a transaction.
-Update the corresponding goal's current amount.
+You don't need another index specifically for this query.
+2. Categories
+Your categories table has:
+UNIQUE (name, user_id)
 
-If the second operation fails, the first operation shouldn't remain committed on its own.
+This automatically creates an index on the combination of name and user_id.
 
-Describe how you would use a database transaction to keep these operations consistent.
+It can help with queries such as:
+SELECT *
+FROM categories
+WHERE name = ?
+  AND user_id = ?;
 
-Concepts: BEGIN, COMMIT, ROLLBACK.
+However, you also retrieve categories by user:
+SELECT *
+FROM categories
+WHERE user_id = ?;
 
-Exercise 9.4 — Delete a category safely
+The existing composite index (name, user_id) generally cannot efficiently support filtering by user_id alone because user_id isn't the leftmost column.
 
-A user wants to delete a category that has transactions associated with it.
+Potential additional index:
+CREATE INDEX idx_categories_user
+ON categories(user_id);
 
-Consider three possible behaviors:
+Priority: Medium.
+3. Goals
+Your goals queries include patterns similar to:
+SELECT *
+FROM goals
+WHERE user_id = ?;
 
-Reject the deletion.
-Delete the category and its associated transactions.
-Delete the category while preserving its transactions without a category.
+And:
+SELECT *
+FROM goals
+WHERE user_id = ?
+  AND current_amount >= target_amount;
 
-Which behavior would you choose for a finance application, and how would your foreign-key design support that choice?
+Potential index:
+CREATE INDEX idx_goals_user
+ON goals(user_id);
 
-Concepts: Foreign keys, ON DELETE, NULL, data integrity.
+This helps locate goals belonging to a particular user.
 
-My recommendation: For a finance application, preserving historical transactions is usually important. Avoid cascading deletion of financial records unless you have a specific, well-designed reason to do so.
+The completion condition compares two columns, current_amount and target_amount. An ordinary index on one of those columns won't necessarily optimize that comparison.
 
-🔵 Level 4 — Query Optimization and Performance
+Priority: Medium to low, depending on the number of goals per user.
+4. Authentication
+Your authentication service uses a query similar to:
+SELECT *
+FROM users
+WHERE email = ?;
 
-You already studied indexes, so now apply that knowledge to the project.
+Your email column already has:
+email TEXT UNIQUE NOT NULL
 
-10. Indexes and Query Plans
-Exercise 10.1 — Optimize recent transactions
+SQLite automatically creates an index to enforce that uniqueness.
 
-Your dashboard frequently runs a query that filters transactions by user_id and sorts them by created_at.
+Therefore, you don't need another index for email lookups.
 
-Consider which index could support that access pattern.
+The same applies to google_id if it has a UNIQUE constraint.
+5. My recommended indexes
+Here is the shortlist I'd consider for your project:
+Table	Index	Priority	Reason
+transactions	(user_id, created_at)	High	Recent transactions, pagination, date filtering
+transactions	(user_id, transaction_type)	Medium	Filter income and expenses
+transactions	(user_id, category_id)	Medium	Filter transactions by category
+categories	(user_id)	Medium	Retrieve categories belonging to a user
+goals	(user_id)	Low	Retrieve goals belonging to a user
 
-Question: Would an index on user_id alone necessarily be as useful as a composite index on user_id and created_at?
 
-Exercise 10.2 — Analyze a query plan
+These are candidates, not a recommendation to create all of them immediately.
+6. What I'd actually implement now
+I'd start with just this:
+CREATE INDEX idx_transactions_user_created
+ON transactions(user_id, created_at);
 
-Use SQLite's EXPLAIN QUERY PLAN to examine the execution plan for your recent-transactions query.
+Then investigate the other queries using EXPLAIN QUERY PLAN.
 
-Then compare the plan before and after adding an appropriate index.
+One important consideration: indexes can overlap.
 
-Look for differences in how SQLite accesses the table and whether it needs an additional sorting step.
+For example, (user_id, created_at) already supports searches using user_id alone. Therefore, creating a separate index on user_id in the transactions table would probably be redundant for those queries.
 
-Exercise 10.3 — Understand index trade-offs
+Also, your transactions table has a foreign key on category_id. SQLite does not automatically create an index on foreign-key columns, so indexing that column can be useful for joins and foreign-key operations.
+My advice
+Don't create indexes based only on this list. Look at the actual SQL queries in your services, identify their filtering and sorting patterns, and choose indexes accordingly.
 
-Consider a database that receives:
-
-Many transaction reads.
-Frequent transaction inserts.
-Occasional transaction updates and deletions.
-
-Explain why adding an index to every column would be a poor decision.
-
-Think about storage costs and the extra work required to maintain indexes during writes.
-
-Exercise 10.4 — Review your user-scoped queries
-
-Inspect the queries used by your API.
-
-For every query that retrieves or changes a user's data, verify that it restricts the operation to the authenticated user's records.
-
-Consider whether a query involving a category or goal also needs to check ownership of the related record.
-
-This is both a correctness and security exercise.
+That's a much better habit than indexing every column in your database.

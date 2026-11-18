@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException, Depends
 from app.schemas import (
     TransactionCreate,
@@ -123,12 +124,20 @@ def get_single_transaction_endpoint(
     )
 
 
-@router.put("/update/{transaction_id}",response_model=TransactionResponse)
+@router.patch("/update/{transaction_id}", response_model=TransactionResponse)
 def update_transaction_endpoint(
     transaction_id: int,
     updated_transaction: TransactionUpdate,
     current_user=Depends(get_current_user)
 ):
+    update_data = updated_transaction.model_dump(exclude_unset=True)
+
+    if not update_data:
+        raise HTTPException(
+            status_code=400,
+            detail="No fields provided for update"
+        )
+
     user_id = current_user["id"]
 
     transaction = get_single_transaction(
@@ -142,9 +151,9 @@ def update_transaction_endpoint(
             detail="Transaction not found"
         )
 
-    if updated_transaction.category_id is not None:
+    if "category_id" in update_data and update_data["category_id"] is not None:
         category = get_category_for_user(
-            updated_transaction.category_id,
+            update_data["category_id"],
             user_id
         )
 
@@ -157,11 +166,7 @@ def update_transaction_endpoint(
     updated = update_transaction(
         user_id=user_id,
         transaction_id=transaction_id,
-        amount=updated_transaction.amount,
-        transaction_type=updated_transaction.transaction_type,
-        description=updated_transaction.description,
-        category_id=updated_transaction.category_id,
-        account=updated_transaction.account
+        **update_data
     )
 
     return TransactionResponse(**dict(updated))

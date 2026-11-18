@@ -62,6 +62,7 @@ def get_recent_transactions(user_id):
             FROM transactions AS t
             LEFT JOIN categories AS c
                 ON t.category_id = c.id
+                AND t.user_id = c.user_id
             WHERE t.user_id = ?
             ORDER BY t.created_at DESC
             LIMIT 5
