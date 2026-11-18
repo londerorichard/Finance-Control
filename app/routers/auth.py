@@ -12,7 +12,7 @@ from app.schemas import (
     PasswordChange,
     Token
 )
-from app.services.auth_service import (
+from app.repositories.auth_repository import (
     create_user, 
     change_password, 
     login_user, 

@@ -1,6 +1,6 @@
 from fastapi import HTTPException, APIRouter
 from app.schemas import UserUpdate, UserResponse
-from app.services.user_service import get_user_by_id, update_user_profile, delete_user_account
+from app.repositories.user_repository import get_user_by_id, update_user_profile, delete_user_account
 
 router = APIRouter(
     prefix="/users",

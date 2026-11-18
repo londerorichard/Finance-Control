@@ -1,4 +1,4 @@
-from app.services.auth_service import create_user, get_user_by_email, get_user_by_id, change_password
+from app.repositories.auth_repository import create_user, get_user_by_email, get_user_by_id, change_password
 from app.auth.security import verify_password
 
 

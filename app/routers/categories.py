@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas import (CreateCategory, UpdateCategory, ResponseCategory)
-from app.services.categories_service import (
+from app.repositories.categories_repository import (
     create_category, 
     list_categories, 
     get_category_by_id, 

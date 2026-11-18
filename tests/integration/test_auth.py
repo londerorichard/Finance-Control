@@ -1,5 +1,5 @@
 from app.auth.jwt import create_access_token
-from app.services.auth_service import create_user, login_user
+from app.repositories.auth_repository import create_user, login_user
 from app.auth.dependency import get_current_user
 
 def test_register_user(db_session):

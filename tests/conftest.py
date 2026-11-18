@@ -3,8 +3,8 @@ import pytest
 
 from fastapi.testclient import TestClient
 
-import app.services.auth_service as auth_service
-import app.services.transaction_service as transaction_service
+import app.repositories.auth_repository as auth_repository
+import app.repositories.transaction_repository as transaction_repository
 
 from app.database.connection import get_connection
 from app.database.setup import create_tables
@@ -36,7 +36,7 @@ def test_auth_db(test_db, monkeypatch):
         return get_connection(test_db)
 
     monkeypatch.setattr(
-        auth_service,
+        auth_repository,
         "get_connection",
         get_test_connection
     )
@@ -48,7 +48,7 @@ def test_transaction_db(test_db, monkeypatch):
         return get_connection(test_db)
 
     monkeypatch.setattr(
-        transaction_service,
+        transaction_repository,
         "get_connection",
         get_test_connection
     )
@@ -60,13 +60,13 @@ def client(test_db, monkeypatch):
         return get_connection(test_db)
 
     monkeypatch.setattr(
-        auth_service,
+        auth_repository,
         "get_connection",
         get_test_connection
     )
 
     monkeypatch.setattr(
-        transaction_service,
+        transaction_repository,
         "get_connection",
         get_test_connection
     )

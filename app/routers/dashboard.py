@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException 
 from app.schemas import DashboardSummary, CategorySummary, RecentTransaction
-from app.services.dashboard_service import get_dashboard_summary, get_recent_transactions
-from app.services.user_service import get_user_by_id
+from app.repositories.dashboard_repository import get_dashboard_summary, get_recent_transactions
+from app.repositories.user_repository import get_user_by_id
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 

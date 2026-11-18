@@ -2,7 +2,7 @@ import httpx
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.services.news_service import (
+from app.repositories.news_repository import (
     get_financial_news,
     get_news_by_symbol,
     search_financial_news,

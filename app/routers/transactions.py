@@ -5,7 +5,7 @@ from app.schemas import (
     TransactionResponse,
     TransactionUpdate
 )
-from app.services.transaction_service import (
+from app.repositories.transaction_repository import (
     create_transaction, 
     list_transactions, 
     calculate_balance,
@@ -13,7 +13,7 @@ from app.services.transaction_service import (
     update_transaction,
     delete_transaction)
 
-from app.services.categories_service import get_category_for_user
+from app.repositories.categories_repository import get_category_for_user
 from app.auth.dependency import get_current_user
 
 

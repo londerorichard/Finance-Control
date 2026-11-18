@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status, Request
 from app.auth.jwt import decode_token
-from app.services.auth_service import get_user_by_id
+from app.repositories.auth_repository import get_user_by_id
 
 
 def get_current_user(request: Request):

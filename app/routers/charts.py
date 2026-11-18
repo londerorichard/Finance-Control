@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from app.services.charts_service import income_expense_chart, category_expenses_chart, monthly_balance_chart
+from app.repositories.charts_repository import income_expense_chart, category_expenses_chart, monthly_balance_chart
 from app.schemas import MonthlyBalance, MonthlyIncomeExpenses, CategoryExpense, SavingsData
 from app.auth.dependency import get_current_user 
 

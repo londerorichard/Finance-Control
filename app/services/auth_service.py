@@ -1,202 +1,74 @@
-from app.database.connection import get_connection
-from datetime import datetime
-from app.auth.security import hash_password, verify_password
-from app.schemas import UserResponse
 from fastapi import HTTPException
-import sqlite3
 
-connection = sqlite3.connect("name_file")
-cursor = connection.cursor()
+from app.auth.security import hash_password, verify_password
 
-def create_user(email, password):
-    connection = get_connection()
+from app.repositories.user_repository import (
+    email_exists,
+    create_user,
+    get_user_by_email,
+    get_user_by_id,
+    update_password_hash,
+)
 
-    try:
-        with connection:
-            cursor = connection.cursor()
-
-            password_hash = hash_password(password)
-            created_at = datetime.now().isoformat()
-
-            print(f"Attempting to create user with email: {email}")
-
-            cursor.execute(
-                """
-                INSERT INTO users (
-                    email,
-                    password_hash,
-                    created_at
-                )
-                VALUES (?, ?, ?)
-                RETURNING id, email
-                """,
-                (email, password_hash, created_at)
-            )
-
-            user = cursor.fetchone()
-
-            return UserResponse(
-                id=user["id"],
-                email=user["email"]
-            )
-
-    finally:
-        connection.close()
+from app.schemas import UserCreate, UserResponse
 
 
-def login_user(email, password):
+def register_user(user: UserCreate) -> UserResponse:
+    if email_exists(user.email):
+        raise HTTPException(
+            status_code=409,
+            detail="Email already registered"
+        )
 
-    connection = get_connection()
-    
-    try:
-        cursor = connection.cursor()
+    password_hash = hash_password(user.password)
 
-        cursor.execute(""" 
-        SELECT * FROM users 
-        WHERE email = ?
-        """, (email,))
-
-        user = cursor.fetchone()
-
-        if not user:
-            raise HTTPException( 
-                status_code=401, 
-                detail="Invalid credentials"
-                )
-
-        password_hash = user['password_hash']
-
-        if not verify_password(password, password_hash): 
-            raise HTTPException(
-                status_code=401, 
-                detail="Invalid credentials" 
-                )
-
-        return user
-
-    finally:
-        connection.close()
+    return create_user(user.email, password_hash)
 
 
-def get_user_by_id(user_id):
+def login_user(email: str, password: str) -> UserResponse:
+    user = get_user_by_email(email)
 
-    connection = get_connection()
+    if user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
 
-    try:
-        cursor = connection.cursor()
+    if not verify_password(password, user["password_hash"]):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
 
-        cursor.execute("""
-            SELECT * FROM users
-            WHERE id = ?
-            """,(user_id,))
-
-        return cursor.fetchone()
-
-    finally:
-        connection.close()
-
-
-def get_user_by_email(email):
-
-    connection = get_connection()
-
-    try:
-        cursor = connection.cursor()
-
-        cursor.execute("""
-            SELECT *
-            FROM users
-            WHERE email = ?
-            """, (email,))
-
-        return cursor.fetchone()
-
-    finally:
-        connection.close()
+    return UserResponse(
+        id=user["id"],
+        email=user["email"]
+    )
 
 
-def change_password(user_id, current_password, new_password):
+def change_password(
+        user_id: int,
+        current_password: str,
+        new_password: str
+    ) -> bool:
 
-    connection = get_connection()
+    user = get_user_by_id(user_id)
 
-    try:
-        cursor = connection.cursor()
+    if user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
 
-        cursor.execute("""
-            SELECT id, password_hash
-            FROM users
-            WHERE id = ?
-        """, (user_id,))
+    stored_password_hash = user["password_hash"]
 
-        user = cursor.fetchone()
+    if not verify_password(current_password, stored_password_hash):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid credentials"
+        )
 
-        if not user:
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid credentials"
-            )
+    new_password_hash = hash_password(new_password)
 
-        stored_password_hash = user["password_hash"]
+    return update_password_hash(user_id, new_password_hash)
 
-        if not verify_password(
-            current_password,
-            stored_password_hash
-        ):
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid credentials"
-            )
-
-        new_password_hash = hash_password(new_password)
-
-        cursor.execute("""
-            UPDATE users
-            SET password_hash = ?
-            WHERE id = ?
-        """, (new_password_hash, user_id))
-
-        connection.commit()
-
-    finally:
-        connection.close()
-
-
-def get_user_by_google_id(google_id):
-    connection = get_connection()
-
-    try:
-        cursor = connection.cursor()
-
-        cursor.execute("""
-            SELECT *
-            FROM users
-            WHERE google_id = ?
-        """, (google_id,))
-
-        return cursor.fetchone()
-
-    finally:
-        connection.close()
-
-
-def create_google_user(email, google_id):
-    connection = get_connection()
-
-    try:
-        cursor = connection.cursor()
-
-        created_at = datetime.now().isoformat()
-
-        cursor.execute("""
-            INSERT INTO users (email, google_id, created_at)
-            VALUES (?, ?, ?)
-            RETURNING id, email, google_id, created_at
-        """, (email, google_id, created_at))
-
-        user = cursor.fetchone()
-        connection.commit()
-
-        return user
-
-    finally:
-        connection.close()
